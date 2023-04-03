@@ -33,7 +33,7 @@ program.version(projectVersion)
     "-P, --force-port <port>",
     "Connect to <port> when using --force-host"
   )
-  .option('-c, --cache', 'Cache downloaded XSD filed')
+  .option('-c, --cache', 'When present, cache downloaded XSD files')
   .option("-o, --out <path>", "Output definitions and modules under <path>")
   .option("-t, --out-ts <path>", "Output TypeScript definitions under <path>. Overrides --out")
   .option("-j, --out-js <path>", "Output JavaScript modules under <path>. Overrides --out")
