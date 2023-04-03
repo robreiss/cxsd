@@ -38,8 +38,8 @@ export abstract class Transform<
   }
 
   exec(
-    visitedNamespaceTbl?: { [key: string]: Namespace },
-    state?: any
+    visitedNamespaceTbl?: Record<string, Namespace>,
+    state?: State
   ): Promise<Output[]> {
     var doc = this.doc;
     var namespace = doc.namespace;

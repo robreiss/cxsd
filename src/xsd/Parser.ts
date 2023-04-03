@@ -2,7 +2,6 @@
 // Released under the MIT license, see LICENSE.
 
 import * as expat from "node-expat";
-import * as Promise from "bluebird";
 
 import { CacheResult } from "@wikipathways/cget";
 import { Rule } from "./Rule";

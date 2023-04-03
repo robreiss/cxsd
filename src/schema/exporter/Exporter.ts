@@ -1,7 +1,6 @@
 // This file is part of cxsd, copyright (c) 2015-2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import * as Promise from "bluebird";
 import * as path from "path";
 
 import { Address, Cache } from "@wikipathways/cget";
@@ -50,7 +49,7 @@ export abstract class Exporter extends Transform<Exporter, boolean, State> {
 
     var outName = this.getOutName(doc.namespace.name);
 
-    return (this.state.cache.isCached(outName) as Promise<boolean>).then(
+    return this.state.cache.isCached(outName).then(
       (isCached: boolean) => {
         if (isCached) return null;
 
