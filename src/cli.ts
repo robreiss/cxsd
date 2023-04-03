@@ -3,7 +3,7 @@
 
 import "source-map-support/register";
 
-import * as cmd from "commander";
+import { program }from "commander";
 
 import { Cache, FetchOptions } from "@wikipathways/cget";
 
@@ -11,16 +11,12 @@ import { Context } from "./xsd/Context";
 import { Namespace } from "./xsd/Namespace";
 import { Loader } from "./xsd/Loader";
 import { exportNamespace } from "./xsd/Exporter";
-import { AddImports } from "./schema/transform/AddImports";
+import { AddImports, Output } from "./schema/transform/AddImports";
 import { Sanitize } from "./schema/transform/Sanitize";
 import * as schema from "./schema";
 
-type _ICommand = typeof cmd;
-interface ICommand extends _ICommand {
-  arguments(spec: string): ICommand;
-}
-
-(cmd.version(require("../package.json").version) as ICommand)
+const projectVersion =require("../package.json").version;
+program.version(projectVersion)
   .arguments("<url>")
   .description("XSD download and conversion tool")
   .option(
@@ -35,13 +31,12 @@ interface ICommand extends _ICommand {
     "-P, --force-port <port>",
     "Connect to <port> when using --force-host"
   )
-  // .option('-c, --cache-xsd <path>', 'Cache downloaded XSD filed under <path>')
   .option("-t, --out-ts <path>", "Output TypeScript definitions under <path>")
   .option("-j, --out-js <path>", "Output JavaScript modules under <path>")
   .action(handleConvert)
   .parse(process.argv);
 
-if (process.argv.length < 3) cmd.help();
+if (process.argv.length < 3) program.help();
 
 function handleConvert(urlRemote: string, opts: { [key: string]: any }) {
   var schemaContext = new schema.Context();
@@ -77,17 +72,20 @@ function handleConvert(urlRemote: string, opts: { [key: string]: any }) {
       var addImports = new AddImports(spec);
       var sanitize = new Sanitize(spec);
 
-      var importsAdded = addImports.exec();
+      var importsAddedPromise = addImports.exec();
+
+      var importsAddedResult: Output[];
 
       // Find ID numbers of all types imported from other namespaces.
-      importsAdded
-        .then(() =>
+      importsAddedPromise
+        .then((importsAdded) => {
+          importsAddedResult = importsAdded
           // Rename types to valid JavaScript class names,
           // adding a prefix or suffix to duplicates.
-          sanitize.exec()
-        )
+          return sanitize.exec()
+        })
         .then(() => sanitize.finish())
-        .then(() => addImports.finish(importsAdded.value()))
+        .then(() => addImports.finish(importsAddedResult))
         .then(() => new schema.JS(spec, jsCache).exec())
         .then(() => new schema.TS(spec, tsCache).exec());
     } catch (err) {

@@ -2,7 +2,6 @@
 // Released under the MIT license, see LICENSE.
 
 import * as expat from "node-expat";
-//import * as sax from 'sax';
 import * as Promise from "bluebird";
 
 import { CacheResult } from "@wikipathways/cget";
@@ -15,8 +14,6 @@ import { Namespace } from "./Namespace";
 import { Loader } from "./Loader";
 import { Source } from "./Source";
 import { QName } from "./QName";
-
-import * as util from "util";
 
 /** Parse syntax rules encoded into handler classes. */
 

@@ -1,5 +1,5 @@
 {
-  "name": "@wikipathways/cxsd",
+  "name": "@loanlink/cxsd",
   "version": "0.2.10",
   "description": "Streaming XSD parser and XML parser generator with TypeScript output",
   "main": "./dist/schema.js",
@@ -17,14 +17,13 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "prepare": "ALLE_DIR='../../../../'; if [ ! -d ./node_modules ] && [ -d \"$ALLE_DIR\"/node_modules ]; then echo 'Alle configuration detected. Testing from the top-level alle directory...' && (cd \"$ALLE_DIR\" && npm run '@wikipathways/cxsd:build'); else npm run build; fi",
+    "prepare": "npm run build",
     "prepublishOnly": "npm i --package-lock-only && ALLE_DIR='../../../../'; if [ ! -d ./node_modules ] && [ -d \"$ALLE_DIR\"/node_modules ]; then echo 'Alle configuration detected. Testing from the top-level alle directory...' && (cd \"$ALLE_DIR\" && npm run '@wikipathways/cxsd:test'); else npm run test; fi",
     "postpublish": "TAG=\"v$(jq -r .version package.json)\" && git commit -am \"Bumped to version $TAG\" && git tag -a $TAG -m \"Published version $TAG\" && git push origin $TAG",
-    "test": "npm-run-all --silent test:* # In case of error, remove --silent to debug.",
+    "test": "npm-run-all test:* # In case of error, remove --silent to debug.",
     "test:build": "npm-run-all test:build:*",
-    "test:build:clean": "mkdir -p cache && rm -rf cache && cd test && mkdir -p cache && rm -rf cache && mkdir -p xmlns && rm -rf xmlns && cd ..",
+    "test:build:clean": "mkdirp cache && rimraf cache && cd test && mkdirp cache && rimraf cache && mkdirp xmlns && rimraf xmlns && cd ..",
     "test:build:compile": "npm-run-all test:build:compile:*",
-    "test:build:compile:GPML2013a": "cd test && node ../bin/cxsd https://raw.githubusercontent.com/ariutta/GPML/master/GPML2013a.xsd && cd ..",
     "test:build:compile:dir-example": "cd test && node ../bin/cxsd ./input/dir-example.xsd && cd ..",
     "test:run": "jest"
   },
@@ -44,23 +43,18 @@
     "transformIgnorePatterns": [
       "<rootDir>/(node_modules)/"
     ],
-    "haste": {
-      "providesModuleNodeModules": [
-        ".*"
-      ]
-    },
     "testRegex": "(/src/.*\\.test\\.(ts|tsx|js))$"
   },
   "author": "Juha Järvi",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ariutta/cxsd.git"
+    "url": "git+https://github.com/Capital-Management-Group/cxsd"
   },
   "bugs": {
-    "url": "https://github.com/charto/cxsd/issues"
+    "url": "https://github.com/Capital-Management-Group/cxsd/issues"
   },
-  "homepage": "https://github.com/charto/cxsd#readme",
+  "homepage": "https://github.com/Capital-Management-Group/cxsd#readme",
   "keywords": [
     "xsd",
     "dts",
@@ -70,20 +64,21 @@
     "typescript"
   ],
   "dependencies": {
-    "@types/bluebird": "^3.5.28",
-    "@types/node": "^10.17.0",
-    "@wikipathways/cget": "0.1.7",
+    "@wikipathways/cget": "^0.1.7",
     "@wikipathways/cxml": "0.2.14",
-    "bluebird": "^3.7.1",
-    "commander": "^2.20.3",
+    "commander": "^9.5.0",
     "node-expat": "^2.3.18",
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
     "@types/jest": "^24.0.21",
-    "jest": "^24.9.0",
-    "npm-run-all": "^4.1.5",
-    "ts-jest": "^24.1.0",
-    "typescript": "^3.6.4"
+    "@types/node": "^10.17.0",
+    "@types/source-map-support": "^0.5.6",
+    "jest": "^29.5.0",
+    "mkdirp": "^2.1.6",
+    "npm-run-all2": "^6.0.4",
+    "rimraf": "^4.4.1",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.0.3"
   }
 }

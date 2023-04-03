@@ -1,11 +1,9 @@
 // This file is part of cxsd, copyright (c) 2015-2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import { MemberSpec as Member, MemberRef } from "@wikipathways/cxml";
+import { MemberSpec, MemberRef } from "@wikipathways/cxml";
 
-import { Cache } from "@wikipathways/cget";
 import { Exporter } from "./Exporter";
-import { Namespace } from "../Namespace";
 import { Type } from "../Type";
 
 var docName = "document";
@@ -144,7 +142,11 @@ export class TS extends Exporter {
       output.push("\n");
     }
 
-    output.push(indent + ref.safeName);
+    let name = member.name;
+    if (member.name !== ref.safeName)
+      name = `"${name}"`;
+    output.push(indent + name);
+
     if (ref.min == 0) output.push("?");
     output.push(": ");
 

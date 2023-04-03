@@ -1,9 +1,6 @@
 // This file is part of cxsd, copyright (c) 2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import * as Promise from "bluebird";
-import { MemberRef } from "@wikipathways/cxml";
-
 import { Namespace } from "../Namespace";
 import { Type } from "../Type";
 
@@ -53,7 +50,7 @@ export abstract class Transform<
     visitedNamespaceTbl[namespace.id] = namespace;
 
     return Promise.resolve(this.prepare()).then((output: Output) =>
-      Promise.map(namespace.getUsedImportList(), (namespace: Namespace) => {
+      Promise.all(namespace.getUsedImportList().map((namespace: Namespace) => {
         if (!visitedNamespaceTbl[namespace.id]) {
           if (namespace.doc) {
             var transform = new this.construct(namespace.doc);
@@ -63,7 +60,7 @@ export abstract class Transform<
         }
 
         return [];
-      }).then((outputList: Output[][]) =>
+      })).then((outputList: Output[][]) =>
         Array.prototype.concat.apply([output], outputList)
       )
     );

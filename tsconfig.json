@@ -12,10 +12,9 @@
     "outDir": "./dist",
     "removeComments": false,
     "lib": [
-      "dom",
-      "es2015"
+      "esnext"
     ],
-    "target": "es5"
+    "target": "es6"
   },
   "include": [
     "src/**/*.ts"
