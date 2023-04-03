@@ -10,4 +10,7 @@ dist/
 shell.nix
 !src/spinoffs/XPathParser.d.ts
 test/cache/
+test/output/
 test/xmlns/
+
+datacatalogus.xsd

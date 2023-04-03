@@ -18,24 +18,24 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "prepare": "npm run build",
-    "prepublishOnly": "npm i --package-lock-only && ALLE_DIR='../../../../'; if [ ! -d ./node_modules ] && [ -d \"$ALLE_DIR\"/node_modules ]; then echo 'Alle configuration detected. Testing from the top-level alle directory...' && (cd \"$ALLE_DIR\" && npm run '@wikipathways/cxsd:test'); else npm run test; fi",
+    "prepublishOnly": "npm run test",
     "postpublish": "TAG=\"v$(jq -r .version package.json)\" && git commit -am \"Bumped to version $TAG\" && git tag -a $TAG -m \"Published version $TAG\" && git push origin $TAG",
-    "test": "npm-run-all test:* # In case of error, remove --silent to debug.",
-    "test:build": "npm-run-all test:build:*",
-    "test:build:clean": "mkdirp cache && rimraf cache && cd test && mkdirp cache && rimraf cache && mkdirp xmlns && rimraf xmlns && cd ..",
+    "test": "npm-run-all test:*",
+    "test:build": "npm-run-all build test:build:*",
+    "test:build:clean": "mkdirp cache && rimraf cache && cd test && mkdirp cache && rimraf cache && mkdirp xmlns && rimraf xmlns && mkdirp output && rimraf output && cd ..",
     "test:build:compile": "npm-run-all test:build:compile:*",
-    "test:build:compile:dir-example": "cd test && node ../bin/cxsd ./input/dir-example.xsd && cd ..",
-    "test:run": "jest"
+    "test:build:compile:dir-example": "cd test && node ../bin/cxsd ./input/dir-example.xsd -o ./output/dir-example && cd ..",
+    "test:build:compile:datacatalogus": "cd test && node ../bin/cxsd ./input/datacatalogus.xsd -o ./output/datacatalogus -n datacatalogus && cd ..",
+    "tests:run": "jest"
   },
   "jest": {
     "moduleFileExtensions": [
       "ts",
-      "tsx",
       "js"
     ],
     "testEnvironment": "node",
     "transform": {
-      "\\.(ts|tsx)$": "ts-jest"
+      "\\.(ts)$": "ts-jest"
     },
     "testPathIgnorePatterns": [
       "<rootDir>/(node_modules)/"
@@ -43,7 +43,7 @@
     "transformIgnorePatterns": [
       "<rootDir>/(node_modules)/"
     ],
-    "testRegex": "(/src/.*\\.test\\.(ts|tsx|js))$"
+    "testRegex": "(/src/.*\\.test\\.(ts|js))$"
   },
   "author": "Juha Järvi",
   "license": "MIT",
