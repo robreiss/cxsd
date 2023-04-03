@@ -1,21 +1,23 @@
 // This file is part of cxsd, copyright (c) 2015-2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import * as path from "path";
-
-import { Address, Cache } from "@wikipathways/cget";
-
 import { Transform } from "../transform/Transform";
 import { Type } from "../Type";
+import { Namespace } from "../Namespace";
+
+export interface Writer {
+  write: (name: string, contentGetter: () => string) => Promise<boolean> | boolean;
+  getPathTo: (name: string, namespace: Namespace) => string
+}
 
 export interface State {
-  cache: Cache;
+  writer: Writer;
 }
 
 export abstract class Exporter extends Transform<Exporter, boolean, State> {
-  constructor(doc: Type, cache: Cache) {
+  constructor(doc: Type, writer: Writer) {
     super(doc);
-    this.state = { cache: cache };
+    this.state = { writer: writer };
   }
 
   writeHeader() {
@@ -24,7 +26,7 @@ export abstract class Exporter extends Transform<Exporter, boolean, State> {
 
     for (var shortName of Object.keys(importTbl).sort()) {
       var namespace = importTbl[shortName];
-      var relativePath = this.getPathTo(namespace.name);
+      var relativePath = this.state.writer.getPathTo(namespace.name, namespace);
       output.push(this.writeImport(shortName, relativePath, namespace.name));
     }
 
@@ -43,51 +45,13 @@ export abstract class Exporter extends Transform<Exporter, boolean, State> {
     var doc = this.doc;
     if (!doc) return null;
 
-    const address = new Address(doc.namespace.name);
-
-    this.cacheDir = path.dirname(this.state.cache.getCachePathSync(new Address(doc.namespace.name)));
-
-    var outName = this.getOutName(doc.namespace.name);
-
-    return this.state.cache.isCached(outName).then(
-      (isCached: boolean) => {
-        if (isCached) return null;
-
-        return this.state.cache.store(outName, this.writeContents());
-      }
-    );
+    const outName = this.getOutName(doc.namespace.name);
+    return this.state.writer.write(outName, this.writeContents.bind(this));
   }
 
   abstract writeContents(): string;
 
-  /** Get relative path to another namespace within the cache. */
-
-  getPathTo(name: string) {
-    // Append and then strip a file extension so references to a parent
-    // directory will target the directory by name instead of .. or similar.
-
-    var targetPath =
-      this.state.cache.getCachePathSync(new Address(name)) + ".js";
-
-    // Always output forward slashes.
-    // If path.sep is a backslash as on Windows, we need to escape it (as a double-backslash) for it to be a valid Regex.
-    // We are using a Regex because the alternative string.replace(string, string) overload only replaces the first occurance.
-    var separatorRegex = new RegExp(path.sep.replace("\\", "\\\\"), "g");
-
-    var relPath = path
-      .relative(this.cacheDir, targetPath)
-      .replace(separatorRegex, "/")
-      .replace(/\.js$/, "");
-
-    if (!relPath.match(/^[./]/)) relPath = "./" + relPath;
-
-    return relPath;
-  }
-
   protected abstract getOutName(name: string): string;
 
   protected state: State;
-
-  /** Full path of directory containing exported output for the current namespace. */
-  protected cacheDir: string;
 }

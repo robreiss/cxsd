@@ -3,7 +3,7 @@
 
 import "source-map-support/register";
 
-import { Option, program }from "commander";
+import { program }from "commander";
 
 import { Cache, FetchOptions } from "@wikipathways/cget";
 
@@ -14,6 +14,8 @@ import { exportNamespace } from "./xsd/Exporter";
 import { AddImports, Output } from "./schema/transform/AddImports";
 import { Sanitize } from "./schema/transform/Sanitize";
 import * as schema from "./schema";
+import { cacheWriter } from "./schema/exporter/CacheWriter";
+import { inMemoryWriter } from "./schema/exporter/InMemoryWriter";
 
 const projectVersion = require("../package.json").version;
 program.version(projectVersion)
@@ -31,6 +33,7 @@ program.version(projectVersion)
     "-P, --force-port <port>",
     "Connect to <port> when using --force-host"
   )
+  .option('-c, --cache', 'Cache downloaded XSD filed')
   .option("-o, --out <path>", "Output definitions and modules under <path>")
   .option("-t, --out-ts <path>", "Output TypeScript definitions under <path>. Overrides --out")
   .option("-j, --out-js <path>", "Output JavaScript modules under <path>. Overrides --out")
@@ -50,21 +53,27 @@ function handleConvert(urlRemote: string, opts: { [key: string]: any }) {
     ? opts["allowLocal"]
     : true;
 
+  const useCache = opts["cache"] ? true : false;
+
   if (opts["forceHost"]) {
     fetchOptions.forceHost = opts["forceHost"];
     if (opts["forcePort"]) fetchOptions.forcePort = opts["forcePort"];
 
-    Cache.patchRequest();
+    if (useCache) {
+      Cache.patchRequest();
+    }
   }
 
   const defaultOut = "xmlns";
   const outJs = opts["outJs"] ?? opts["out"] ?? defaultOut;
   const outTs = opts["outTs"] ?? opts["out"] ?? defaultOut;
 
-  var jsCache = new Cache(outJs, { indexName: "_index.js" });
-  var tsCache = new Cache(outTs, {
+  const files: Record<string, string> = {}
+
+  const jsWriter = useCache ? cacheWriter(new Cache(outJs, { indexName: "_index.js" })) : inMemoryWriter(files);
+  const tsWriter = useCache ? cacheWriter(new Cache(outTs, {
     indexName: "_index.d.ts"
-  });
+  })) : inMemoryWriter(files);
 
   var loader = new Loader(xsdContext, fetchOptions, opts['namespace']);
 
@@ -92,8 +101,8 @@ function handleConvert(urlRemote: string, opts: { [key: string]: any }) {
         })
         .then(() => sanitize.finish())
         .then(() => addImports.finish(importsAddedResult))
-        .then(() => new schema.JS(spec, jsCache).exec())
-        .then(() => new schema.TS(spec, tsCache).exec());
+        .then(() => new schema.JS(spec, jsWriter).exec())
+        .then(() => new schema.TS(spec, tsWriter).exec());
     } catch (err) {
       console.error(err);
       console.log("Stack:");

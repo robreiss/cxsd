@@ -333,7 +333,7 @@ export class TS extends Exporter {
       var other = type.namespace;
 
       output.push(
-        "declare module " + "'" + this.getPathTo(other.name) + "'" + " {"
+        "declare module " + "'" + this.state.writer.getPathTo(other.name, namespace) + "'" + " {"
       );
 
       for (var typeId of typeIdList) {
