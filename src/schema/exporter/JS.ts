@@ -237,12 +237,22 @@ export class JS extends Exporter {
     }
 
     var exportTypeNameList: string[] = [];
+    const exportedTypesObject: string[] = [];
 
     for (var type of typeList.exported) {
       name = type.safeName;
       if (type.name && type.name != name) name += ":" + type.name;
 
       exportTypeNameList.push("\n\t" + "'" + name + "'");
+
+      if (type.isPlainPrimitive && type.literalList && type.literalList.length) {
+        exportedTypesObject.push(
+          "\t" +
+          name + ": {\n" +
+          type.literalList.map(el => `\t\t${el}: ${el}`).join(",\n") +
+          "\n\t}"
+        )
+      }
     }
 
     return []
@@ -269,6 +279,12 @@ export class JS extends Exporter {
             memberSpecList.join(",") +
             "\n]" +
             ");"
+        ],
+        [
+          "",
+          "module.exports = {\n" +
+          exportedTypesObject.join(",\n") +
+          "\n}"
         ]
       )
       .join("\n");

@@ -25,7 +25,7 @@
     "test:build:clean": "mkdirp cache && rimraf cache && cd test && mkdirp cache && rimraf cache && mkdirp xmlns && rimraf xmlns && mkdirp output && rimraf output && cd ..",
     "test:build:compile": "npm-run-all test:build:compile:*",
     "test:build:compile:dir-example": "cd test && node ../bin/cxsd ./input/dir-example.xsd -o ./output/dir-example && cd ..",
-    "test:build:compile:datacatalogus": "cd test && node ../bin/cxsd ./input/datacatalogus.xsd -o ./output/datacatalogus -n datacatalogus && cd ..",
+    "test:build:compile:datacatalogus": "cd test && node ../bin/cxsd ./input/datacatalogus.xsd -o ./output/datacatalogus -n index && cd ..",
     "tests:run": "jest"
   },
   "jest": {

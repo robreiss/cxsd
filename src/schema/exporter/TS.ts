@@ -202,6 +202,26 @@ export class TS extends Exporter {
     return output.join("");
   }
 
+  writePrimitiveEnum(type: Type) {
+    if (!type.isPlainPrimitive) {
+      console.warn(`When writing an enum, type should be primitive. Found in type '${type.name}'. This is a bug and/or unsupported case in CXSD.`);
+      return "";
+    }
+
+    let output: string[] = [];
+
+    let literalList = type.literalList;
+    if (literalList && literalList.length > 0) {
+      output.push(`export const ${type.safeName}: Readonly<{\n`)
+      output.push(literalList.map(el => `\t${el}: ${el}`).join(",\n"))
+      output.push('\n}>\n')
+    } else {
+      return ""
+    }
+
+    return output.join("")
+  }
+
   writeType(type: Type) {
     var namespace = this.namespace;
     var output: string[] = [];
@@ -249,6 +269,8 @@ export class TS extends Exporter {
             "; }" +
             "\n"
         );
+
+        output.push(this.writePrimitiveEnum(type))
       } else {
         // NOTE: Substitution groups are ignored here!
         output.push("type _" + name + " = " + parentDef + ";" + "\n");
