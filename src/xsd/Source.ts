@@ -13,7 +13,10 @@ export class Source {
   constructor(
     urlRemote: string,
     context: Context,
-    targetNamespace?: Namespace
+    opts?: {
+      targetNamespace?: Namespace,
+      defaultTargetNamespace?: string
+    }
   ) {
     var id = Source.list.length;
 
@@ -21,10 +24,9 @@ export class Source {
     this.id = id;
     this.url = urlRemote;
     this.urlOriginal = urlRemote;
-    if (targetNamespace) {
-      this.targetNamespace = targetNamespace;
-      this.targetNamespace.addSource(this);
-    }
+
+    this.targetNamespace = opts.targetNamespace
+    this.defaultTargetNamespace = opts.defaultTargetNamespace
 
     Source.list[id] = this;
   }
@@ -35,27 +37,21 @@ export class Source {
     // Unqualified tags are assumed to be in the default namespace.
     // For the schema file itself, it should be http://www.w3.org/2001/XMLSchema
 
-    if (attrTbl["xmlns"]) {
-      this.defaultNamespace = this.context.registerNamespace(attrTbl["xmlns"]);
-    }
+    const defaultNamespaceName = attrTbl["xmlns"] ?? this.defaultTargetNamespace;
+    this.defaultNamespace = this.context.registerNamespace(defaultNamespaceName);
 
     // Everything defined in the current file belongs to the target namespace by default.
 
-    if (attrTbl["targetnamespace"]) {
-      if (!this.targetNamespace) {
-        this.targetNamespace = this.context.registerNamespace(
-          attrTbl["targetnamespace"],
-          this.urlOriginal
-        );
-        this.targetNamespace.addSource(this);
-      }
+    if (!this.targetNamespace) {
+      const targetNamespaceName = attrTbl["targetnamespace"] ?? this.defaultTargetNamespace;
+      this.registerTargetNamespace(targetNamespaceName)
     }
 
     // Read the current file's preferred shorthand codes for other XML namespaces.
 
     for (var attr of Object.keys(attrTbl)) {
       if (attr.match(/^xmlns:/i)) {
-        var short = attr.substr(attr.indexOf(":") + 1);
+        var short = attr.substring(attr.indexOf(":") + 1);
 
         this.namespaceRefTbl[short] = this.context
           .registerNamespace(attrTbl[attr])
@@ -68,6 +64,14 @@ export class Source {
     this.namespaceRefTbl["xml"] = this.context.registerNamespace(
       "http://www.w3.org/XML/1998/namespace"
     );
+  }
+
+  registerTargetNamespace(targetNamespaceName: string) {
+    this.targetNamespace = this.context.registerNamespace(
+      targetNamespaceName,
+      this.urlOriginal
+    );
+    this.targetNamespace.addSource(this);
   }
 
   /** Find a namespace according to its full name or the short name as used in this source file. */
@@ -113,8 +117,11 @@ export class Source {
   /** Original remote address of the file, before any redirections. */
   urlOriginal: string;
 
+  defaultTargetNamespace: string;
+
   /** New definitions are exported into the target namespace. */
   targetNamespace: Namespace;
+
 
   /** Unqualified names are assumed to belong to the default namespace. */
   defaultNamespace: Namespace;

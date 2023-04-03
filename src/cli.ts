@@ -3,7 +3,7 @@
 
 import "source-map-support/register";
 
-import { program }from "commander";
+import { Option, program }from "commander";
 
 import { Cache, FetchOptions } from "@wikipathways/cget";
 
@@ -15,7 +15,7 @@ import { AddImports, Output } from "./schema/transform/AddImports";
 import { Sanitize } from "./schema/transform/Sanitize";
 import * as schema from "./schema";
 
-const projectVersion =require("../package.json").version;
+const projectVersion = require("../package.json").version;
 program.version(projectVersion)
   .arguments("<url>")
   .description("XSD download and conversion tool")
@@ -31,8 +31,10 @@ program.version(projectVersion)
     "-P, --force-port <port>",
     "Connect to <port> when using --force-host"
   )
-  .option("-t, --out-ts <path>", "Output TypeScript definitions under <path>")
-  .option("-j, --out-js <path>", "Output JavaScript modules under <path>")
+  .option("-o, --out <path>", "Output definitions and modules under <path>")
+  .option("-t, --out-ts <path>", "Output TypeScript definitions under <path>. Overrides --out")
+  .option("-j, --out-js <path>", "Output JavaScript modules under <path>. Overrides --out")
+  .option("-n, --namespace <namespace>", "Use namespace <namespace> as namespace when file doesn't define a namespace.")
   .action(handleConvert)
   .parse(process.argv);
 
@@ -55,12 +57,16 @@ function handleConvert(urlRemote: string, opts: { [key: string]: any }) {
     Cache.patchRequest();
   }
 
-  var jsCache = new Cache(opts["outJs"] || "xmlns", { indexName: "_index.js" });
-  var tsCache = new Cache(opts["outTs"] || "xmlns", {
+  const defaultOut = "xmlns";
+  const outJs = opts["outJs"] ?? opts["out"] ?? defaultOut;
+  const outTs = opts["outTs"] ?? opts["out"] ?? defaultOut;
+
+  var jsCache = new Cache(outJs, { indexName: "_index.js" });
+  var tsCache = new Cache(outTs, {
     indexName: "_index.d.ts"
   });
 
-  var loader = new Loader(xsdContext, fetchOptions);
+  var loader = new Loader(xsdContext, fetchOptions, opts['namespace']);
 
   loader.import(urlRemote).then((namespace: Namespace) => {
     try {

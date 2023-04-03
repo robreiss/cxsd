@@ -31,10 +31,11 @@ export function clone(src: Object) {
 /** Loader handles caching schema definitions and calling parser stages. */
 
 export class Loader {
-  constructor(context: Context, options?: FetchOptions) {
+  constructor(context: Context, options?: FetchOptions, defaultTargetNamespace?: string) {
     this.context = context;
     this.options = clone(options || {});
     this.parser = new Parser(context);
+    this.defaultTargetNamespace = defaultTargetNamespace;
   }
 
   import(urlRemote: string) {
@@ -54,7 +55,10 @@ export class Loader {
     var source = Loader.sourceTbl[urlRemote];
 
     if (!source) {
-      source = new Source(urlRemote, this.context, namespace);
+      source = new Source(urlRemote, this.context, {
+        targetNamespace: namespace,
+        defaultTargetNamespace: this.defaultTargetNamespace,
+      });
 
       Loader.cache
         .fetch(urlRemote, options)
@@ -95,6 +99,8 @@ export class Loader {
   private options: FetchOptions;
   private parser: Parser;
   private source: Source;
+
+  private defaultTargetNamespace: string;
 
   private pendingCount = 0;
 

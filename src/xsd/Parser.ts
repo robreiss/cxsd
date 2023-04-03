@@ -106,7 +106,6 @@ export class Parser {
     var importList: { namespace: Namespace; url: string }[] = [];
 
     var xml = new expat.Parser(null);
-    // var xml = sax.createStream(true, { position: true });
 
     state.stateStatic = {
       context: this.context,
@@ -117,12 +116,10 @@ export class Parser {
 
       getLineNumber: () => {
         return xml.getCurrentLineNumber();
-        // return(0);
       },
 
       getBytePos: () => {
         return xml.getCurrentByteIndex();
-        // return(0);
       },
 
       textDepth: 0,
@@ -145,10 +142,6 @@ export class Parser {
     xml.on(
       "startElement",
       (name: string, attrTbl: { [name: string]: string }) => {
-        // xml.on('opentag', (node: sax.Tag) => {
-        // var name = node.name;
-        // var attrTbl = node.attributes;
-
         try {
           state = this.startElement(state, name, attrTbl);
         } catch (err) {
@@ -161,7 +154,6 @@ export class Parser {
     );
 
     xml.on("endElement", function(name: string) {
-      // xml.on('closetag', function() {
       if (state.xsdElement) {
         if (state.xsdElement.loaded) {
           state.xsdElement.loaded(state);
@@ -199,7 +191,6 @@ export class Parser {
     });
 
     stream.on("end", () => {
-      // xml.on('end', () => {
       // Finish parsing the file (synchronous call).
 
       xml.parse("", true); // Expat-specific line.
@@ -213,8 +204,6 @@ export class Parser {
         })
       );
     });
-
-    // stream.pipe(xml);
 
     return promise;
   }

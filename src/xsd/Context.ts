@@ -76,7 +76,7 @@ export class Context extends ContextBase<Namespace> {
     ];
 
     // TODO: these lines are ugly!
-    var source = new Source("", this, primitiveSpace);
+    var source = new Source("", this, { targetNamespace: primitiveSpace });
     var state = new State(null, null, source);
 
     state.setScope(scope);
