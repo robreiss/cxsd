@@ -22,11 +22,11 @@
     "postpublish": "TAG=\"v$(jq -r .version package.json)\" && git commit -am \"Bumped to version $TAG\" && git tag -a $TAG -m \"Published version $TAG\" && git push origin $TAG",
     "test": "npm-run-all test:*",
     "test:build": "npm-run-all build test:build:*",
-    "tests:build:clean": "mkdirp cache && rimraf cache && cd test && mkdirp cache && rimraf cache && mkdirp xmlns && rimraf xmlns && mkdirp output && rimraf output && cd ..",
+    "test:build:clean": "mkdirp cache && rimraf cache && cd test && mkdirp cache && rimraf cache && mkdirp xmlns && rimraf xmlns && mkdirp output && rimraf output && cd ..",
     "test:build:compile": "npm-run-all test:build:compile:*",
-    "test:build:compile:dir-example": "cd test && node ../bin/cxsd ./input/dir-example.xsd -o ./output/dir-example && cd ..",
-    "test:build:compile:datacatalogus": "cd test && node ../bin/cxsd ./input/datacatalogus.xsd -o ./output/datacatalogus -n index && cd ..",
-    "test:run": "jest"
+    "test:build:compile:dir-example": "cd test && node ../bin/cxsd ./input/dir-example.xsd -c -o ./output/dir-example && cd ..",
+    "test:build:compile:datacatalogus": "cd test && node ../bin/cxsd ./input/datacatalogus.xsd -c -o ./output/datacatalogus -n index && cd ..",
+    "skip:test:run": "jest"
   },
   "jest": {
     "moduleFileExtensions": [

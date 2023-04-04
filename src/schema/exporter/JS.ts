@@ -280,12 +280,12 @@ export class JS extends Exporter {
             "\n]" +
             ");"
         ],
-        [
+        exportedTypesObject.length > 0 ? [
           "",
-          "module.exports = {\n" +
+          "Object.assign(module.exports, {\n" +
           exportedTypesObject.join(",\n") +
-          "\n}"
-        ]
+          "\n});"
+        ] : ""
       )
       .join("\n");
   }
