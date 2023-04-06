@@ -26,7 +26,7 @@
     "skip:test:build:compile": "npm-run-all test:build:compile:*",
     "skip:test:build:compile:dir-example": "cd test && node ../bin/cxsd ./input/dir-example.xsd -c -o ./output/dir-example && cd ..",
     "skip:test:build:compile:datacatalogus": "cd test && node ../bin/cxsd ./input/datacatalogus.xsd -c -o ./output/datacatalogus -n index && cd ..",
-    "test:run": "jest --watch"
+    "test:run": "jest"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -38,10 +38,12 @@
       "\\.(ts)$": "ts-jest"
     },
     "testPathIgnorePatterns": [
-      "<rootDir>/(node_modules)/"
+      "<rootDir>/(node_modules)/",
+      "<rootDir>/(dist)/"
     ],
     "transformIgnorePatterns": [
-      "<rootDir>/(node_modules)/"
+      "<rootDir>/(node_modules)/",
+      "<rootDir>/(dist)/"
     ],
     "testRegex": "(/(src|test)/.*\\.test\\.(ts|js))$"
   },
@@ -65,14 +67,14 @@
   ],
   "dependencies": {
     "@wikipathways/cget": "^0.1.7",
-    "@wikipathways/cxml": "0.2.14",
+    "@loanlink/cxml": "github:Capital-Management-Group/cxml",
     "commander": "^9.5.0",
     "node-expat": "^2.3.18",
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
     "@types/jest": "^24.0.21",
-    "@types/node": "^10.17.0",
+    "@types/node": "^18.15.11",
     "@types/node-expat": "^2.3.2",
     "@types/source-map-support": "^0.5.6",
     "jest": "^29.5.0",

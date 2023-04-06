@@ -175,7 +175,6 @@ export class TS extends Exporter {
       var outMemberList: string[] = [];
 
       var output: string[] = [];
-      var parentType = type.parent;
 
       for (var attribute of type.attributeList) {
         var outAttribute = this.writeMember(attribute, false);
@@ -311,6 +310,8 @@ export class TS extends Exporter {
   writeSubstitutions(type: Type, refList: any[], output: string[]) {
     for (var ref of refList) {
       var proxy = ref.member.proxySpec;
+
+      console.log(ref);
 
       if (!ref.member.isAbstract) output.push(this.writeMember(ref, false));
 
