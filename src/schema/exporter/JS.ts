@@ -5,7 +5,7 @@ import {
   MemberSpec as Member,
   MemberFlag,
   MemberRef,
-  MemberRefFlag
+  MemberRefFlag,
 } from "@wikipathways/cxml";
 
 import { Exporter } from "./Exporter";
@@ -22,7 +22,7 @@ export class JS extends Exporter {
   writeMember(member: Member, typeNumTbl: NumTbl, memberNumTbl: NumTbl) {
     var substituteNum = 0;
     var memberTypeList = member.typeSpecList.map(
-      memberType => typeNumTbl[memberType.surrogateKey]
+      (memberType) => typeNumTbl[memberType.surrogateKey],
     );
 
     var name = member.name;
@@ -119,15 +119,15 @@ export class JS extends Exporter {
     }
 
     exportedTypeList.sort((a: Type, b: Type) =>
-      a.safeName.localeCompare(b.safeName)
+      a.safeName.localeCompare(b.safeName),
     );
     hiddenTypeList.sort((a: Type, b: Type) =>
-      a.safeName.localeCompare(b.safeName)
+      a.safeName.localeCompare(b.safeName),
     );
 
     return {
       all: exportedTypeList.concat(hiddenTypeList),
-      exported: exportedTypeList
+      exported: exportedTypeList,
     };
   }
 
@@ -142,16 +142,16 @@ export class JS extends Exporter {
     }
 
     exportedMemberList.sort((a: Member, b: Member) =>
-      a.name.localeCompare(b.name)
+      a.name.localeCompare(b.name),
     );
     // TODO: merge identical hidden members.
     hiddenMemberList.sort((a: Member, b: Member) =>
-      a.name.localeCompare(b.name)
+      a.name.localeCompare(b.name),
     );
 
     return {
       all: exportedMemberList.concat(hiddenMemberList),
-      exported: exportedMemberList
+      exported: exportedMemberList,
     };
   }
 
@@ -204,7 +204,7 @@ export class JS extends Exporter {
           "[" +
           importMemberNameList.join(", ") +
           "]" +
-          "]"
+          "]",
       );
 
       importNumTbl[otherNamespaceId] = num++;
@@ -245,13 +245,18 @@ export class JS extends Exporter {
 
       exportTypeNameList.push("\n\t" + "'" + name + "'");
 
-      if (type.isPlainPrimitive && type.literalList && type.literalList.length) {
+      if (
+        type.isPlainPrimitive &&
+        type.literalList &&
+        type.literalList.length
+      ) {
         exportedTypesObject.push(
           "\t" +
-          name + ": {\n" +
-          type.literalList.map(el => `\t\t${el}: ${el}`).join(",\n") +
-          "\n\t}"
-        )
+            name +
+            ": {\n" +
+            type.literalList.map((el) => `\t\t${el}: ${el}`).join(",\n") +
+            "\n\t}",
+        );
       }
     }
 
@@ -278,14 +283,16 @@ export class JS extends Exporter {
             "[" +
             memberSpecList.join(",") +
             "\n]" +
-            ");"
+            ");",
         ],
-        exportedTypesObject.length > 0 ? [
-          "",
-          "Object.assign(module.exports, {\n" +
-          exportedTypesObject.join(",\n") +
-          "\n});"
-        ] : ""
+        exportedTypesObject.length > 0
+          ? [
+              "",
+              "Object.assign(module.exports, {\n" +
+                exportedTypesObject.join(",\n") +
+                "\n});",
+            ]
+          : "",
       )
       .join("\n");
   }

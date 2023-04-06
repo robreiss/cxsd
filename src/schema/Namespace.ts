@@ -1,11 +1,7 @@
 // This file is part of cxsd, copyright (c) 2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import {
-  NamespaceBase,
-  MemberSpec as Member,
-  MemberRef
-} from "@wikipathways/cxml";
+import { NamespaceBase, MemberSpec as Member } from "@wikipathways/cxml";
 
 import { Context } from "./Context";
 import { Type } from "./Type";
@@ -55,11 +51,11 @@ export class Namespace extends NamespaceBase<Context> {
       var importTbl = this.getUsedImportTbl();
 
       return Object.keys(importTbl).map(
-        (shortName: string) => importTbl[shortName]
+        (shortName: string) => importTbl[shortName],
       );
     } else {
       return Object.keys(this.shortNameTbl).map((id: string) =>
-        this.context.namespaceById(+id)
+        this.context.namespaceById(+id),
       );
     }
   }

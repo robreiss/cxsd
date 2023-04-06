@@ -20,7 +20,7 @@ export class QName {
 
     if (splitter >= 0) {
       namespace = source.lookupNamespace(name.substr(0, splitter));
-      name = name.substr(splitter + 1);
+      name = name.substring(splitter + 1);
     } else if (!namespace) {
       namespace = source.targetNamespace;
     }

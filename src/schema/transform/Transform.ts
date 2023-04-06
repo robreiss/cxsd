@@ -9,7 +9,7 @@ import { Type } from "../Type";
 export abstract class Transform<
   TransformType extends Transform<TransformType, Output, State>,
   Output,
-  State
+  State,
 > {
   constructor(doc: Type) {
     this.doc = doc;
@@ -39,7 +39,7 @@ export abstract class Transform<
 
   async exec(
     visitedNamespaceTbl?: Record<string, Namespace>,
-    state?: State
+    state?: State,
   ): Promise<Output[]> {
     var doc = this.doc;
     var namespace = doc.namespace;
@@ -50,17 +50,19 @@ export abstract class Transform<
     visitedNamespaceTbl[namespace.id] = namespace;
 
     const output = await Promise.resolve(this.prepare());
-    const outputList = await Promise.all(namespace.getUsedImportList().map((namespace_1: Namespace) => {
-      if (!visitedNamespaceTbl[namespace_1.id]) {
-        if (namespace_1.doc) {
-          var transform = new this.construct(namespace_1.doc);
+    const outputList = await Promise.all(
+      namespace.getUsedImportList().map((namespace_1: Namespace) => {
+        if (!visitedNamespaceTbl[namespace_1.id]) {
+          if (namespace_1.doc) {
+            var transform = new this.construct(namespace_1.doc);
 
-          return transform.exec(visitedNamespaceTbl, this.state);
+            return transform.exec(visitedNamespaceTbl, this.state);
+          }
         }
-      }
 
-      return [];
-    }));
+        return [];
+      }),
+    );
     return Array.prototype.concat.apply([output], outputList);
   }
 

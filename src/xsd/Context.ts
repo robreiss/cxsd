@@ -22,11 +22,11 @@ export class Context extends ContextBase<Namespace> {
     this.primitiveSpace.init(null, "Primitive");
     this.primitiveScope = this.populatePrimitives(
       this.primitiveSpace,
-      schemaContext
+      schemaContext,
     );
 
     this.xmlSpace = this.registerNamespace(
-      "http://www.w3.org/XML/1998/namespace"
+      "http://www.w3.org/XML/1998/namespace",
     );
     this.xmlSpace.init("http://www.w3.org/2001/xml.xsd", "xml");
 
@@ -51,7 +51,7 @@ export class Context extends ContextBase<Namespace> {
 
   private populatePrimitives(
     primitiveSpace: Namespace,
-    schemaContext: schema.Context
+    schemaContext: schema.Context,
   ) {
     var scope = primitiveSpace.getScope();
 
@@ -62,7 +62,7 @@ export class Context extends ContextBase<Namespace> {
         "byte decimal double float int integer long short " +
           "unsignedLong unsignedInt unsignedShort unsignedByte " +
           "negativeInteger nonNegativeInteger nonPositiveInteger positiveInteger ",
-        "number"
+        "number",
       ],
       [
         "Name NCName QName anyURI language normalizedString string token " +
@@ -70,9 +70,9 @@ export class Context extends ContextBase<Namespace> {
           "gDay gMonth gMonthDay gYear gYearMonth " +
           "hexBinary base64Binary " +
           "duration time",
-        "string"
+        "string",
       ],
-      ["anytype", "any"]
+      ["anytype", "any"],
     ];
 
     // TODO: these lines are ugly!
@@ -98,7 +98,7 @@ export class Context extends ContextBase<Namespace> {
           "type",
           type,
           1,
-          1
+          1,
         );
       }
     }

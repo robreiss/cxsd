@@ -6,8 +6,11 @@ import { Type } from "../Type";
 import { Namespace } from "../Namespace";
 
 export interface Writer {
-  write: (name: string, contentGetter: () => string) => Promise<boolean> | boolean;
-  getPathTo: (name: string, namespace: Namespace) => string
+  write: (
+    name: string,
+    contentGetter: () => string,
+  ) => Promise<boolean> | boolean;
+  getPathTo: (name: string, namespace: Namespace) => string;
 }
 
 export interface State {
@@ -36,7 +39,7 @@ export abstract class Exporter extends Transform<Exporter, boolean, State> {
   abstract writeImport(
     shortName: string,
     relativePath: string,
-    absolutePath: string
+    absolutePath: string,
   ): string;
 
   /** Output namespace contents to cache, if not already exported. */

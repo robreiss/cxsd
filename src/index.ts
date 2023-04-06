@@ -10,7 +10,10 @@ import * as schema from "./schema";
 import { cacheWriter } from "./schema/exporter/CacheWriter";
 import { inMemoryWriter } from "./schema/exporter/InMemoryWriter";
 
-export async function handleConvert(urlRemote: string, opts: { [key: string]: any }) {
+export async function handleConvert(
+  urlRemote: string,
+  opts: { [key: string]: any },
+) {
   const fetchOptions: FetchOptions = {};
 
   fetchOptions.allowLocal = opts.hasOwnProperty("allowLocal")
@@ -32,16 +35,22 @@ export async function handleConvert(urlRemote: string, opts: { [key: string]: an
   const outJs = opts["outJs"] ?? opts["out"] ?? defaultOut;
   const outTs = opts["outTs"] ?? opts["out"] ?? defaultOut;
 
-  const files: Record<string, string> = {}
+  const files: Record<string, string> = {};
 
-  const jsWriter = useCache ? cacheWriter(new Cache(outJs, { indexName: "_index.js" })) : inMemoryWriter(files);
-  const tsWriter = useCache ? cacheWriter(new Cache(outTs, {
-    indexName: "_index.d.ts"
-  })) : inMemoryWriter(files);
+  const jsWriter = useCache
+    ? cacheWriter(new Cache(outJs, { indexName: "_index.js" }))
+    : inMemoryWriter(files);
+  const tsWriter = useCache
+    ? cacheWriter(
+        new Cache(outTs, {
+          indexName: "_index.d.ts",
+        }),
+      )
+    : inMemoryWriter(files);
 
   const schemaContext = new schema.Context();
   const xsdContext = new Context(schemaContext);
-  const loader = new Loader(xsdContext, fetchOptions, opts['namespace']);
+  const loader = new Loader(xsdContext, fetchOptions, opts["namespace"]);
 
   loader.import(urlRemote).then((namespace: Namespace) => {
     try {
@@ -58,17 +67,17 @@ export async function handleConvert(urlRemote: string, opts: { [key: string]: an
       let importsAddedResult: Output[];
 
       // Find ID numbers of all types imported from other namespaces.
-      return (importsAddedPromise
+      return importsAddedPromise
         .then((importsAdded) => {
-          importsAddedResult = importsAdded
+          importsAddedResult = importsAdded;
           // Rename types to valid JavaScript class names,
           // adding a prefix or suffix to duplicates.
-          return sanitize.exec()
+          return sanitize.exec();
         })
         .then(() => sanitize.finish())
         .then(() => addImports.finish(importsAddedResult))
         .then(() => new schema.JS(spec, jsWriter).exec())
-        .then(() => new schema.TS(spec, tsWriter).exec()));
+        .then(() => new schema.TS(spec, tsWriter).exec());
     } catch (err) {
       console.error(err);
       console.log("Stack:");

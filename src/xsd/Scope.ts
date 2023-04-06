@@ -20,7 +20,7 @@ function addMemberToTable(
   name: string,
   specNew: TypeMember,
   min = 1,
-  max = 1
+  max = 1,
 ) {
   var spec = tbl[name];
 
@@ -31,7 +31,7 @@ function addMemberToTable(
     spec = {
       min: specNew.min * min,
       max: specNew.max * max,
-      item: specNew.item
+      item: specNew.item,
     };
 
     tbl[name] = spec;
@@ -54,7 +54,7 @@ export class Scope {
     kind: string,
     target: types.Base,
     min: number,
-    max: number
+    max: number,
   ) {
     if (name) {
       var visibleTbl = this.visible[kind];
@@ -79,7 +79,7 @@ export class Scope {
         name: name,
         min: min,
         max: max,
-        item: target
+        item: target,
       });
     }
   }
@@ -89,7 +89,7 @@ export class Scope {
     kind: string,
     target: types.Base,
     min: number,
-    max: number
+    max: number,
   ) {
     this.parent.add(name, kind, target, min, max);
   }
@@ -98,7 +98,7 @@ export class Scope {
     kind: string,
     target: types.Base,
     min: number,
-    max: number
+    max: number,
   ) {
     this.parent.add(null, kind, target, min, max);
   }

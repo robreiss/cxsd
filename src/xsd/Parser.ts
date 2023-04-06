@@ -49,7 +49,7 @@ export class Parser {
   startElement(
     state: State,
     name: string,
-    attrTbl: { [name: string]: string }
+    attrTbl: { [name: string]: string },
   ) {
     var qName = this.qName;
 
@@ -87,7 +87,7 @@ export class Parser {
 
     for (var key of rule.attributeList) {
       if (attrTbl.hasOwnProperty(key)) {
-        ((xsdElem as any) as { [key: string]: string })[key] = attrTbl[key];
+        (xsdElem as any as { [key: string]: string })[key] = attrTbl[key];
       }
     }
 
@@ -122,7 +122,7 @@ export class Parser {
       },
 
       textDepth: 0,
-      textHandlerList: []
+      textHandlerList: [],
     };
 
     var stateStatic = state.stateStatic;
@@ -149,10 +149,10 @@ export class Parser {
           console.error("Stack:");
           console.error(err.stack);
         }
-      }
+      },
     );
 
-    xml.on("endElement", function(name: string) {
+    xml.on("endElement", function (name: string) {
       if (state.xsdElement) {
         if (state.xsdElement.loaded) {
           state.xsdElement.loaded(state);
@@ -171,16 +171,16 @@ export class Parser {
       state = state.parent;
     });
 
-    xml.on("text", function(text: string) {
+    xml.on("text", function (text: string) {
       if (stateStatic.textDepth) {
         stateStatic.textHandlerList[stateStatic.textDepth - 1].addText(
           state,
-          text
+          text,
         );
       }
     });
 
-    xml.on("error", function(err: any) {
+    xml.on("error", function (err: any) {
       console.error(err);
     });
 
@@ -197,10 +197,10 @@ export class Parser {
       resolve(
         importList.map((spec: { namespace: Namespace; url: string }) => {
           console.log(
-            "IMPORT into " + spec.namespace.name + " from " + spec.url
+            "IMPORT into " + spec.namespace.name + " from " + spec.url,
           );
           return loader.importFile(spec.url, spec.namespace);
-        })
+        }),
       );
     });
 
@@ -219,7 +219,7 @@ export class Parser {
             " on line " +
             state.xsdElement.lineNumber +
             " of " +
-            state.source.url
+            state.source.url,
         );
         console.error("Stack:");
         console.error(err.stack);

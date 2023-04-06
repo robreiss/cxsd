@@ -12,7 +12,7 @@ import { Parser } from "./Parser";
 
 export function extend(
   dst: { [key: string]: any },
-  src: { [key: string]: any }
+  src: { [key: string]: any },
 ) {
   for (var key of Object.keys(src)) {
     dst[key] = src[key];
@@ -29,7 +29,11 @@ export function clone(src: Object) {
 /** Loader handles caching schema definitions and calling parser stages. */
 
 export class Loader {
-  constructor(context: Context, options?: FetchOptions, defaultTargetNamespace?: string) {
+  constructor(
+    context: Context,
+    options?: FetchOptions,
+    defaultTargetNamespace?: string,
+  ) {
     this.context = context;
     this.options = clone(options || {});
     this.parser = new Parser(context);
@@ -89,7 +93,7 @@ export class Loader {
   }
 
   private static cache = new Cache("cache/xsd", {
-    indexName: "_index.xsd"
+    indexName: "_index.xsd",
   });
   private static sourceTbl: { [url: string]: Source } = {};
 

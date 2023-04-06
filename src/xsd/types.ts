@@ -18,7 +18,7 @@ export { SimpleType } from "./types/SimpleType";
 export {
   ComplexType,
   SimpleContent,
-  ComplexContent
+  ComplexContent,
 } from "./types/ComplexType";
 export { List } from "./types/List";
 export { Union } from "./types/Union";

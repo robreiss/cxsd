@@ -14,9 +14,9 @@ export class Source {
     urlRemote: string,
     context: Context,
     opts?: {
-      targetNamespace?: Namespace,
-      defaultTargetNamespace?: string
-    }
+      targetNamespace?: Namespace;
+      defaultTargetNamespace?: string;
+    },
   ) {
     var id = Source.list.length;
 
@@ -25,8 +25,8 @@ export class Source {
     this.url = urlRemote;
     this.urlOriginal = urlRemote;
 
-    this.targetNamespace = opts.targetNamespace
-    this.defaultTargetNamespace = opts.defaultTargetNamespace
+    this.targetNamespace = opts.targetNamespace;
+    this.defaultTargetNamespace = opts.defaultTargetNamespace;
 
     Source.list[id] = this;
   }
@@ -37,14 +37,17 @@ export class Source {
     // Unqualified tags are assumed to be in the default namespace.
     // For the schema file itself, it should be http://www.w3.org/2001/XMLSchema
 
-    const defaultNamespaceName = attrTbl["xmlns"] ?? this.defaultTargetNamespace;
-    this.defaultNamespace = this.context.registerNamespace(defaultNamespaceName);
+    const defaultNamespaceName =
+      attrTbl["xmlns"] ?? this.defaultTargetNamespace;
+    this.defaultNamespace =
+      this.context.registerNamespace(defaultNamespaceName);
 
     // Everything defined in the current file belongs to the target namespace by default.
 
     if (!this.targetNamespace) {
-      const targetNamespaceName = attrTbl["targetnamespace"] ?? this.defaultTargetNamespace;
-      this.registerTargetNamespace(targetNamespaceName)
+      const targetNamespaceName =
+        attrTbl["targetnamespace"] ?? this.defaultTargetNamespace;
+      this.registerTargetNamespace(targetNamespaceName);
     }
 
     // Read the current file's preferred shorthand codes for other XML namespaces.
@@ -62,14 +65,14 @@ export class Source {
     // xml prefix may be used without defining xmlns:xml.
 
     this.namespaceRefTbl["xml"] = this.context.registerNamespace(
-      "http://www.w3.org/XML/1998/namespace"
+      "http://www.w3.org/XML/1998/namespace",
     );
   }
 
   registerTargetNamespace(targetNamespaceName: string) {
     this.targetNamespace = this.context.registerNamespace(
       targetNamespaceName,
-      this.urlOriginal
+      this.urlOriginal,
     );
     this.targetNamespace.addSource(this);
   }
@@ -121,7 +124,6 @@ export class Source {
 
   /** New definitions are exported into the target namespace. */
   targetNamespace: Namespace;
-
 
   /** Unqualified names are assumed to belong to the default namespace. */
   defaultNamespace: Namespace;

@@ -79,7 +79,7 @@ export class TS extends Exporter {
         output.push(short + "." + name);
       } else {
         console.error(
-          "MISSING IMPORT " + namespace.name + " for type " + type.name
+          "MISSING IMPORT " + namespace.name + " for type " + type.name,
         );
         output.push("any");
       }
@@ -143,8 +143,7 @@ export class TS extends Exporter {
     }
 
     let name = member.name;
-    if (member.name !== ref.safeName)
-      name = `"${name}"`;
+    if (member.name !== ref.safeName) name = `"${name}"`;
     output.push(indent + name);
 
     if (ref.min == 0) output.push("?");
@@ -204,7 +203,9 @@ export class TS extends Exporter {
 
   writePrimitiveEnum(type: Type) {
     if (!type.isPlainPrimitive) {
-      console.warn(`When writing an enum, type should be primitive. Found in type '${type.name}'. This is a bug and/or unsupported case in CXSD.`);
+      console.warn(
+        `When writing an enum, type should be primitive. Found in type '${type.name}'. This is a bug and/or unsupported case in CXSD.`,
+      );
       return "";
     }
 
@@ -212,14 +213,14 @@ export class TS extends Exporter {
 
     let literalList = type.literalList;
     if (literalList && literalList.length > 0) {
-      output.push(`export const ${type.safeName}: Readonly<{\n`)
-      output.push(literalList.map(el => `\t${el}: ${el}`).join(",\n"))
-      output.push('\n}>\n')
+      output.push(`export const ${type.safeName}: Readonly<{\n`);
+      output.push(literalList.map((el) => `\t${el}: ${el}`).join(",\n"));
+      output.push("\n}>\n");
     } else {
-      return ""
+      return "";
     }
 
-    return output.join("")
+    return output.join("");
   }
 
   writeType(type: Type) {
@@ -249,7 +250,7 @@ export class TS extends Exporter {
           ": " +
           type.primitiveType.name +
           "; }" +
-          "\n"
+          "\n",
       );
     } else if (type.isList) {
       output.push(exportPrefix + "type " + name + " = " + content + ";" + "\n");
@@ -267,10 +268,10 @@ export class TS extends Exporter {
             ": " +
             name +
             "; }" +
-            "\n"
+            "\n",
         );
 
-        output.push(this.writePrimitiveEnum(type))
+        output.push(this.writePrimitiveEnum(type));
       } else {
         // NOTE: Substitution groups are ignored here!
         output.push("type _" + name + " = " + parentDef + ";" + "\n");
@@ -284,7 +285,7 @@ export class TS extends Exporter {
           this.writeParents(parentDef, type.mixinList) +
           " " +
           content +
-          "\n"
+          "\n",
       );
       output.push(
         exportPrefix +
@@ -295,11 +296,11 @@ export class TS extends Exporter {
           " { constructor: { new(): " +
           name +
           " }; }" +
-          "\n"
+          "\n",
       );
       if (type.isExported)
         output.push(
-          exportPrefix + "var " + name + ": { new(): " + name + " };" + "\n"
+          exportPrefix + "var " + name + ": { new(): " + name + " };" + "\n",
         );
     }
 
@@ -333,7 +334,11 @@ export class TS extends Exporter {
       var other = type.namespace;
 
       output.push(
-        "declare module " + "'" + this.state.writer.getPathTo(other.name, namespace) + "'" + " {"
+        "declare module " +
+          "'" +
+          this.state.writer.getPathTo(other.name, namespace) +
+          "'" +
+          " {",
       );
 
       for (var typeId of typeIdList) {

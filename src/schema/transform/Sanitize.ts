@@ -23,7 +23,7 @@ function capitalize(match: string, initial: string) {
 
 function sanitizeName(name: string) {
   var reserved = {
-    constructor: true
+    constructor: true,
   };
 
   name = name
@@ -39,13 +39,13 @@ function sanitizeName(name: string) {
 export class Sanitize extends Transform<Sanitize, void, State> {
   prepare() {
     var memberList = this.namespace.memberList.filter(
-      (member: Member) => !!member
+      (member: Member) => !!member,
     );
 
     for (var member of memberList) {
       if (member.isSubstituted || member.isAbstract) {
         member.getProxy(Type).containingRef.safeName = sanitizeName(
-          member.name
+          member.name,
         );
       }
 
@@ -77,7 +77,7 @@ export class Sanitize extends Transform<Sanitize, void, State> {
       (a: Type, b: Type) =>
         a.safeName.localeCompare(b.safeName) ||
         +!!b.name - +!!a.name ||
-        (a.name && a.name.localeCompare(b.name))
+        (a.name && a.name.localeCompare(b.name)),
     );
 
     // Add numeric suffix to duplicate names.
@@ -243,9 +243,8 @@ export class Sanitize extends Transform<Sanitize, void, State> {
 
       if (!spec) {
         spec = { type: memberType.containingType, memberTypeList: [] };
-        this.state.pendingAnonTbl[
-          memberType.containingType.surrogateKey
-        ] = spec;
+        this.state.pendingAnonTbl[memberType.containingType.surrogateKey] =
+          spec;
       }
 
       spec.memberTypeList.push(memberType);
@@ -260,7 +259,7 @@ export class Sanitize extends Transform<Sanitize, void, State> {
           containingType ? containingType.safeName : "",
           (containingRef.safeName || "").replace(/^([a-z])/, capitalize),
           type.isProxy ? "Proxy" : "",
-          "Type"
+          "Type",
         ].join("");
       }
 
@@ -297,7 +296,7 @@ export class Sanitize extends Transform<Sanitize, void, State> {
   protected state: State = {
     pendingAnonTbl: {},
     pendingAnonList: [],
-    typeListList: []
+    typeListList: [],
   };
 
   construct = Sanitize;

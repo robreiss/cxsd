@@ -28,7 +28,7 @@ function exportMemberRef(
   spec: TypeMember,
   parentScope: Scope,
   namespace: schema.Namespace,
-  context: schema.Context
+  context: schema.Context,
 ) {
   var member = spec.item as types.MemberBase;
   var outMember = member.getOutMember(context);
@@ -46,7 +46,7 @@ function exportMember(
   outRef: any,
   parentScope: Scope,
   namespace: schema.Namespace,
-  context: schema.Context
+  context: schema.Context,
 ) {
   var outMember = outRef.member;
   var scope = member.getScope();
@@ -81,7 +81,7 @@ function exportMember(
       }
 
       return outType;
-    }
+    },
   );
 
   outMember.isAbstract = member.isAbstract();
@@ -99,7 +99,7 @@ function exportAttributes(
   scope: Scope,
   namespace: schema.Namespace,
   context: schema.Context,
-  type: schema.Type
+  type: schema.Type,
 ) {
   var memberTbl = scope.dumpMembers("attribute", "attributeGroup");
 
@@ -114,7 +114,7 @@ function exportChildren(
   namespace: schema.Namespace,
   context: schema.Context,
   outType: schema.Type,
-  setExported: boolean
+  setExported: boolean,
 ) {
   var memberTbl = scope.dumpMembers("element", "group");
 
@@ -138,7 +138,7 @@ function exportGroups(scope: Scope, namespace: schema.Namespace, context: schema
 function exportType(
   type: types.TypeBase,
   namespace: schema.Namespace,
-  context: schema.Context
+  context: schema.Context,
 ) {
   var scope = type.getScope();
   var comment = scope.getComments();
@@ -165,7 +165,7 @@ function exportType(
     var literalList: string[];
     var parentSimple = type.getParent(
       types.SimpleType,
-      false
+      false,
     ) as types.SimpleType;
 
     if (parentSimple) {
@@ -199,7 +199,7 @@ function exportType(
 
       outMember.namespace = namespace;
       outMember.typeSpecList = [
-        exportType(spec.item as types.TypeBase, namespace, context)
+        exportType(spec.item as types.TypeBase, namespace, context),
       ] as any;
 
       outType.addChild(outMemberRef);
@@ -215,7 +215,7 @@ function exportType(
 
 export function exportNamespace(
   namespace: Namespace,
-  context: schema.Context
+  context: schema.Context,
 ): schema.Type {
   var outNamespace = context.copyNamespace(namespace);
   var doc = outNamespace.doc;
@@ -249,7 +249,7 @@ export function exportNamespace(
       exportType(
         spec.item as types.TypeBase,
         outNamespace,
-        context
+        context,
       ).isExported = true;
   }
 

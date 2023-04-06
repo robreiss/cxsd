@@ -32,7 +32,7 @@ export class AddImports extends Transform<AddImports, Output, void> {
       for (var namespaceId of Object.keys(namespaceTbl)) {
         var output: ImportContent = {
           typeTbl: {},
-          memberTbl: {}
+          memberTbl: {},
         };
 
         var typeTbl = namespaceTbl[namespaceId].typeTbl;
@@ -80,7 +80,7 @@ export class AddImports extends Transform<AddImports, Output, void> {
         if (!this.output[id]) {
           this.output[id] = {
             typeTbl: {},
-            memberTbl: {}
+            memberTbl: {},
           };
         }
 
