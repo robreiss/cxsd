@@ -23,10 +23,10 @@
     "test": "npm-run-all test:*",
     "test:build": "npm-run-all build test:build:*",
     "test:build:clean": "mkdirp cache && rimraf cache && cd test && mkdirp cache && rimraf cache && mkdirp xmlns && rimraf xmlns && mkdirp output && rimraf output && cd ..",
-    "test:build:compile": "npm-run-all test:build:compile:*",
-    "test:build:compile:dir-example": "cd test && node ../bin/cxsd ./input/dir-example.xsd -c -o ./output/dir-example && cd ..",
-    "test:build:compile:datacatalogus": "cd test && node ../bin/cxsd ./input/datacatalogus.xsd -c -o ./output/datacatalogus -n index && cd ..",
-    "skip:test:run": "jest"
+    "skip:test:build:compile": "npm-run-all test:build:compile:*",
+    "skip:test:build:compile:dir-example": "cd test && node ../bin/cxsd ./input/dir-example.xsd -c -o ./output/dir-example && cd ..",
+    "skip:test:build:compile:datacatalogus": "cd test && node ../bin/cxsd ./input/datacatalogus.xsd -c -o ./output/datacatalogus -n index && cd ..",
+    "test:run": "jest --watch"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -43,7 +43,7 @@
     "transformIgnorePatterns": [
       "<rootDir>/(node_modules)/"
     ],
-    "testRegex": "(/src/.*\\.test\\.(ts|js))$"
+    "testRegex": "(/(src|test)/.*\\.test\\.(ts|js))$"
   },
   "author": "Juha Järvi",
   "license": "MIT",
@@ -73,6 +73,7 @@
   "devDependencies": {
     "@types/jest": "^24.0.21",
     "@types/node": "^10.17.0",
+    "@types/node-expat": "^2.3.2",
     "@types/source-map-support": "^0.5.6",
     "jest": "^29.5.0",
     "mkdirp": "^2.1.6",

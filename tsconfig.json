@@ -16,7 +16,10 @@
     ],
     "target": "es6"
   },
+  "files": [
+    "src/cli.ts"
+  ],
   "include": [
-    "src/**/*.ts"
+    "test/**/*.test.ts"
   ]
 }

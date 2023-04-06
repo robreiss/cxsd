@@ -37,7 +37,7 @@ export abstract class Transform<
     return this.output;
   }
 
-  exec(
+  async exec(
     visitedNamespaceTbl?: Record<string, Namespace>,
     state?: State
   ): Promise<Output[]> {
@@ -49,21 +49,19 @@ export abstract class Transform<
     if (!visitedNamespaceTbl) visitedNamespaceTbl = {};
     visitedNamespaceTbl[namespace.id] = namespace;
 
-    return Promise.resolve(this.prepare()).then((output: Output) =>
-      Promise.all(namespace.getUsedImportList().map((namespace: Namespace) => {
-        if (!visitedNamespaceTbl[namespace.id]) {
-          if (namespace.doc) {
-            var transform = new this.construct(namespace.doc);
+    const output = await Promise.resolve(this.prepare());
+    const outputList = await Promise.all(namespace.getUsedImportList().map((namespace_1: Namespace) => {
+      if (!visitedNamespaceTbl[namespace_1.id]) {
+        if (namespace_1.doc) {
+          var transform = new this.construct(namespace_1.doc);
 
-            return transform.exec(visitedNamespaceTbl, this.state);
-          }
+          return transform.exec(visitedNamespaceTbl, this.state);
         }
+      }
 
-        return [];
-      })).then((outputList: Output[][]) =>
-        Array.prototype.concat.apply([output], outputList)
-      )
-    );
+      return [];
+    }));
+    return Array.prototype.concat.apply([output], outputList);
   }
 
   construct: { new (...args: any[]): Transform<TransformType, Output, State> };

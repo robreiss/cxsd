@@ -13,4 +13,4 @@ test/cache/
 test/output/
 test/xmlns/
 
-datacatalogus.xsd
+datacatalogus.*
