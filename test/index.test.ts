@@ -1,7 +1,7 @@
 import { handleConvert } from "../src";
 import * as fs from "fs";
 
-describe("Document tests", () => {
+describe.only("Document tests", () => {
   fs.rmSync("./test/output", { recursive: true, force: true });
 
   const filenames = fs

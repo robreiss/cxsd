@@ -1,28 +1,25 @@
 // This file is part of cxsd, copyright (c) 2015-2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import { MemberSpec, MemberRef } from "@loanlink/cxml";
+import { MemberRef } from "@loanlink/cxml";
 
 import { Exporter } from "./Exporter";
 import { Type } from "../Type";
 
-var docName = "document";
-var baseName = "BaseType";
+const docName = "document";
+const singleIndent = "  ";
 
 /** Export parsed schema to a TypeScript d.ts definition file. */
-
 export class TS extends Exporter {
   /** Format an XSD annotation as JSDoc. */
-
   static formatComment(indent: string, comment: string) {
-    var lineList = comment.split("\n");
-    var lineCount = lineList.length;
-    var blankCount = 0;
-    var contentCount = 0;
-    var output: string[] = [];
-    var prefix = "/**";
+    const lineList = comment.split("\n");
+    let blankCount = 0;
+    let contentCount = 0;
+    const output: string[] = [];
+    let prefix = "/**";
 
-    for (var line of lineList) {
+    for (let line of lineList) {
       // Remove leading and trailing whitespace.
       line = line.trim();
 
@@ -48,13 +45,12 @@ export class TS extends Exporter {
   }
 
   /** Output list of original schema file locations. */
-
   exportSourceList(sourceList: string[]) {
-    var output: string[] = [];
+    const output: string[] = [];
 
     output.push("// Source files:");
 
-    for (var urlRemote of sourceList) {
+    for (const urlRemote of sourceList) {
       output.push("// " + urlRemote);
     }
 
@@ -63,17 +59,16 @@ export class TS extends Exporter {
   }
 
   writeTypeRef(type: Type, namePrefix: string) {
-    var output: string[] = [];
+    const output: string[] = [];
 
-    var namespace = type.namespace as any;
-    var name = namePrefix + type.safeName;
+    const namespace = type.namespace as any;
+    const name = namePrefix + type.safeName;
 
     if (!namespace || namespace == this.namespace) {
       output.push(name);
     } else {
       // Type from another, imported namespace.
-
-      var short = this.namespace.getShortRef(namespace.id);
+      const short = this.namespace.getShortRef(namespace.id);
 
       if (short) {
         output.push(short + "." + name);
@@ -89,26 +84,24 @@ export class TS extends Exporter {
   }
 
   writeParents(parentDef: string, mixinList: Type[]) {
-    var parentList: string[] = [];
+    const parentList: string[] = [];
 
     if (parentDef) parentList.push(parentDef);
 
-    for (var type of mixinList || []) {
+    for (const type of mixinList || []) {
       parentList.push(this.writeTypeRef(type, "_"));
     }
 
-    if (!parentList.length) parentList.push(baseName);
-
-    return " extends " + parentList.join(", ");
+    return parentList.length ? " extends " + parentList.join(", ") : "";
   }
 
   // writeTypeList(ref: MemberRef) {
   writeTypeList(ref: any) {
-    var typeList = ref.member.typeSpecList;
+    let typeList = ref.member.typeSpecList;
 
     if (ref.max > 1 && ref.member.proxySpec) typeList = [ref.member.proxySpec];
 
-    var outTypeList = typeList.map((type: Type) => {
+    const outTypeList = typeList.map((type: Type) => {
       if (
         type.isPlainPrimitive &&
         (!type.literalList || !type.literalList.length)
@@ -119,7 +112,7 @@ export class TS extends Exporter {
 
     if (outTypeList.length == 0) return null;
 
-    var outTypes = outTypeList.sort().join(" | ");
+    const outTypes = outTypeList.sort().join(" | ");
 
     if (ref.max > 1) {
       if (outTypeList.length > 1) return "(" + outTypes + ")[]";
@@ -127,13 +120,11 @@ export class TS extends Exporter {
     } else return outTypes;
   }
 
-  writeMember(ref: MemberRef, isGlobal: boolean) {
-    var output: string[] = [];
-    var member = ref.member;
-    var comment = member.comment;
-    var indent = "\t";
-
-    console.log(ref);
+  writeMember(ref: MemberRef, isGlobal: boolean, indentCount: number = 1) {
+    const output: string[] = [];
+    const member = ref.member;
+    const comment = member.comment;
+    const indent = singleIndent.repeat(indentCount);
 
     if ((ref as any).isHidden) return "";
     if (isGlobal && member.isAbstract) return "";
@@ -151,7 +142,7 @@ export class TS extends Exporter {
     if (ref.min == 0) output.push("?");
     output.push(": ");
 
-    var outTypes = this.writeTypeList(ref);
+    const outTypes = this.writeTypeList(ref);
     if (!outTypes) return "";
 
     output.push(outTypes);
@@ -161,10 +152,10 @@ export class TS extends Exporter {
   }
 
   writeTypeContent(type: Type) {
-    var output: string[] = [];
+    const output: string[] = [];
 
     if (type.isPlainPrimitive) {
-      var literalList = type.literalList;
+      const literalList = type.literalList;
 
       if (literalList && literalList.length > 0) {
         if (literalList.length > 1) {
@@ -174,31 +165,32 @@ export class TS extends Exporter {
     } else if (type.isList) {
       output.push(this.writeTypeList(type.childList[0]));
     } else {
-      var outMemberList: string[] = [];
+      const outMemberList: string[] = [];
       const outAttributeList: string[] = [];
 
-      var output: string[] = [];
-
-      for (var attribute of type.attributeList) {
-        var outAttribute = this.writeMember(attribute, false);
+      for (const attribute of type.attributeList) {
+        const outAttribute = this.writeMember(attribute, false, 2);
         if (outAttribute) outAttributeList.push(outAttribute);
       }
 
-      for (var child of type.childList) {
-        var outChild = this.writeMember(child, false);
+      for (const child of type.childList) {
+        const outChild = this.writeMember(child, false, 1);
         if (outChild) outMemberList.push(outChild);
       }
 
       output.push("{");
 
+      if (outAttributeList.length || outMemberList.length) {
+        output.push("\n");
+      }
+
       if (outAttributeList.length) {
-        output.push("\t_attributes: {");
+        output.push(`${singleIndent}_attributes: {\n`);
         output.push(outAttributeList.join("\n"));
-        output.push("\n\t}\n");
+        output.push(`\n${singleIndent}};\n`);
       }
 
       if (outMemberList.length) {
-        output.push("\n");
         output.push(outMemberList.join("\n"));
         output.push("\n");
       }
@@ -221,9 +213,24 @@ export class TS extends Exporter {
 
     let literalList = type.literalList;
     if (literalList && literalList.length > 0) {
-      output.push(`export const ${type.safeName}: Readonly<{\n`);
-      output.push(literalList.map((el) => `\t${el}: ${el}`).join(",\n"));
-      output.push("\n}>\n");
+      const isDefinitions = false;
+      let assignmentOp = " =";
+      let wrapFunc = "Object.freeze(";
+      let endOp = ")";
+
+      if (isDefinitions) {
+        assignmentOp = ":";
+        wrapFunc = "Readonly<";
+        endOp = ">";
+      }
+
+      output.push(
+        `export const ${type.safeName}${assignmentOp} ${wrapFunc}{\n`,
+      );
+      output.push(
+        literalList.map((el) => `${singleIndent}${el}: ${el}`).join(",\n"),
+      );
+      output.push(`\n}${endOp};\n`);
     } else {
       return "";
     }
@@ -232,20 +239,20 @@ export class TS extends Exporter {
   }
 
   writeType(type: Type) {
-    var namespace = this.namespace;
-    var output: string[] = [];
-    var comment = type.comment;
-    var parentDef: string;
-    var exportPrefix = type.isExported ? "export " : "";
+    const namespace = this.namespace;
+    const output: string[] = [];
+    const comment = type.comment;
+    let parentDef: string;
+    const exportPrefix = type.isExported ? "export " : "";
 
-    var name = type.safeName;
+    const name = type.safeName;
 
     if (comment) {
       output.push(TS.formatComment("", comment));
       output.push("\n");
     }
 
-    var content = this.writeTypeContent(type);
+    const content = this.writeTypeContent(type);
 
     if (namespace.isPrimitiveSpace) {
       output.push(
@@ -265,51 +272,35 @@ export class TS extends Exporter {
     } else if (type.isPlainPrimitive) {
       parentDef = this.writeTypeRef(type.parent, "_");
 
-      output.push(exportPrefix + "type " + name + " = " + content + ";" + "\n");
       if (type.literalList && type.literalList.length) {
         output.push(
-          "interface _" +
+          exportPrefix +
+            "type " +
             name +
-            this.writeParents(parentDef, type.mixinList) +
-            " { " +
-            "content" +
-            ": " +
+            " = keyof typeof " +
             name +
-            "; }" +
+            ";" +
             "\n",
         );
 
         output.push(this.writePrimitiveEnum(type));
       } else {
-        // NOTE: Substitution groups are ignored here!
-        output.push("type _" + name + " = " + parentDef + ";" + "\n");
+        output.push(
+          exportPrefix + "type " + name + " = " + content + ";" + "\n",
+        );
       }
     } else {
       if (type.parent) parentDef = this.writeTypeRef(type.parent, "_");
 
       output.push(
-        "interface _" +
+        exportPrefix +
+          "interface " +
           name +
           this.writeParents(parentDef, type.mixinList) +
           " " +
           content +
           "\n",
       );
-      output.push(
-        exportPrefix +
-          "interface " +
-          name +
-          " extends _" +
-          name +
-          " { constructor: { new(): " +
-          name +
-          " }; }" +
-          "\n",
-      );
-      if (type.isExported)
-        output.push(
-          exportPrefix + "var " + name + ": { new(): " + name + " };" + "\n",
-        );
     }
 
     return output.join("");
@@ -317,10 +308,8 @@ export class TS extends Exporter {
 
   // writeSubstitutions(type: Type, refList: MemberRef[], output: string[]) {
   writeSubstitutions(type: Type, refList: any[], output: string[]) {
-    for (var ref of refList) {
-      var proxy = ref.member.proxySpec;
-
-      console.log(ref);
+    for (const ref of refList) {
+      const proxy = ref.member.proxySpec;
 
       if (!ref.member.isAbstract) output.push(this.writeMember(ref, false));
 
@@ -328,20 +317,20 @@ export class TS extends Exporter {
         this.writeSubstitutions(proxy, proxy.childList, output);
     }
 
-    for (var mixin of type.mixinList) {
+    for (const mixin of type.mixinList) {
       if (mixin != type)
         this.writeSubstitutions(mixin, mixin.childList, output);
     }
   }
 
   writeAugmentations(output: string[]) {
-    var namespace = this.namespace;
+    const namespace = this.namespace;
 
-    for (var namespaceId of Object.keys(namespace.augmentTbl)) {
-      var augmentTbl = namespace.augmentTbl[namespaceId];
-      var typeIdList = Object.keys(augmentTbl);
-      var type = augmentTbl[typeIdList[0]].type;
-      var other = type.namespace;
+    for (const namespaceId of Object.keys(namespace.augmentTbl)) {
+      const augmentTbl = namespace.augmentTbl[namespaceId];
+      const typeIdList = Object.keys(augmentTbl);
+      let type = augmentTbl[typeIdList[0]].type;
+      const other = type.namespace;
 
       output.push(
         "declare module " +
@@ -351,12 +340,12 @@ export class TS extends Exporter {
           " {",
       );
 
-      for (var typeId of typeIdList) {
+      for (const typeId of typeIdList) {
         type = augmentTbl[typeId].type;
 
         output.push("export interface _" + type.safeName + " {");
 
-        for (var ref of augmentTbl[typeId].refList) {
+        for (const ref of augmentTbl[typeId].refList) {
           ref.safeName = ref.member.safeName;
         }
 
@@ -370,23 +359,15 @@ export class TS extends Exporter {
   }
 
   writeContents(): string {
-    var output = this.writeHeader();
-    var doc = this.doc;
-    var namespace = this.namespace;
-    var prefix: string;
+    const output = []; //this.writeHeader();
+    const doc = this.doc;
+    const namespace = this.namespace;
 
     output.push("");
-    output = output.concat(this.exportSourceList(namespace.sourceList));
 
-    output.push("");
-    this.writeAugmentations(output);
+    // this.writeAugmentations(output);
 
-    output.push("interface " + baseName + " {");
-    output.push("\t_exists: boolean;");
-    output.push("\t_namespace: string;");
-    output.push("}");
-
-    for (var type of namespace.typeList
+    for (const type of namespace.typeList
       .slice(0)
       .sort((a: Type, b: Type) => a.safeName.localeCompare(b.safeName))) {
       if (!type) continue;
@@ -394,23 +375,22 @@ export class TS extends Exporter {
       output.push(this.writeType(type));
     }
 
-    output.push("export interface " + docName + " extends " + baseName + " {");
+    output.push("export interface " + docName + " {");
 
-    for (var child of doc.childList) {
-      var outElement = this.writeMember(child, true);
+    for (const child of doc.childList) {
+      const outElement = this.writeMember(child, true);
       if (outElement) {
         output.push(outElement);
       }
     }
 
     output.push("}");
-    output.push("export var " + docName + ": " + docName + ";\n");
 
     return output.join("\n");
   }
 
   getOutName(name: string) {
-    return name + ".d.ts";
+    return name + ".ts";
   }
 
   construct = TS;

@@ -20,13 +20,7 @@
     "prepare": "npm run build",
     "prepublishOnly": "npm run test",
     "postpublish": "TAG=\"v$(jq -r .version package.json)\" && git commit -am \"Bumped to version $TAG\" && git tag -a $TAG -m \"Published version $TAG\" && git push origin $TAG",
-    "test": "npm-run-all test:*",
-    "test:build": "npm-run-all build test:build:*",
-    "test:build:clean": "mkdirp cache && rimraf cache && cd test && mkdirp cache && rimraf cache && mkdirp xmlns && rimraf xmlns && mkdirp output && rimraf output && cd ..",
-    "skip:test:build:compile": "npm-run-all test:build:compile:*",
-    "skip:test:build:compile:dir-example": "cd test && node ../bin/cxsd ./input/dir-example.xsd -c -o ./output/dir-example && cd ..",
-    "skip:test:build:compile:datacatalogus": "cd test && node ../bin/cxsd ./input/datacatalogus.xsd -c -o ./output/datacatalogus -n index && cd ..",
-    "test:run": "jest"
+    "test": "jest"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -66,8 +60,8 @@
     "typescript"
   ],
   "dependencies": {
-    "@loanlink/cget": "github:Capital-Management-Group/cget",
-    "@loanlink/cxml": "github:Capital-Management-Group/cxml",
+    "@loanlink/cget": "../cget",
+    "@loanlink/cxml": "../cxml",
     "commander": "^9.5.0",
     "node-expat": "^2.3.18",
     "source-map-support": "^0.5.16"
