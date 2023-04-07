@@ -133,6 +133,8 @@ export class TS extends Exporter {
     var comment = member.comment;
     var indent = "\t";
 
+    console.log(ref);
+
     if ((ref as any).isHidden) return "";
     if (isGlobal && member.isAbstract) return "";
     if (member.name == "*") return "";
@@ -173,12 +175,13 @@ export class TS extends Exporter {
       output.push(this.writeTypeList(type.childList[0]));
     } else {
       var outMemberList: string[] = [];
+      const outAttributeList: string[] = [];
 
       var output: string[] = [];
 
       for (var attribute of type.attributeList) {
         var outAttribute = this.writeMember(attribute, false);
-        if (outAttribute) outMemberList.push(outAttribute);
+        if (outAttribute) outAttributeList.push(outAttribute);
       }
 
       for (var child of type.childList) {
@@ -187,6 +190,12 @@ export class TS extends Exporter {
       }
 
       output.push("{");
+
+      if (outAttributeList.length) {
+        output.push("\t_attributes: {");
+        output.push(outAttributeList.join("\n"));
+        output.push("\n\t}\n");
+      }
 
       if (outMemberList.length) {
         output.push("\n");

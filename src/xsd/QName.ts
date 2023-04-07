@@ -19,7 +19,7 @@ export class QName {
     name = name.toLowerCase();
 
     if (splitter >= 0) {
-      namespace = source.lookupNamespace(name.substr(0, splitter));
+      namespace = source.lookupNamespace(name.substring(0, splitter));
       name = name.substring(splitter + 1);
     } else if (!namespace) {
       namespace = source.targetNamespace;
