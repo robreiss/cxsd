@@ -1,6 +1,6 @@
 import * as path from "path";
 
-import { Cache, Address } from "@wikipathways/cget";
+import { Cache, Address } from "@loanlink/cget";
 import { Writer } from "./Exporter";
 
 export const cacheWriter = (cache: Cache, disableCache = false): Writer => ({

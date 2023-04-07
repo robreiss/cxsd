@@ -66,7 +66,7 @@
     "typescript"
   ],
   "dependencies": {
-    "@wikipathways/cget": "^0.1.7",
+    "@loanlink/cget": "github:Capital-Management-Group/cget",
     "@loanlink/cxml": "github:Capital-Management-Group/cxml",
     "commander": "^9.5.0",
     "node-expat": "^2.3.18",

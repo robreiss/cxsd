@@ -3,7 +3,7 @@
 
 import * as expat from "node-expat";
 
-import { CacheResult } from "@wikipathways/cget";
+import { CacheResult } from "@loanlink/cget";
 import { Rule } from "./Rule";
 
 import * as types from "./types";

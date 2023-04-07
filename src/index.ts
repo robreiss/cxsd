@@ -1,4 +1,4 @@
-import { Cache, FetchOptions } from "@wikipathways/cget";
+import { Cache, FetchOptions } from "@loanlink/cget";
 
 import { Context } from "./xsd/Context";
 import { Namespace } from "./xsd/Namespace";
