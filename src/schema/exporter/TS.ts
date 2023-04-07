@@ -1,7 +1,7 @@
 // This file is part of cxsd, copyright (c) 2015-2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import { MemberSpec, MemberRef } from "@wikipathways/cxml";
+import { MemberSpec, MemberRef } from "@loanlink/cxml";
 
 import { Exporter } from "./Exporter";
 import { Type } from "../Type";

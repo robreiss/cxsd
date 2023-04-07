@@ -6,7 +6,7 @@ import {
   MemberFlag,
   MemberRef,
   MemberRefFlag,
-} from "@wikipathways/cxml";
+} from "@loanlink/cxml";
 
 import { Exporter } from "./Exporter";
 import { Namespace } from "../Namespace";
@@ -262,7 +262,7 @@ export class JS extends Exporter {
 
     return []
       .concat(
-        ['var cxml = require("@wikipathways/cxml");'],
+        ['var cxml = require("@loanlink/cxml");'],
         this.writeHeader(),
         [
           "",
