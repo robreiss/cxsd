@@ -115,8 +115,9 @@ export class TS extends Exporter {
     const outTypes = outTypeList.sort().join(" | ");
 
     if (ref.max > 1) {
-      if (outTypeList.length > 1) return "(" + outTypes + ")[]";
-      else return outTypes + "[]";
+      const type = outTypeList.length > 1 ? "(" + outTypes + ")" : outTypes;
+
+      return `${type}[]`;
     } else return outTypes;
   }
 

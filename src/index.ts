@@ -67,17 +67,19 @@ export async function handleConvert(
       let importsAddedResult: Output[];
 
       // Find ID numbers of all types imported from other namespaces.
-      return importsAddedPromise
-        .then((importsAdded) => {
-          importsAddedResult = importsAdded;
-          // Rename types to valid JavaScript class names,
-          // adding a prefix or suffix to duplicates.
-          return sanitize.exec();
-        })
-        .then(() => sanitize.finish())
-        .then(() => addImports.finish(importsAddedResult))
-        .then(() => new schema.JS(spec, jsWriter).exec())
-        .then(() => new schema.TS(spec, tsWriter).exec());
+      return (
+        importsAddedPromise
+          .then((importsAdded) => {
+            importsAddedResult = importsAdded;
+            // Rename types to valid JavaScript class names,
+            // adding a prefix or suffix to duplicates.
+            return sanitize.exec();
+          })
+          .then(() => sanitize.finish())
+          .then(() => addImports.finish(importsAddedResult))
+          // .then(() => new schema.JS(spec, jsWriter).exec())
+          .then(() => new schema.TS(spec, tsWriter).exec())
+      );
     } catch (err) {
       console.error(err);
       console.log("Stack:");
