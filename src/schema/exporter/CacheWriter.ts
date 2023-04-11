@@ -4,7 +4,7 @@ import { Cache, Address } from "@loanlink/cget";
 import { Writer } from "./Exporter";
 
 export const cacheWriter = (cache: Cache, disableCache = false): Writer => ({
-  write: (name, contentGetter) => {
+  write: async (name, contentGetter) => {
     return cache
       .isCached(name)
       .then((isCached: boolean) => {

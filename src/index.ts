@@ -52,38 +52,29 @@ export async function handleConvert(
   const xsdContext = new Context(schemaContext);
   const loader = new Loader(xsdContext, fetchOptions, opts["namespace"]);
 
-  loader.import(urlRemote).then((namespace: Namespace) => {
-    try {
-      exportNamespace(xsdContext.primitiveSpace, schemaContext);
-      exportNamespace(xsdContext.xmlSpace, schemaContext);
+  const namespace = await loader.import(urlRemote);
 
-      const spec = exportNamespace(namespace, schemaContext);
+  try {
+    exportNamespace(xsdContext.primitiveSpace, schemaContext);
+    exportNamespace(xsdContext.xmlSpace, schemaContext);
 
-      const addImports = new AddImports(spec);
-      const sanitize = new Sanitize(spec);
+    const spec = exportNamespace(namespace, schemaContext);
 
-      const importsAddedPromise = addImports.exec();
+    const addImports = new AddImports(spec);
+    const sanitize = new Sanitize(spec);
 
-      let importsAddedResult: Output[];
+    const importsAdded = await addImports.exec();
 
-      // Find ID numbers of all types imported from other namespaces.
-      return (
-        importsAddedPromise
-          .then((importsAdded) => {
-            importsAddedResult = importsAdded;
-            // Rename types to valid JavaScript class names,
-            // adding a prefix or suffix to duplicates.
-            return sanitize.exec();
-          })
-          .then(() => sanitize.finish())
-          .then(() => addImports.finish(importsAddedResult))
-          // .then(() => new schema.JS(spec, jsWriter).exec())
-          .then(() => new schema.TS(spec, tsWriter).exec())
-      );
-    } catch (err) {
-      console.error(err);
-      console.log("Stack:");
-      console.error(err.stack);
-    }
-  });
+    // Rename types to valid JavaScript class names,
+    // adding a prefix or suffix to duplicates.
+    await sanitize.exec();
+    sanitize.finish();
+    addImports.finish(importsAdded);
+    await new schema.JS(spec, jsWriter).exec();
+    await new schema.TS(spec, tsWriter).exec();
+  } catch (err) {
+    console.error(err);
+    console.log("Stack:");
+    console.error(err.stack);
+  }
 }

@@ -6,10 +6,7 @@ import { Type } from "../Type";
 import { Namespace } from "../Namespace";
 
 export interface Writer {
-  write: (
-    name: string,
-    contentGetter: () => string,
-  ) => Promise<boolean> | boolean;
+  write: (name: string, contentGetter: () => string) => Promise<boolean>;
   getPathTo: (name: string, namespace: Namespace) => string;
 }
 

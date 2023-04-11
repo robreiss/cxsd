@@ -2,10 +2,10 @@ import { Writer } from "./Exporter";
 
 export const inMemoryWriter = (files: Record<string, string>): Writer => {
   return {
-    write: (name, contentGetter) => {
+    write: async (name, contentGetter) => {
       files[name] = contentGetter();
 
-      return true;
+      return new Promise((res) => res(true));
     },
     getPathTo: (name) => {
       return `./${name}`;
