@@ -66,7 +66,7 @@ export async function handleConvert(
     sanitize.finish();
     addImports.finish(importsAdded);
     await new schema.TS(spec, tsWriter, {
-      document: opts["document"] ?? "document",
+      document: opts?.["document"] ?? "document",
     }).exec();
   } catch (err) {
     console.error(err);

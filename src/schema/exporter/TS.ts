@@ -375,7 +375,9 @@ export class TS extends Exporter {
       output.push(this.writeType(type));
     }
 
-    output.push("export interface " + this.opts["document"] + " {");
+    output.push(
+      "export interface " + this.opts?.["document"] ?? "document" + " {",
+    );
 
     for (const child of doc.childList) {
       const outElement = this.writeMember(child, true);
