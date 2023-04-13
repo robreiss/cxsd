@@ -1,12 +1,11 @@
 // This file is part of cxsd, copyright (c) 2015-2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import { MemberRef } from "@loanlink/cxml";
+import { MemberRef, TypeSpec } from "@loanlink/cxml";
 
 import { Exporter } from "./Exporter";
 import { Type } from "../Type";
 
-const docName = "document";
 const singleIndent = "  ";
 
 /** Export parsed schema to a TypeScript d.ts definition file. */
@@ -376,7 +375,7 @@ export class TS extends Exporter {
       output.push(this.writeType(type));
     }
 
-    output.push("export interface " + docName + " {");
+    output.push("export interface " + this.opts["document"] + " {");
 
     for (const child of doc.childList) {
       const outElement = this.writeMember(child, true);
@@ -386,6 +385,45 @@ export class TS extends Exporter {
     }
 
     output.push("}");
+
+    function findType(typeSpec: TypeSpec): Type {
+      return namespace.typeList.find(
+        (type) => type?.surrogateKey === typeSpec.surrogateKey,
+      );
+    }
+
+    function recursiveArrayPathFinder(type: Type, currentPath: string[] = []) {
+      const paths: string[] = [];
+
+      for (const child of Object.values(type.childTbl)) {
+        let nextPath = [...currentPath, child?.member?.name];
+
+        if (child?.max > 1) {
+          paths.push(nextPath.join("."));
+        }
+
+        child?.member?.typeSpecList?.forEach((typeSpec) => {
+          const type = findType(typeSpec);
+
+          if (type) {
+            const result = recursiveArrayPathFinder(type, nextPath);
+            paths.push(...result);
+          }
+        });
+      }
+
+      return paths;
+    }
+
+    const paths = recursiveArrayPathFinder(doc);
+
+    if (paths.length) {
+      output.push("\nexport const handleAsArray = {");
+      output.push(
+        ...paths.map((path) => `${singleIndent}"${path}": { isArray: true },`),
+      );
+      output.push("};");
+    }
 
     return output.join("\n");
   }
