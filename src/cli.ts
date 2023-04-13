@@ -37,6 +37,11 @@ program
     "-n, --namespace <namespace>",
     "Use namespace <namespace> as namespace when file doesn't define a namespace.",
   )
+  .option(
+    "-d, --document <name>",
+    "Use the document <namespace> as the document name",
+    "document",
+  )
   .action(handleConvert)
   .parse(process.argv);
 

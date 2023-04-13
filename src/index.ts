@@ -70,8 +70,9 @@ export async function handleConvert(
     await sanitize.exec();
     sanitize.finish();
     addImports.finish(importsAdded);
-    await new schema.JS(spec, jsWriter).exec();
-    await new schema.TS(spec, tsWriter).exec();
+    await new schema.TS(spec, tsWriter, {
+      document: opts["document"] ?? "document",
+    }).exec();
   } catch (err) {
     console.error(err);
     console.log("Stack:");

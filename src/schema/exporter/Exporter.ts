@@ -15,9 +15,10 @@ export interface State {
 }
 
 export abstract class Exporter extends Transform<Exporter, boolean, State> {
-  constructor(doc: Type, writer: Writer) {
+  constructor(doc: Type, writer: Writer, opts?: Record<string, any>) {
     super(doc);
     this.state = { writer: writer };
+    this.opts = opts;
   }
 
   writeHeader() {
@@ -54,4 +55,6 @@ export abstract class Exporter extends Transform<Exporter, boolean, State> {
   protected abstract getOutName(name: string): string;
 
   protected state: State;
+
+  protected opts: Record<string, any>;
 }
