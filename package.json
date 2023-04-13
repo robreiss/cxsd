@@ -16,6 +16,8 @@
     "LICENSE"
   ],
   "scripts": {
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint --ext .ts,.js --ignore-path .gitignore --fix src",
     "prepare": "npm run build",

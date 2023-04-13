@@ -376,7 +376,7 @@ export class TS extends Exporter {
     }
 
     output.push(
-      "export interface " + this.opts?.["document"] ?? "document" + " {",
+      "export interface " + (this.opts?.["document"] ?? "document") + " {",
     );
 
     for (const child of doc.childList) {
