@@ -30,7 +30,7 @@ export class Schema extends types.Base {
     // (meaning they are children of this, the root element).
 
     state.source.parse(state.attributeTbl);
-    var scope = state.source.targetNamespace.getScope();
+    const scope = state.source.targetNamespace.getScope();
 
     state.setScope(scope);
     this.scope = scope;

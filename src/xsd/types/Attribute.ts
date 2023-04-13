@@ -12,7 +12,7 @@ export type XmlAttribute = string | number;
 export class Attribute extends MemberBase {
   static mayContain: () => types.BaseClass[] = () => [
     types.Annotation,
-    types.SimpleType
+    types.SimpleType,
   ];
 
   init(state: State) {
@@ -25,7 +25,7 @@ export class Attribute extends MemberBase {
   }
 
   resolve(state: State) {
-    var attribute = this.resolveMember(state, "attribute") as Attribute;
+    this.resolveMember(state, "attribute");
   }
 
   use: string | null = null;

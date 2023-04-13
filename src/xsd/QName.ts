@@ -14,7 +14,7 @@ export class QName {
   /** Parse a name with a possible namespace prefix. */
 
   parse(name: string, source: Source, namespace?: Namespace) {
-    var splitter = name.indexOf(":");
+    const splitter = name.indexOf(":");
 
     name = name.toLowerCase();
 

@@ -20,7 +20,7 @@ export class DerivationBase extends types.Base {
   ];
 
   resolve(state: State) {
-    var base = new QName(this.base, state.source);
+    const base = new QName(this.base, state.source);
     (state.parent.xsdElement as (ContentBase | types.SimpleType)).parent =
       (this.scope.lookup(base, "type") as types.TypeBase) || base;
 

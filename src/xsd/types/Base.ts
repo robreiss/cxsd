@@ -3,7 +3,6 @@
 
 import { Rule } from "../Rule";
 import { State } from "../State";
-import { Namespace } from "../Namespace";
 import { Scope } from "../Scope";
 import { QName } from "../QName";
 
@@ -36,23 +35,31 @@ export class Base {
   }
 
   /** Hook, runs after opening tag. */
-  init(state: State) {}
+  init(_state: State) {
+    return;
+  }
 
   /** Hook, runs for text content. */
-  addText(state: State, text: string) {}
+  addText(_state: State, _text: string) {
+    return;
+  }
 
   /** Hook, runs after closing tag. */
-  loaded(state: State) {}
+  loaded(_state: State) {
+    return;
+  }
 
   /** Hook, runs after all dependencies have been loaded. */
-  resolve(state: State) {}
+  resolve(_state: State) {
+    return;
+  }
 
   /** Add this named tag to scope, listed under given type.
    * Optionally set number of allowed occurrences, for optional elements, sequences etc.
    * @return fully qualified name. */
   define(state: State, type: string, min = 1, max = 1, scope?: Scope) {
-    var name = this.name;
-    var qName: QName = null;
+    let name = this.name;
+    let qName: QName = null;
 
     if (name) {
       qName = new QName(name, state.source);

@@ -13,11 +13,11 @@ export class AddImports extends Transform<AddImports, Output, void> {
   prepare() {
     this.visitType(this.doc);
 
-    for (var type of this.namespace.typeList) {
+    for (const type of this.namespace.typeList) {
       if (type) this.visitType(type);
     }
 
-    for (var member of this.namespace.memberList) {
+    for (const member of this.namespace.memberList) {
       if (member) this.visitMember(member);
     }
 
@@ -28,24 +28,24 @@ export class AddImports extends Transform<AddImports, Output, void> {
 
   /** Replace imported type and member IDs with sanitized names. */
   finish(result: Output[]) {
-    for (var namespaceTbl of result) {
-      for (var namespaceId of Object.keys(namespaceTbl)) {
-        var output: ImportContent = {
+    for (const namespaceTbl of result) {
+      for (const namespaceId of Object.keys(namespaceTbl)) {
+        const output: ImportContent = {
           typeTbl: {},
           memberTbl: {},
         };
 
-        var typeTbl = namespaceTbl[namespaceId].typeTbl;
+        const typeTbl = namespaceTbl[namespaceId].typeTbl;
 
-        for (var key of Object.keys(typeTbl)) {
-          var type = typeTbl[key];
+        for (const key of Object.keys(typeTbl)) {
+          const type = typeTbl[key];
           output.typeTbl[type.safeName] = type;
         }
 
-        var memberTbl = namespaceTbl[namespaceId].memberTbl;
+        const memberTbl = namespaceTbl[namespaceId].memberTbl;
 
-        for (var key of Object.keys(memberTbl)) {
-          var member = memberTbl[key];
+        for (const key of Object.keys(memberTbl)) {
+          const member = memberTbl[key];
           // Use name instead of safeName, because the latter may
           // randomly differ between different containing types due to
           // naming collisions (for example between attribute and element).
@@ -65,8 +65,8 @@ export class AddImports extends Transform<AddImports, Output, void> {
       if (type) type.isExported = true;
       if (member) member.isExported = true;
 
-      var id = namespace.id;
-      var short = this.namespace.getShortRef(id);
+      const id = namespace.id;
+      let short = this.namespace.getShortRef(id);
 
       if (!short) {
         short =
@@ -101,7 +101,7 @@ export class AddImports extends Transform<AddImports, Output, void> {
     if (member.substitutes)
       this.addRef(member.substitutes.namespace as any, member.substitutes);
 
-    for (var type of member.typeSpecList)
+    for (const type of member.typeSpecList)
       this.addRef(type.namespace as any, member, type as any);
   }
 
@@ -112,7 +112,7 @@ export class AddImports extends Transform<AddImports, Output, void> {
 
     if (type.parent) this.addRef(type.parent.namespace, null, type.parent);
 
-    for (var member of this.getTypeMembers(type))
+    for (const member of this.getTypeMembers(type))
       this.visitMember(member.member);
   }
 

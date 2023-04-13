@@ -9,17 +9,12 @@ import { Source } from "./Source";
 import * as types from "./types";
 import * as schema from "../schema";
 
-interface MemberGroup extends TypeMember {
-  item: types.MemberBase;
-  typeList: types.TypeBase[];
-}
-
 function mergeDuplicateTypes(typeList: types.TypeBase[]) {
   if (typeList.length < 2) return typeList;
 
-  var tbl: { [key: string]: types.TypeBase } = {};
+  const tbl: { [key: string]: types.TypeBase } = {};
 
-  for (var type of typeList) tbl[type.surrogateKey] = type;
+  for (const type of typeList) tbl[type.surrogateKey] = type;
 
   return Object.keys(tbl).map((key: string) => tbl[key]);
 }
@@ -30,9 +25,9 @@ function exportMemberRef(
   namespace: schema.Namespace,
   context: schema.Context,
 ) {
-  var member = spec.item as types.MemberBase;
-  var outMember = member.getOutMember(context);
-  var outRef = new MemberRef(outMember as any, spec.min, spec.max);
+  const member = spec.item as types.MemberBase;
+  const outMember = member.getOutMember(context);
+  const outRef = new MemberRef(outMember as any, spec.min, spec.max);
 
   if (!outMember.typeSpecList)
     exportMember(member, outRef, parentScope, namespace, context);
@@ -48,9 +43,9 @@ function exportMember(
   namespace: schema.Namespace,
   context: schema.Context,
 ) {
-  var outMember = outRef.member;
-  var scope = member.getScope();
-  var otherNamespace = scope.namespace;
+  const outMember = outRef.member;
+  const scope = member.getScope();
+  const otherNamespace = scope.namespace;
 
   outMember.comment = scope.getComments();
 
@@ -61,8 +56,8 @@ function exportMember(
   //outMember.typeSpecList = member.getTypes().map(
   outMember.typeSpecList = mergeDuplicateTypes(member.getTypes()).map(
     (type: types.TypeBase) => {
-      var outType = type.getOutType(context);
-      var qName = type.qName;
+      const outType = type.getOutType(context);
+      const qName = type.qName;
 
       if (!qName && !type.name && !type.exported) {
         // Anonymous type defined only within this element.
@@ -72,7 +67,7 @@ function exportMember(
         // Look through parent scopes for a containing type,
         // If the member was referenced from another namespace,
         // its scope points to definition in that namespace.
-        var parentType = scope.getParentType(otherNamespace);
+        const parentType = scope.getParentType(otherNamespace);
         if (parentType) {
           outType.containingType = parentType.getOutType(context);
         }
@@ -101,10 +96,10 @@ function exportAttributes(
   context: schema.Context,
   type: schema.Type,
 ) {
-  var memberTbl = scope.dumpMembers("attribute", "attributeGroup");
+  const memberTbl = scope.dumpMembers("attribute", "attributeGroup");
 
-  for (var key of Object.keys(memberTbl).sort()) {
-    var ref = exportMemberRef(memberTbl[key], scope, namespace, context);
+  for (const key of Object.keys(memberTbl).sort()) {
+    const ref = exportMemberRef(memberTbl[key], scope, namespace, context);
     type.addAttribute(ref);
   }
 }
@@ -116,10 +111,10 @@ function exportChildren(
   outType: schema.Type,
   setExported: boolean,
 ) {
-  var memberTbl = scope.dumpMembers("element", "group");
+  const memberTbl = scope.dumpMembers("element", "group");
 
-  for (var key of Object.keys(memberTbl).sort()) {
-    var ref = exportMemberRef(memberTbl[key], scope, namespace, context);
+  for (const key of Object.keys(memberTbl).sort()) {
+    const ref = exportMemberRef(memberTbl[key], scope, namespace, context);
 
     if (setExported) ref.member.isExported = true;
     outType.addChild(ref);
@@ -128,8 +123,8 @@ function exportChildren(
 
 /* TODO
 function exportGroups(scope: Scope, namespace: schema.Namespace, context: schema.Context) {
-//	var groupTbl = scope.dumpGroups();
-	var groupList: schema.Member[] = [];
+//	const groupTbl = scope.dumpGroups();
+	const groupList: schema.Member[] = [];
 
 	return(groupList);
 }
@@ -140,16 +135,16 @@ function exportType(
   namespace: schema.Namespace,
   context: schema.Context,
 ) {
-  var scope = type.getScope();
-  var comment = scope.getComments();
+  const scope = type.getScope();
+  const comment = scope.getComments();
 
   type.exported = true;
 
-  var outType = type.getOutType(context);
+  const outType = type.getOutType(context);
   outType.comment = comment;
   outType.bytePos = type.bytePos;
   // If the type derives from a primitive type, it may have text content.
-  var parentPrimitive = type.getParent(types.Primitive, false);
+  let parentPrimitive = type.getParent(types.Primitive, false);
 
   if (parentPrimitive) {
     // Get equivalent JavaScript type.
@@ -162,8 +157,8 @@ function exportType(
   }
 
   if (parentPrimitive) {
-    var literalList: string[];
-    var parentSimple = type.getParent(
+    let literalList: string[];
+    const parentSimple = type.getParent(
       types.SimpleType,
       false,
     ) as types.SimpleType;
@@ -180,7 +175,7 @@ function exportType(
     outType.primitiveType = parentPrimitive.getOutType(context);
   }
 
-  var parent = type.parent;
+  const parent = type.parent;
 
   if (parent instanceof types.TypeBase && parent != parentPrimitive) {
     outType.parent = parent.getOutType(context);
@@ -190,12 +185,12 @@ function exportType(
   exportChildren(scope, namespace, context, outType, false);
   //	outType.groupList = exportGroups(scope, namespace, context);
 
-  var listType = type.getListType();
+  const listType = type.getListType();
 
   if (listType) {
-    for (var spec of listType) {
-      var outMember = new MemberSpec("");
-      var outMemberRef = new MemberRef(outMember as any, spec.min, spec.max);
+    for (const spec of listType) {
+      const outMember = new MemberSpec("");
+      const outMemberRef = new MemberRef(outMember as any, spec.min, spec.max);
 
       outMember.namespace = namespace;
       outMember.typeSpecList = [
@@ -217,22 +212,22 @@ export function exportNamespace(
   namespace: Namespace,
   context: schema.Context,
 ): schema.Type {
-  var outNamespace = context.copyNamespace(namespace);
-  var doc = outNamespace.doc;
+  const outNamespace = context.copyNamespace(namespace);
+  let doc = outNamespace.doc;
 
   if (doc) return doc;
 
   //	if(!doc) {
-  var scope = namespace.getScope();
+  const scope = namespace.getScope();
 
-  var sourceList = namespace.getSourceList();
-  var importTbl: { [id: string]: Namespace } = {};
+  const sourceList = namespace.getSourceList();
+  const importTbl: { [id: string]: Namespace } = {};
 
-  for (var source of sourceList) {
-    var namespaceRefTbl = source.getNamespaceRefs();
+  for (const source of sourceList) {
+    const namespaceRefTbl = source.getNamespaceRefs();
 
-    for (var name of Object.keys(namespaceRefTbl)) {
-      var otherNamespace = namespaceRefTbl[name];
+    for (const name of Object.keys(namespaceRefTbl)) {
+      const otherNamespace = namespaceRefTbl[name];
 
       outNamespace.addRef(name, context.copyNamespace(otherNamespace));
 
@@ -244,7 +239,7 @@ export function exportNamespace(
     .map((source: Source) => source.url)
     .sort();
 
-  for (var spec of scope.dumpTypes("type") || []) {
+  for (const spec of scope.dumpTypes("type") || []) {
     if (spec.name)
       exportType(
         spec.item as types.TypeBase,
@@ -261,12 +256,12 @@ export function exportNamespace(
 
   outNamespace.doc = doc;
 
-  for (var namespaceId of Object.keys(importTbl)) {
+  for (const namespaceId of Object.keys(importTbl)) {
     exportNamespace(importTbl[namespaceId], context);
   }
 
-  for (var member of outNamespace.pendingSubstituteList as any) {
-    var proxy = member.substitutes.getProxy(schema.Type);
+  for (const member of outNamespace.pendingSubstituteList as any) {
+    const proxy = member.substitutes.getProxy(schema.Type);
 
     if (member.substitutes.namespace == member.namespace) {
       if (member.isSubstituted || member.isAbstract) {

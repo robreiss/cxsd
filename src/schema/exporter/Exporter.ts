@@ -22,12 +22,12 @@ export abstract class Exporter extends Transform<Exporter, boolean, State> {
   }
 
   writeHeader() {
-    var output: string[] = [];
-    var importTbl = this.namespace.getUsedImportTbl();
+    const output: string[] = [];
+    const importTbl = this.namespace.getUsedImportTbl();
 
-    for (var shortName of Object.keys(importTbl).sort()) {
-      var namespace = importTbl[shortName];
-      var relativePath = this.state.writer.getPathTo(namespace.name, namespace);
+    for (const shortName of Object.keys(importTbl).sort()) {
+      const namespace = importTbl[shortName];
+      const relativePath = this.state.writer.getPathTo(namespace.name, namespace);
       output.push(this.writeImport(shortName, relativePath, namespace.name));
     }
 
@@ -43,7 +43,7 @@ export abstract class Exporter extends Transform<Exporter, boolean, State> {
   /** Output namespace contents to cache, if not already exported. */
 
   prepare() {
-    var doc = this.doc;
+    const doc = this.doc;
     if (!doc) return null;
 
     const outName = this.getOutName(doc.namespace.name);

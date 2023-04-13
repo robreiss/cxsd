@@ -11,15 +11,11 @@
     "noImplicitThis": true,
     "outDir": "./dist",
     "removeComments": false,
-    "lib": [
-      "esnext"
-    ],
+    "resolveJsonModule": true,
+    "lib": ["esnext"],
     "target": "es6"
   },
-  "files": [
-    "src/cli.ts"
-  ],
-  "include": [
-    "test/**/*.test.ts"
-  ]
+  "files": ["src/cli.ts"],
+  "include": ["test/**/*.test.ts"],
+  "exclude": ["node_modules", "packages", "./dist/**"]
 }

@@ -19,21 +19,24 @@ import { QName } from "./QName";
 function parseRule(ctor: types.BaseClass, context: Context) {
   if (ctor.rule) return ctor.rule as Rule;
 
-  var rule = new Rule(ctor);
+  const rule = new Rule(ctor);
 
   ctor.rule = rule;
 
-  for (var baseFollower of ctor.mayContain()) {
-    var follower = baseFollower as types.BaseClass;
-    var followerName = new QName().parseClass(follower.name, context.xsdSpace);
+  for (const baseFollower of ctor.mayContain()) {
+    const follower = baseFollower as types.BaseClass;
+    const followerName = new QName().parseClass(
+      follower.name,
+      context.xsdSpace,
+    );
 
     rule.followerTbl[followerName.nameFull] = parseRule(follower, context);
     rule.followerTbl[followerName.name] = parseRule(follower, context);
   }
 
-  var obj = new ctor();
+  const obj = new ctor();
 
-  for (var key of Object.keys(obj)) {
+  for (const key of Object.keys(obj)) {
     rule.attributeList.push(key);
   }
 
@@ -51,11 +54,11 @@ export class Parser {
     name: string,
     attrTbl: { [name: string]: string },
   ) {
-    var qName = this.qName;
+    const qName = this.qName;
 
     qName.parse(name, state.source, state.source.defaultNamespace);
 
-    var rule = state.rule;
+    let rule = state.rule;
 
     if (rule) {
       rule =
@@ -69,24 +72,22 @@ export class Parser {
 
     if (!rule || !rule.proto) return state;
 
-    var xsdElem = new (rule.proto as types.BaseClass)(state);
+    const xsdElem = new (rule.proto as types.BaseClass)(state);
 
     state.xsdElement = xsdElem;
 
     // Make all attributes lowercase.
+    for (const key of Object.keys(attrTbl)) {
+      const keyLower = key.toLowerCase();
 
-    for (var key of Object.keys(attrTbl)) {
-      var keyLower = key.toLowerCase();
-
-      if (key != keyLower && !attrTbl.hasOwnProperty(keyLower)) {
+      if (key != keyLower && !Object.hasOwn(attrTbl, keyLower)) {
         attrTbl[keyLower] = attrTbl[key];
       }
     }
 
     // Copy known attributes to XSD element.
-
-    for (var key of rule.attributeList) {
-      if (attrTbl.hasOwnProperty(key)) {
+    for (const key of rule.attributeList) {
+      if (Object.hasOwn(attrTbl, key)) {
         (xsdElem as any as { [key: string]: string })[key] = attrTbl[key];
       }
     }
@@ -101,10 +102,10 @@ export class Parser {
   }
 
   init(cached: CacheResult, source: Source, loader: Loader) {
-    var state = new State(null, this.rootRule, source);
-    var importList: { namespace: Namespace; url: string }[] = [];
+    let state = new State(null, this.rootRule, source);
+    const importList: { namespace: Namespace; url: string }[] = [];
 
-    var xml = new expat.Parser(null);
+    const xml = new expat.Parser(null);
 
     state.stateStatic = {
       context: this.context,
@@ -125,18 +126,16 @@ export class Parser {
       textHandlerList: [],
     };
 
-    var stateStatic = state.stateStatic;
-    var resolve: (result: Source[]) => void;
-    var reject: (err: any) => void;
+    const stateStatic = state.stateStatic;
+    let resolve: (result: Source[]) => void;
 
-    var promise = new Promise<Source[]>((res, rej) => {
+    const promise = new Promise<Source[]>((res) => {
       resolve = res;
-      reject = rej;
     });
 
-    var stream = cached.stream;
+    const stream = cached.stream;
 
-    var pendingList = this.pendingList;
+    const pendingList = this.pendingList;
 
     xml.on(
       "startElement",
@@ -152,7 +151,7 @@ export class Parser {
       },
     );
 
-    xml.on("endElement", function (name: string) {
+    xml.on("endElement", () => {
       if (state.xsdElement) {
         if (state.xsdElement.loaded) {
           state.xsdElement.loaded(state);
@@ -171,7 +170,7 @@ export class Parser {
       state = state.parent;
     });
 
-    xml.on("text", function (text: string) {
+    xml.on("text", (text: string) => {
       if (stateStatic.textDepth) {
         stateStatic.textHandlerList[stateStatic.textDepth - 1].addText(
           state,
@@ -180,7 +179,7 @@ export class Parser {
       }
     });
 
-    xml.on("error", function (err: any) {
+    xml.on("error", (err: any) => {
       console.error(err);
     });
 
@@ -209,8 +208,8 @@ export class Parser {
 
   /** Bind references, call after all imports have been initialized. */
   resolve() {
-    for (var pos = 0; pos < this.pendingList.length; ++pos) {
-      var state = this.pendingList[pos];
+    for (let pos = 0; pos < this.pendingList.length; ++pos) {
+      const state = this.pendingList[pos];
       try {
         state.xsdElement.resolve(state);
       } catch (err) {

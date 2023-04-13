@@ -9,25 +9,22 @@ import { Source } from "./Source";
 import { Parser } from "./Parser";
 
 /** Copy all members of src object to dst object. */
-
 export function extend(
   dst: { [key: string]: any },
   src: { [key: string]: any },
 ) {
-  for (var key of Object.keys(src)) {
+  for (const key of Object.keys(src)) {
     dst[key] = src[key];
   }
   return dst;
 }
 
 /** Make shallow clone of object. */
-
-export function clone(src: Object) {
+export function clone(src: object) {
   return extend({}, src);
 }
 
 /** Loader handles caching schema definitions and calling parser stages. */
-
 export class Loader {
   constructor(
     context: Context,
@@ -41,7 +38,7 @@ export class Loader {
   }
 
   import(urlRemote: string) {
-    var promise = new Promise<Namespace>((resolve, reject) => {
+    const promise = new Promise<Namespace>((resolve, reject) => {
       this.resolve = resolve;
       this.reject = reject;
 
@@ -54,7 +51,7 @@ export class Loader {
   importFile(urlRemote: string, namespace?: Namespace) {
     const options = this.options;
 
-    var source = Loader.sourceTbl[urlRemote];
+    let source = Loader.sourceTbl[urlRemote];
 
     if (!source) {
       source = new Source(urlRemote, this.context, {
@@ -69,10 +66,9 @@ export class Loader {
 
           return this.parser.init(cached, source, this);
         })
-        .then((dependencyList: Source[]) => {
+        .then(() => {
           // TODO: The source could be parsed already if all dependencies
           // (and recursively their dependencies) have been preprocessed.
-
           if (--this.pendingCount == 0) this.finish();
         });
 

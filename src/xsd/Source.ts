@@ -18,7 +18,7 @@ export class Source {
       defaultTargetNamespace?: string;
     },
   ) {
-    var id = Source.list.length;
+    const id = Source.list.length;
 
     this.context = context;
     this.id = id;
@@ -52,9 +52,9 @@ export class Source {
 
     // Read the current file's preferred shorthand codes for other XML namespaces.
 
-    for (var attr of Object.keys(attrTbl)) {
+    for (const attr of Object.keys(attrTbl)) {
       if (attr.match(/^xmlns:/i)) {
-        var short = attr.substring(attr.indexOf(":") + 1);
+        const short = attr.substring(attr.indexOf(":") + 1);
 
         this.namespaceRefTbl[short] = this.context
           .registerNamespace(attrTbl[attr])

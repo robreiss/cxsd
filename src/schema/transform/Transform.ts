@@ -18,9 +18,9 @@ export abstract class Transform<
 
   getTypeMembers(type: Type) {
     // var memberList: MemberRef[] = [];
-    var memberList: any[] = [];
+    const memberList: any[] = [];
     // var ref: MemberRef;
-    var ref: any;
+    let ref: any;
 
     if (type.attributeList) {
       for (ref of type.attributeList) memberList.push(ref);
@@ -41,8 +41,8 @@ export abstract class Transform<
     visitedNamespaceTbl?: Record<string, Namespace>,
     state?: State,
   ): Promise<Output[]> {
-    var doc = this.doc;
-    var namespace = doc.namespace;
+    const doc = this.doc;
+    const namespace = doc.namespace;
 
     if (state) this.state = state;
 
@@ -54,7 +54,7 @@ export abstract class Transform<
       namespace.getUsedImportList().map((namespace_1: Namespace) => {
         if (!visitedNamespaceTbl[namespace_1.id]) {
           if (namespace_1.doc) {
-            var transform = new this.construct(namespace_1.doc);
+            const transform = new this.construct(namespace_1.doc);
 
             return transform.exec(visitedNamespaceTbl, this.state);
           }

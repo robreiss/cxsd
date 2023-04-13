@@ -1,7 +1,7 @@
 // This file is part of cxsd, copyright (c) 2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import { MemberSpec as Member, MemberRef } from "@loanlink/cxml";
+import { MemberSpec as Member } from "@loanlink/cxml";
 
 import { Type } from "../Type";
 import { Transform } from "./Transform";
@@ -22,7 +22,7 @@ function capitalize(match: string, initial: string) {
 }
 
 function sanitizeName(name: string) {
-  var reserved = {
+  const reserved = {
     constructor: true,
   };
 
@@ -31,18 +31,18 @@ function sanitizeName(name: string) {
     .replace(/[^_0-9A-Za-z]/g, "")
     .replace(/^[^A-Za-z]+/, "");
 
-  if (reserved.hasOwnProperty(name)) name = "_" + name;
+  if (Object.hasOwn(reserved, name)) name = "_" + name;
 
   return name;
 }
 
 export class Sanitize extends Transform<Sanitize, void, State> {
   prepare() {
-    var memberList = this.namespace.memberList.filter(
+    const memberList = this.namespace.memberList.filter(
       (member: Member) => !!member,
     );
 
-    for (var member of memberList) {
+    for (const member of memberList) {
       if (member.isSubstituted || member.isAbstract) {
         member.getProxy(Type).containingRef.safeName = sanitizeName(
           member.name,
@@ -54,11 +54,11 @@ export class Sanitize extends Transform<Sanitize, void, State> {
       }
     }
 
-    var typeList = this.namespace.typeList.filter((type: Type) => !!type);
+    const typeList = this.namespace.typeList.filter((type: Type) => !!type);
 
     this.visitType(this.doc);
 
-    for (var type of typeList) {
+    for (const type of typeList) {
       this.visitType(type);
     }
 
@@ -82,10 +82,10 @@ export class Sanitize extends Transform<Sanitize, void, State> {
 
     // Add numeric suffix to duplicate names.
 
-    var name = "";
-    var suffix = 2;
+    let name = "";
+    let suffix = 2;
 
-    for (var type of typeList) {
+    for (const type of typeList) {
       if (type.safeName == name) {
         type.safeName += "_" + suffix++;
       } else {
@@ -96,41 +96,39 @@ export class Sanitize extends Transform<Sanitize, void, State> {
   }
 
   finish() {
-    for (var key of Object.keys(this.state.pendingAnonTbl)) {
-      var spec = this.state.pendingAnonTbl[key];
+    for (const key of Object.keys(this.state.pendingAnonTbl)) {
+      const spec = this.state.pendingAnonTbl[key];
 
       if (spec) {
-        for (var memberType of spec.memberTypeList) {
+        for (const memberType of spec.memberTypeList) {
           if (memberType.containingType.safeName)
             this.addNameToType(memberType);
         }
       }
     }
 
-    for (var type of this.state.pendingAnonList) {
+    for (const type of this.state.pendingAnonList) {
       if (!type.safeName) type.safeName = "Type";
     }
 
-    for (var typeList of this.state.typeListList) {
+    for (const typeList of this.state.typeListList) {
       this.renameDuplicates(typeList);
     }
   }
 
   visitType(type: Type) {
     // var refList: MemberRef[] = [];
-    var refList: any[] = [];
-    // var ref: MemberRef;
-    var ref: any;
-    var member: Member;
-    var other: Type;
+    const refList: any[] = [];
+    let member: Member;
+    let other: Type;
     // var otherMember: MemberRef;
-    var otherMember: any;
-    var iter: number;
+    let otherMember: any;
+    let iter: number;
 
     if (type.name) type.safeName = sanitizeName(type.name);
     else this.state.pendingAnonList.push(type);
 
-    for (ref of type.attributeList) {
+    for (const ref of type.attributeList) {
       // Add a $ prefix to attributes of this type
       // conflicting with children of this or parent types.
 
@@ -150,7 +148,7 @@ export class Sanitize extends Transform<Sanitize, void, State> {
       refList.push(ref);
     }
 
-    for (ref of type.childList) {
+    for (const ref of type.childList) {
       // Add a $ prefix to attributes of parent types
       // conflicting with children of this type.
 
@@ -192,7 +190,7 @@ export class Sanitize extends Transform<Sanitize, void, State> {
         !type.isProxy &&
         (member.isSubstituted || member.isAbstract)
       ) {
-        let proxy = member.getProxy(Type);
+        const proxy = member.getProxy(Type);
 
         type.addMixin(proxy as any);
 
@@ -204,11 +202,10 @@ export class Sanitize extends Transform<Sanitize, void, State> {
     }
 
     // Add names to any unnamed types of members, based on the member name.
-
-    for (var ref of refList) {
+    for (const ref of refList) {
       // TODO: Detect duplicate names from other namespaces and prefix them.
 
-      var safeName = ref.member.safeName;
+      let safeName = ref.member.safeName;
 
       if (!safeName) {
         if (ref.member.name == "*") safeName = "*";
@@ -222,7 +219,7 @@ export class Sanitize extends Transform<Sanitize, void, State> {
 
       this.addNameToMemberTypes(type, ref.member);
 
-      let proxy = ref.member.proxy;
+      const proxy = ref.member.proxy;
 
       if (proxy && !(proxy as any).sanitized) {
         (proxy as any).sanitized = true;
@@ -232,13 +229,12 @@ export class Sanitize extends Transform<Sanitize, void, State> {
   }
 
   addNameToType(type: Type) {
-    var containingType = type.containingType;
-    var containingRef = type.containingRef;
-    var spec: AnonType;
+    const containingType = type.containingType;
+    const containingRef = type.containingRef;
+    let spec: AnonType;
 
     if (containingType && !containingType.safeName) {
       // Type is inside another which is not named (yet) so try again later.
-
       spec = this.state.pendingAnonTbl[memberType.containingType.surrogateKey];
 
       if (!spec) {
@@ -251,7 +247,6 @@ export class Sanitize extends Transform<Sanitize, void, State> {
     } else if (containingType || (containingRef && containingRef.safeName)) {
       // Type is inside a named type or referenced by a named member.
       // Give it a name based on those.
-
       if (containingRef) {
         type.namespace = containingRef.member.namespace;
 
@@ -266,6 +261,7 @@ export class Sanitize extends Transform<Sanitize, void, State> {
       spec = this.state.pendingAnonTbl[type.surrogateKey];
 
       if (spec) {
+        // eslint-disable-next-line no-var
         for (var memberType of spec.memberTypeList) {
           this.addNameToType(memberType);
         }
@@ -283,7 +279,7 @@ export class Sanitize extends Transform<Sanitize, void, State> {
     ) {
       this.addNameToType(member.proxySpec as any);
     }
-    for (var memberType of member.typeSpecList) {
+    for (const memberType of member.typeSpecList) {
       if (
         !memberType.safeName &&
         (memberType.namespace as any) == this.namespace

@@ -12,7 +12,7 @@ export class AttributeGroup extends types.Base {
   static mayContain: () => types.BaseClass[] = () => [
     types.Annotation,
     types.Attribute,
-    AttributeGroup
+    AttributeGroup,
   ];
 
   init(state: State) {
@@ -20,6 +20,7 @@ export class AttributeGroup extends types.Base {
   }
 
   resolve(state: State) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     let attributeGroup: AttributeGroup = this;
     let ref: QName = null;
 
@@ -27,7 +28,7 @@ export class AttributeGroup extends types.Base {
       ref = new QName(this.ref, state.source);
       attributeGroup = this.scope.lookup(
         ref,
-        "attributeGroup"
+        "attributeGroup",
       ) as AttributeGroup;
     }
 

@@ -7,15 +7,15 @@ import { ElementLike } from "./Element";
 import * as types from "../types";
 
 export class GroupBase extends types.Base implements ElementLike {
-  init(state: State) {
+  init(_state: State) {
     this.min = +this.minOccurs;
     if (this.maxOccurs == "unbounded") this.max = Infinity;
     else this.max = +this.maxOccurs;
   }
 
   id: string = null;
-  minOccurs: string = "1";
-  maxOccurs: string = "1";
+  minOccurs = "1";
+  maxOccurs = "1";
 
   min: number;
   max: number;
@@ -28,10 +28,10 @@ export class GenericChildList extends GroupBase {
     Group,
     Sequence,
     Choice,
-    types.Any
+    types.Any,
   ];
 
-  resolve(state: State) {
+  resolve() {
     this.scope.addAllToParent("element", this.min, this.max);
     this.scope.addAllToParent("group", this.min, this.max);
   }
@@ -55,7 +55,7 @@ export class Group extends GroupBase {
   static mayContain: () => types.BaseClass[] = () => [
     types.Annotation,
     Sequence,
-    Choice
+    Choice,
   ];
 
   init(state: State) {
@@ -65,10 +65,13 @@ export class Group extends GroupBase {
   }
 
   resolve(state: State) {
-    var group: Group = this;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    let group: Group = this;
+
+    let ref: QName;
 
     if (this.ref) {
-      var ref = new QName(this.ref, state.source);
+      ref = new QName(this.ref, state.source);
       group = this.scope.lookup(ref, "group") as Group;
     }
 

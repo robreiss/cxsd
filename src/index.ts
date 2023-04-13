@@ -1,10 +1,9 @@
 import { Cache, FetchOptions } from "@loanlink/cget";
 
 import { Context } from "./xsd/Context";
-import { Namespace } from "./xsd/Namespace";
 import { Loader } from "./xsd/Loader";
 import { exportNamespace } from "./xsd/Exporter";
-import { AddImports, Output } from "./schema/transform/AddImports";
+import { AddImports } from "./schema/transform/AddImports";
 import { Sanitize } from "./schema/transform/Sanitize";
 import * as schema from "./schema";
 import { cacheWriter } from "./schema/exporter/CacheWriter";
@@ -16,7 +15,7 @@ export async function handleConvert(
 ) {
   const fetchOptions: FetchOptions = {};
 
-  fetchOptions.allowLocal = opts.hasOwnProperty("allowLocal")
+  fetchOptions.allowLocal = Object.hasOwn(opts, "allowLocal")
     ? opts["allowLocal"]
     : true;
 
@@ -32,14 +31,10 @@ export async function handleConvert(
   }
 
   const defaultOut = "xmlns";
-  const outJs = opts["outJs"] ?? opts["out"] ?? defaultOut;
   const outTs = opts["outTs"] ?? opts["out"] ?? defaultOut;
 
   const files: Record<string, string> = {};
 
-  const jsWriter = useCache
-    ? cacheWriter(new Cache(outJs, { indexName: "_index.js" }))
-    : inMemoryWriter(files);
   const tsWriter = useCache
     ? cacheWriter(
         new Cache(outTs, {

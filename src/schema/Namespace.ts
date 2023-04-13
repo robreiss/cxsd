@@ -13,30 +13,30 @@ export interface ImportContent {
 
 export class Namespace extends NamespaceBase<Context> {
   addRef(shortName: string, namespace: Namespace) {
-    var id = namespace.id;
+    const id = namespace.id;
 
     if (!this.shortNameTbl[id]) this.shortNameTbl[id] = [];
     this.shortNameTbl[id].push(shortName);
   }
 
   getShortRef(id: number) {
-    var nameList = this.shortNameTbl[id];
+    const nameList = this.shortNameTbl[id];
 
     if (nameList && nameList.length) return nameList[0];
     else return null;
   }
 
   getUsedImportTbl() {
-    var importTbl = this.importTbl;
+    let importTbl = this.importTbl;
 
     if (!importTbl) {
       importTbl = {};
 
       if (this.importContentTbl) {
-        for (var key of Object.keys(this.importContentTbl)) {
-          var id = +key;
-          var short = this.getShortRef(id);
-          importTbl[this.getShortRef(id)] = this.context.namespaceById(id);
+        for (const key of Object.keys(this.importContentTbl)) {
+          const id = +key;
+          const shortRef = this.getShortRef(id);
+          importTbl[shortRef] = this.context.namespaceById(id);
         }
 
         this.importTbl = importTbl;
@@ -48,7 +48,7 @@ export class Namespace extends NamespaceBase<Context> {
 
   getUsedImportList() {
     if (this.importContentTbl) {
-      var importTbl = this.getUsedImportTbl();
+      const importTbl = this.getUsedImportTbl();
 
       return Object.keys(importTbl).map(
         (shortName: string) => importTbl[shortName],
@@ -61,14 +61,14 @@ export class Namespace extends NamespaceBase<Context> {
   }
 
   addType(type: Type) {
-    var id = type.surrogateKey;
+    const id = type.surrogateKey;
     this.typeList[id] = type;
 
     type.namespace = this;
   }
 
   addMember(member: Member) {
-    var id = member.surrogateKey;
+    const id = member.surrogateKey;
     this.memberList[id] = member;
 
     member.namespace = this;
@@ -80,14 +80,14 @@ export class Namespace extends NamespaceBase<Context> {
     // TODO: Adding a member with an identical name but different namespace should be handled somehow!
     if (type.childTbl[member.name]) return;
 
-    var augmentTbl = this.augmentTbl[type.namespace.id];
+    let augmentTbl = this.augmentTbl[type.namespace.id];
 
     if (!augmentTbl) {
       augmentTbl = {};
       this.augmentTbl[type.namespace.id] = augmentTbl;
     }
 
-    var augmentSpec = augmentTbl[type.surrogateKey];
+    let augmentSpec = augmentTbl[type.surrogateKey];
 
     if (!augmentSpec) {
       augmentSpec = { type: type, refList: [] };

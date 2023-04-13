@@ -39,7 +39,7 @@ export class TS extends Exporter {
     return output.join("\n");
   }
 
-  writeImport(shortName: string, relativePath: string, absolutePath: string) {
+  writeImport(shortName: string, relativePath: string) {
     return `import * as ${shortName} from "${relativePath}";`;
   }
 
@@ -120,7 +120,7 @@ export class TS extends Exporter {
     } else return outTypes;
   }
 
-  writeMember(ref: MemberRef, isGlobal: boolean, indentCount: number = 1) {
+  writeMember(ref: MemberRef, isGlobal: boolean, indentCount = 1) {
     const output: string[] = [];
     const member = ref.member;
     const comment = member.comment;
@@ -209,9 +209,9 @@ export class TS extends Exporter {
       return "";
     }
 
-    let output: string[] = [];
+    const output: string[] = [];
 
-    let literalList = type.literalList;
+    const literalList = type.literalList;
     if (literalList && literalList.length > 0) {
       const isDefinitions = false;
       let assignmentOp = " =";
@@ -396,7 +396,7 @@ export class TS extends Exporter {
       const paths: string[] = [];
 
       for (const child of Object.values(type.childTbl)) {
-        let nextPath = [...currentPath, child?.member?.name];
+        const nextPath = [...currentPath, child?.member?.name];
 
         if (child?.max > 1) {
           paths.push(nextPath.join("."));

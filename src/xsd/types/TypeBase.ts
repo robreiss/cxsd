@@ -4,10 +4,9 @@
 import { Base, BaseClass } from "./Base";
 import { State } from "../State";
 import { QName } from "../QName";
-import { NamedTypeMember } from "../Scope";
 import * as schema from "../../schema";
 
-export interface TypeBaseChild extends TypeBase {}
+export type TypeBaseChild = TypeBase;
 
 export class TypeBase extends Base {
   init(state: State) {
@@ -22,7 +21,7 @@ export class TypeBase extends Base {
   }
 
   getOutType(schemaContext: schema.Context): schema.Type {
-    var outType = this.outType;
+    let outType = this.outType;
 
     if (!outType) {
       outType = new schema.Type(this.name);
@@ -40,10 +39,11 @@ export class TypeBase extends Base {
   /** Find parent type inheriting from a base type. */
 
   getParent(base: BaseClass, breakAtContent: boolean): TypeBase {
-    var next: TypeBaseChild | QName = this;
-    var type: TypeBaseChild | QName;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    let next: TypeBaseChild | QName = this;
+    let type: TypeBaseChild | QName;
     /** Maximum iterations in case type inheritance forms a loop. */
-    var iter = 100;
+    let iter = 100;
 
     while (--iter) {
       type = next;
@@ -64,17 +64,19 @@ export class TypeBase extends Base {
   }
 
   getListType() {
-    var next: TypeBase | QName = this;
-    var type: TypeBase | QName;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    let next: TypeBase | QName = this;
+    let type: TypeBase | QName;
+
     /** Maximum iterations in case type inheritance forms a loop. */
-    var iter = 100;
+    let iter = 100;
 
     while (--iter) {
       type = next;
 
       if (!(type instanceof TypeBase)) break;
       else {
-        var listType = type.scope && type.scope.dumpTypes("list");
+        const listType = type.scope && type.scope.dumpTypes("list");
 
         if (listType) return listType;
         else next = type.parent;

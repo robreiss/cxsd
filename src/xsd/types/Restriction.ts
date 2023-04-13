@@ -35,7 +35,7 @@ export class Restriction extends DerivationBase {
       this.enumerationList = [];
 
       // TODO: Remove this and uncomment the resolve function.
-      var parent = this.parent.xsdElement;
+      const parent = this.parent.xsdElement;
 
       if (parent instanceof types.SimpleType) {
         parent.setEnumerationList(this.enumerationList);

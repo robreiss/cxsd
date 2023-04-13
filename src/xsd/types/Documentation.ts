@@ -20,7 +20,7 @@ export class Documentation extends types.Base {
     state.endText();
   }
 
-  resolve(state: State) {
+  resolve() {
     this.scope.addCommentsToGrandParent(this.commentList);
   }
 

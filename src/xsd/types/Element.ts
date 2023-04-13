@@ -4,7 +4,6 @@
 import { State } from "../State";
 import { QName } from "../QName";
 import { MemberBase } from "./MemberBase";
-import { TypeBase } from "./TypeBase";
 import * as types from "../types";
 
 export interface ElementLike {
@@ -22,7 +21,7 @@ export class Element extends MemberBase implements ElementLike {
   static mayContain: () => types.BaseClass[] = () => [
     types.Annotation,
     types.SimpleType,
-    types.ComplexType
+    types.ComplexType,
   ];
 
   init(state: State) {
@@ -34,12 +33,11 @@ export class Element extends MemberBase implements ElementLike {
   }
 
   resolve(state: State) {
-    var element = this.resolveMember(state, "element") as Element;
-
+    this.resolveMember(state, "element");
     if (this.substitutionGroup) {
       // Add this as an alternative to the substitution group base element.
-      var ref = new QName(this.substitutionGroup, state.source);
-      var groupBase = this.scope.lookup(ref, "element") as Element;
+      const ref = new QName(this.substitutionGroup, state.source);
+      const groupBase = this.scope.lookup(ref, "element") as Element;
 
       if (!groupBase) throw new types.MissingReferenceError("element", ref);
 
@@ -52,8 +50,8 @@ export class Element extends MemberBase implements ElementLike {
     return this.abstract == "true" || this.abstract == "1";
   }
 
-  minOccurs: string = "1";
-  maxOccurs: string = "1";
+  minOccurs = "1";
+  maxOccurs = "1";
 
   default: string | null = null;
 

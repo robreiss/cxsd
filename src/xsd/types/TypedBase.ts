@@ -10,7 +10,7 @@ export class TypedBase extends types.Base {
     // If the element has a type set through an attribute, look it up in scope.
 
     if (typeName) {
-      var type = new QName(typeName, state.source);
+      const type = new QName(typeName, state.source);
       return (this.scope.lookup(type, "type") as types.TypeBase) || type;
     } else {
       // If there's a single type as a child, use it as the element's type.

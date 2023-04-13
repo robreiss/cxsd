@@ -6,7 +6,8 @@ import "source-map-support/register";
 import { program } from "commander";
 import { handleConvert } from "./index";
 
-const projectVersion = require("../package.json").version;
+import { version as projectVersion } from "../package.json";
+
 program
   .version(projectVersion)
   .arguments("<url>")

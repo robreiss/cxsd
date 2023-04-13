@@ -22,7 +22,7 @@ function addMemberToTable(
   min = 1,
   max = 1,
 ) {
-  var spec = tbl[name];
+  let spec = tbl[name];
 
   if (spec) {
     spec.min += specNew.min * min;
@@ -57,7 +57,7 @@ export class Scope {
     max: number,
   ) {
     if (name) {
-      var visibleTbl = this.visible[kind];
+      let visibleTbl = this.visible[kind];
 
       if (!visibleTbl) {
         visibleTbl = {};
@@ -68,7 +68,7 @@ export class Scope {
     }
 
     if (max) {
-      var exposeList = this.expose[kind];
+      let exposeList = this.expose[kind];
 
       if (!exposeList) {
         exposeList = [];
@@ -106,10 +106,11 @@ export class Scope {
   addAllToParent(kind: string, min = 1, max = 1, target?: Scope) {
     // Check if there's anything to add.
     if (!this.expose[kind]) return;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     if (!target) target = this;
     target = target.parent;
 
-    for (var spec of this.expose[kind]) {
+    for (const spec of this.expose[kind]) {
       // TODO: If target is a choice, it must take the overall min and max.
       target.add(spec.name, kind, spec.item, spec.min * min, spec.max * max);
     }
@@ -131,19 +132,20 @@ export class Scope {
   }
 
   lookup(name: QName, kind: string): types.Base {
-    var scope: Scope = this;
-    var nameFull = name.nameFull;
-    var nameWild = "*:" + name.name;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    let scope: Scope = this;
+    const nameFull = name.nameFull;
+    const nameWild = "*:" + name.name;
 
     if (name.namespace && name.namespace != this.namespace) {
       scope = name.namespace.getScope();
     }
 
-    var iter = 100;
+    let iter = 100;
 
     while (scope && --iter) {
       if (scope.visible[kind]) {
-        var result =
+        const result =
           scope.visible[kind][nameFull] || scope.visible[kind][nameWild];
 
         if (result) return result;
@@ -172,7 +174,7 @@ export class Scope {
 
   getParentType(namespace: Namespace): types.TypeBase {
     for (
-      var parent = this.parent;
+      let parent = this.parent;
       parent && parent.namespace == namespace;
       parent = parent.parent
     ) {
@@ -191,21 +193,21 @@ export class Scope {
   }
 
   dumpMembers(kind: string, groupKind: string) {
-    var itemList = this.expose[kind] || [];
-    var groupList = this.expose[groupKind] || [];
-    var output: { [name: string]: TypeMember } = {};
+    const itemList = this.expose[kind] || [];
+    const groupList = this.expose[groupKind] || [];
+    const output: { [name: string]: TypeMember } = {};
 
-    for (var spec of itemList) {
+    for (const spec of itemList) {
       if (spec.name) addMemberToTable(output, spec.name, spec);
     }
 
-    for (var group of groupList) {
-      var min = group.min;
-      var max = group.max;
+    for (const group of groupList) {
+      const min = group.min;
+      const max = group.max;
 
-      var attributeTbl = group.item.getScope().dumpMembers(kind, groupKind);
+      const attributeTbl = group.item.getScope().dumpMembers(kind, groupKind);
 
-      for (var key of Object.keys(attributeTbl)) {
+      for (const key of Object.keys(attributeTbl)) {
         addMemberToTable(output, key, attributeTbl[key], min, max);
       }
     }

@@ -22,7 +22,7 @@ export class Type {
   }
 
   addChildSpec(spec: Member) {
-    var ref = spec.getRef();
+    const ref = spec.getRef();
 
     this.childList.push(ref);
     this.childTbl[spec.name] = ref;

@@ -11,12 +11,12 @@ import * as schema from "../../schema";
 
 export class MemberBase extends TypedBase {
   resolveMember(state: State, kind: string) {
-    var member = this as MemberBase;
+    let member = this as MemberBase;
 
     if (this.ref) {
       // Replace this with another, referenced element.
 
-      var ref = new QName(this.ref, state.source);
+      const ref = new QName(this.ref, state.source);
       member = this.scope.lookup(ref, kind) as MemberBase;
 
       if (member) member.define(state, kind, this.min, this.max, this.scope);
@@ -29,7 +29,7 @@ export class MemberBase extends TypedBase {
   }
 
   getOutMember(schemaContext: schema.Context): MemberSpec {
-    var outMember = this.outMember;
+    let outMember = this.outMember;
 
     if (!outMember) {
       outMember = new MemberSpec(this.name);
@@ -45,7 +45,7 @@ export class MemberBase extends TypedBase {
   }
 
   getTypes(): types.TypeBase[] {
-    var typeList: types.TypeBase[];
+    let typeList: types.TypeBase[];
 
     // Filter out types of unresolved elements.
     if (this.typeRef && this.typeRef instanceof types.TypeBase) {

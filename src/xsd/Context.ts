@@ -35,7 +35,7 @@ export class Context extends ContextBase<Namespace> {
   }
 
   registerNamespace(name: string, url?: string) {
-    var namespace = super.registerNamespace(name);
+    const namespace = super.registerNamespace(name);
 
     if (url) namespace.updateUrl(null, url);
 
@@ -53,9 +53,9 @@ export class Context extends ContextBase<Namespace> {
     primitiveSpace: Namespace,
     schemaContext: schema.Context,
   ) {
-    var scope = primitiveSpace.getScope();
+    const scope = primitiveSpace.getScope();
 
-    var spec = [
+    const spec = [
       ["boolean", "boolean"],
       ["date dateTime", "Date"],
       [
@@ -76,23 +76,23 @@ export class Context extends ContextBase<Namespace> {
     ];
 
     // TODO: these lines are ugly!
-    var source = new Source("", this, { targetNamespace: primitiveSpace });
-    var state = new State(null, null, source);
+    const source = new Source("", this, { targetNamespace: primitiveSpace });
+    const state = new State(null, null, source);
 
     state.setScope(scope);
     schemaContext.copyNamespace(primitiveSpace).isPrimitiveSpace = true;
 
-    for (var typeSpec of spec) {
-      var type = new Primitive(null);
+    for (const typeSpec of spec) {
+      const type = new Primitive(null);
       type.name = typeSpec[1];
       type.init(new State(state, null));
 
-      var outType = type.getOutType(schemaContext);
+      const outType = type.getOutType(schemaContext);
 
       outType.primitiveType = outType;
       outType.safeName = type.name;
 
-      for (var name of typeSpec[0].split(" ")) {
+      for (const name of typeSpec[0].split(" ")) {
         scope.add(
           new QName().parsePrimitive(name, primitiveSpace).nameFull,
           "type",
