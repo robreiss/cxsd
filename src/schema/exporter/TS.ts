@@ -8,6 +8,11 @@ import { Type } from "../Type";
 
 const singleIndent = "  ";
 
+interface NodeOptions {
+  isArray?: boolean;
+  type?: string;
+}
+
 /** Export parsed schema to a TypeScript d.ts definition file. */
 export class TS extends Exporter {
   /** Format an XSD annotation as JSDoc. */
@@ -395,36 +400,72 @@ export class TS extends Exporter {
     }
 
     function recursiveArrayPathFinder(type: Type, currentPath: string[] = []) {
-      const paths: string[] = [];
+      const nodeOptions: Record<string, NodeOptions> = {};
 
       for (const child of Object.values(type.childTbl)) {
-        const nextPath = [...currentPath, child?.member?.name];
+        const nextPathArray = [...currentPath, child?.member?.name];
+        const nextPath = nextPathArray.join(".");
+        const currentOptions = nodeOptions[nextPath] || {};
 
         if (child?.max > 1) {
-          paths.push(nextPath.join("."));
+          currentOptions.isArray = true;
         }
 
-        child?.member?.typeSpecList?.forEach((typeSpec) => {
+        child?.member?.typeSpecList?.forEach((typeSpec: any) => {
           const type = findType(typeSpec);
 
           if (type) {
-            const result = recursiveArrayPathFinder(type, nextPath);
-            paths.push(...result);
+            if (type.isPlainPrimitive) {
+              currentOptions.type = type.primitiveType.name;
+            }
+
+            const result = recursiveArrayPathFinder(type, nextPathArray);
+            Object.assign(nodeOptions, result);
           }
         });
+
+        if (Object.keys(currentOptions).length > 0) {
+          nodeOptions[nextPath] = currentOptions;
+        }
       }
 
-      return paths;
+      return nodeOptions;
     }
 
-    const paths = recursiveArrayPathFinder(doc);
+    function writeObject(obj: any): string {
+      const output = [];
 
-    if (paths.length) {
-      output.push("\nexport const handleAsArray = {");
+      for (const [key, value] of Object.entries(obj)) {
+        if (typeof value === "object") {
+          output.push(`${key}: { ${writeObject(value)} }`);
+        } else if (value === true || value === false) {
+          output.push(`${key}: ${value}`);
+        } else {
+          output.push(`${key}: "${value}"`);
+        }
+      }
+
+      return output.join(", ");
+    }
+
+    const nodeOptions = recursiveArrayPathFinder(doc);
+
+    if (Object.keys(nodeOptions).length) {
+      output.push(`\nexport interface NodeOptions {
+${singleIndent}isArray?: boolean;
+${singleIndent}type?: "string" | "number" | "boolean";
+}`);
+
       output.push(
-        ...paths.map((path) => `${singleIndent}"${path}": { isArray: true },`),
+        "\nexport const mappings: Record<string, NodeOptions> = Object.freeze({",
       );
-      output.push("};");
+      output.push(
+        ...Object.entries(nodeOptions).map(
+          ([path, opts]) =>
+            `${singleIndent}"${path}": { ${writeObject(opts)} },`,
+        ),
+      );
+      output.push("});");
     }
 
     return output.join("\n");
