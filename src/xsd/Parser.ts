@@ -4,15 +4,15 @@
 import * as expat from "node-expat";
 
 import { CacheResult } from "@loanlink/cget";
-import { Rule } from "./Rule";
+import { Rule } from "./Rule.js";
 
-import * as types from "./types";
-import { Context } from "./Context";
-import { State } from "./State";
-import { Namespace } from "./Namespace";
-import { Loader } from "./Loader";
-import { Source } from "./Source";
-import { QName } from "./QName";
+import * as types from "./types.js";
+import { Context } from "./Context.js";
+import { State } from "./State.js";
+import { Namespace } from "./Namespace.js";
+import { Loader } from "./Loader.js";
+import { Source } from "./Source.js";
+import { QName } from "./QName.js";
 
 /** Parse syntax rules encoded into handler classes. */
 
@@ -80,14 +80,14 @@ export class Parser {
     for (const key of Object.keys(attrTbl)) {
       const keyLower = key.toLowerCase();
 
-      if (key != keyLower && !Object.hasOwn(attrTbl, keyLower)) {
+      if (key != keyLower && !(keyLower in attrTbl)) {
         attrTbl[keyLower] = attrTbl[key];
       }
     }
 
     // Copy known attributes to XSD element.
     for (const key of rule.attributeList) {
-      if (Object.hasOwn(attrTbl, key)) {
+      if (key in attrTbl) {
         (xsdElem as any as { [key: string]: string })[key] = attrTbl[key];
       }
     }

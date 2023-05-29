@@ -4,7 +4,7 @@
 import "source-map-support/register";
 
 import { program } from "commander";
-import { handleConvert } from "./index";
+import { handleConvert } from "./index.js";
 
 import { version as projectVersion } from "../package.json";
 

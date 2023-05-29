@@ -3,8 +3,8 @@
 
 import { MemberSpec as Member } from "@loanlink/cxml";
 
-import { Type } from "../Type";
-import { Transform } from "./Transform";
+import { Type } from "../Type.js";
+import { Transform } from "./Transform.js";
 
 export interface AnonType {
   type: Type;
@@ -31,7 +31,7 @@ function sanitizeName(name: string) {
     .replace(/[^_0-9A-Za-z]/g, "")
     .replace(/^[^A-Za-z]+/, "");
 
-  if (Object.hasOwn(reserved, name)) name = "_" + name;
+  if (name in reserved) name = "_" + name;
 
   return name;
 }

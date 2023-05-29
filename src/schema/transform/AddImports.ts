@@ -3,9 +3,9 @@
 
 import { MemberSpec as Member } from "@loanlink/cxml";
 
-import { Namespace, ImportContent } from "../Namespace";
-import { Type } from "../Type";
-import { Transform } from "./Transform";
+import { Namespace, ImportContent } from "../Namespace.js"
+import { Type } from "../Type.js"
+import { Transform } from "./Transform.js"
 
 export type Output = { [namespaceId: string]: ImportContent };
 

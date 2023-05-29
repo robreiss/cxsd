@@ -1,10 +1,10 @@
 // This file is part of cxsd, copyright (c) 2015-2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import { Base, BaseClass } from "./Base";
-import { State } from "../State";
-import { QName } from "../QName";
-import * as schema from "../../schema";
+import { Base, BaseClass } from "./Base.js"
+import { State } from "../State.js"
+import { QName } from "../QName.js"
+import * as schema from "../../schema.js"
 
 export type TypeBaseChild = TypeBase;
 

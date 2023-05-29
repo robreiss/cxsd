@@ -3,9 +3,9 @@
 
 import * as url from "url";
 
-import { Context } from "./Context";
-import { Namespace } from "./Namespace";
-import { Loader } from "./Loader";
+import { Context } from "./Context.js"
+import { Namespace } from "./Namespace.js"
+import { Loader } from "./Loader.js"
 
 /** Details of a single XSD source file. */
 

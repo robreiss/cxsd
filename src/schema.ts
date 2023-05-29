@@ -3,8 +3,8 @@
 
 import "source-map-support/register";
 
-export { Context } from "./schema/Context";
-export { Namespace } from "./schema/Namespace";
-export { Type } from "./schema/Type";
-export { JS } from "./schema/exporter/JS";
-export { TS } from "./schema/exporter/TS";
+export { Context } from "./schema/Context.js"
+export { Namespace } from "./schema/Namespace.js"
+export { Type } from "./schema/Type.js"
+export { JS } from "./schema/exporter/JS.js"
+export { TS } from "./schema/exporter/TS.js"

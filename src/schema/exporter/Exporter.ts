@@ -1,9 +1,9 @@
 // This file is part of cxsd, copyright (c) 2015-2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import { Transform } from "../transform/Transform";
-import { Type } from "../Type";
-import { Namespace } from "../Namespace";
+import { Transform } from "../transform/Transform.js"
+import { Type } from "../Type.js"
+import { Namespace } from "../Namespace.js"
 
 export interface Writer {
   write: (name: string, contentGetter: () => string) => Promise<boolean>;

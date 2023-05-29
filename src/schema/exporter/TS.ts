@@ -3,8 +3,8 @@
 
 import { MemberRef, TypeSpec } from "@loanlink/cxml";
 
-import { Exporter } from "./Exporter";
-import { Type } from "../Type";
+import { Exporter } from "./Exporter.js"
+import { Type } from "../Type.js"
 
 const singleIndent = "  ";
 

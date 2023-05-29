@@ -1,7 +1,7 @@
 import * as path from "path";
 
 import { Cache, Address } from "@loanlink/cget";
-import { Writer } from "./Exporter";
+import { Writer } from "./Exporter.js"
 
 export const cacheWriter = (cache: Cache, disableCache = false): Writer => ({
   write: async (name, contentGetter) => {

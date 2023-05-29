@@ -1,9 +1,9 @@
 // This file is part of cxsd, copyright (c) 2015-2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import { State } from "../State";
-import { MemberBase } from "./MemberBase";
-import * as types from "../types";
+import { State } from "../State.js"
+import { MemberBase } from "./MemberBase.js"
+import * as types from "../types.js"
 
 export type XmlAttribute = string | number;
 

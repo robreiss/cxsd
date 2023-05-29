@@ -1,8 +1,8 @@
 // This file is part of cxsd, copyright (c) 2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import { Namespace } from "../Namespace";
-import { Type } from "../Type";
+import { Namespace } from "../Namespace.js"
+import { Type } from "../Type.js"
 
 /** TransformType is a class derived from Transform, used like CRTP in C++. */
 

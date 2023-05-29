@@ -3,11 +3,11 @@
 
 import { MemberSpec, MemberRef } from "@loanlink/cxml";
 
-import { Namespace } from "./Namespace";
-import { Scope, TypeMember } from "./Scope";
-import { Source } from "./Source";
-import * as types from "./types";
-import * as schema from "../schema";
+import { Namespace } from "./Namespace.js"
+import { Scope, TypeMember } from "./Scope.js"
+import { Source } from "./Source.js"
+import * as types from "./types.js"
+import * as schema from "../schema.js"
 
 function mergeDuplicateTypes(typeList: types.TypeBase[]) {
   if (typeList.length < 2) return typeList;

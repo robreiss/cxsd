@@ -3,11 +3,11 @@
 
 import { MemberSpec } from "@loanlink/cxml";
 
-import { State } from "../State";
-import { QName } from "../QName";
-import * as types from "../types";
-import { TypedBase } from "./TypedBase";
-import * as schema from "../../schema";
+import { State } from "../State.js"
+import { QName } from "../QName.js"
+import * as types from "../types.js"
+import { TypedBase } from "./TypedBase.js"
+import * as schema from "../../schema.js"
 
 export class MemberBase extends TypedBase {
   resolveMember(state: State, kind: string) {
