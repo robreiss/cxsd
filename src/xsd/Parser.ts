@@ -80,14 +80,14 @@ export class Parser {
     for (const key of Object.keys(attrTbl)) {
       const keyLower = key.toLowerCase();
 
-      if (key != keyLower && !Object.hasOwn(attrTbl, keyLower)) {
+      if (key != keyLower && !(keyLower in attrTbl)) {
         attrTbl[keyLower] = attrTbl[key];
       }
     }
 
     // Copy known attributes to XSD element.
     for (const key of rule.attributeList) {
-      if (Object.hasOwn(attrTbl, key)) {
+      if (key in attrTbl) {
         (xsdElem as any as { [key: string]: string })[key] = attrTbl[key];
       }
     }

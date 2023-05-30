@@ -1,15 +1,11 @@
 // This file is part of cxsd, copyright (c) 2015-2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import "source-map-support/register";
-
 import { program } from "commander";
 import { handleConvert } from "./index";
 
-import { version as projectVersion } from "../package.json";
-
 program
-  .version(projectVersion)
+  .version("0.2.10")
   .arguments("<url>")
   .description("XSD download and conversion tool")
   .option(

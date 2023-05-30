@@ -15,9 +15,7 @@ export async function handleConvert(
 ) {
   const fetchOptions: FetchOptions = {};
 
-  fetchOptions.allowLocal = Object.hasOwn(opts, "allowLocal")
-    ? opts["allowLocal"]
-    : true;
+  fetchOptions.allowLocal = "allowLocal" in opts ? opts["allowLocal"] : true;
 
   const useCache = opts["cache"] ? true : false;
 

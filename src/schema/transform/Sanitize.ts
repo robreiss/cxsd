@@ -31,7 +31,7 @@ function sanitizeName(name: string) {
     .replace(/[^_0-9A-Za-z]/g, "")
     .replace(/^[^A-Za-z]+/, "");
 
-  if (Object.hasOwn(reserved, name)) name = "_" + name;
+  if (name in reserved) name = "_" + name;
 
   return name;
 }

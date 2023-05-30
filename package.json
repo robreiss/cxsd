@@ -1,50 +1,8 @@
 {
   "name": "@loanlink/cxsd",
-  "version": "0.2.10",
+  "version": "1.0.0",
   "description": "Streaming XSD parser and XML parser generator with TypeScript output",
-  "main": "./dist/schema.js",
-  "typings": "./dist/schema.d.ts",
-  "bin": {
-    "cxsd": "bin/cxsd.js"
-  },
-  "files": [
-    "dist",
-    "bin",
-    "package.json",
-    "package-lock.json",
-    "README.md",
-    "LICENSE"
-  ],
-  "scripts": {
-    "clean": "rimraf dist",
-    "prebuild": "npm run clean",
-    "build": "tsc -p tsconfig.build.json",
-    "lint": "eslint --ext .ts,.js --ignore-path .gitignore --fix src",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm run test",
-    "postpublish": "TAG=\"v$(jq -r .version package.json)\" && git commit -am \"Bumped to version $TAG\" && git tag -a $TAG -m \"Published version $TAG\" && git push origin $TAG",
-    "test": "jest"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ],
-    "testEnvironment": "node",
-    "transform": {
-      "\\.(ts)$": "ts-jest"
-    },
-    "testPathIgnorePatterns": [
-      "<rootDir>/(node_modules)/",
-      "<rootDir>/(dist)/"
-    ],
-    "transformIgnorePatterns": [
-      "<rootDir>/(node_modules)/",
-      "<rootDir>/(dist)/"
-    ],
-    "testRegex": "(/(src|test)/.*\\.test\\.(ts|js))$"
-  },
-  "author": "Juha Järvi",
+  "author": "Loanlink",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -54,6 +12,29 @@
     "url": "https://github.com/Capital-Management-Group/cxsd/issues"
   },
   "homepage": "https://github.com/Capital-Management-Group/cxsd#readme",
+  "main": "./dist/schema.js",
+  "typings": "./dist/schema.d.ts",
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "build": "tsc -p tsconfig.build.json",
+    "release": "np",
+    "lint": "eslint --ext .ts,.js --ignore-path .gitignore --fix src",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test",
+    "postpublish": "TAG=\"v$(jq -r .version package.json)\" && git commit -am \"Bumped to version $TAG\" && git tag -a $TAG -m \"Published version $TAG\" && git push origin $TAG",
+    "test": "jest"
+  },
+  "bin": {
+    "cxsd": "bin/cxsd.js"
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
   "keywords": [
     "xsd",
     "dts",
@@ -63,8 +44,8 @@
     "typescript"
   ],
   "dependencies": {
-    "@loanlink/cget": "Capital-Management-Group/cget",
-    "@loanlink/cxml": "Capital-Management-Group/cxml",
+    "@loanlink/cget": "../cget",
+    "@loanlink/cxml": "../cxml",
     "commander": "^9.5.0",
     "node-expat": "^2.4.0",
     "source-map-support": "^0.5.16"
@@ -87,5 +68,24 @@
     "rimraf": "^5.0.1",
     "ts-jest": "^29.1.0",
     "typescript": "^5.0.3"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "testEnvironment": "node",
+    "transform": {
+      "\\.(ts)$": "ts-jest"
+    },
+    "testPathIgnorePatterns": [
+      "<rootDir>/(node_modules)/",
+      "<rootDir>/(dist)/"
+    ],
+    "transformIgnorePatterns": [
+      "<rootDir>/(node_modules)/",
+      "<rootDir>/(dist)/"
+    ],
+    "testRegex": "(/(src|test)/.*\\.test\\.(ts|js))$"
   }
 }
