@@ -1,9 +1,9 @@
 // This file is part of cxsd, copyright (c) 2015-2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import { State } from "../State.js"
-import { QName } from "../QName.js"
-import * as types from "../types.js"
+import { State } from "../State";
+import { QName } from "../QName";
+import * as types from "../types";
 
 export class TypedBase extends types.Base {
   resolveType(typeName: string, state: State): QName | types.TypeBase {

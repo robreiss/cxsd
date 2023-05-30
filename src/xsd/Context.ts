@@ -3,14 +3,14 @@
 
 import { ContextBase } from "@loanlink/cxml";
 
-import { Namespace } from "./Namespace.js"
-import { Scope } from "./Scope.js"
+import { Namespace } from "./Namespace";
+import { Scope } from "./Scope";
 
-import { Source } from "./Source.js"
-import { State } from "./State.js"
-import { QName } from "./QName.js"
-import { Primitive } from "./types/Primitive.js"
-import * as schema from "../schema.js"
+import { Source } from "./Source";
+import { State } from "./State";
+import { QName } from "./QName";
+import { Primitive } from "./types/Primitive";
+import * as schema from "../schema";
 
 /** XML parser context, holding definitions of all imported namespaces. */
 

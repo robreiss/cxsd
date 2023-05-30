@@ -8,9 +8,9 @@ import {
   MemberRefFlag,
 } from "@loanlink/cxml";
 
-import { Exporter } from "./Exporter.js"
-import { Namespace } from "../Namespace.js"
-import { Type } from "../Type.js"
+import { Exporter } from "./Exporter";
+import { Namespace } from "../Namespace";
+import { Type } from "../Type";
 
 export type NumTbl = { [id: string]: number };
 

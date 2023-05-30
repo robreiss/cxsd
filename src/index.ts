@@ -1,13 +1,13 @@
 import { Cache, FetchOptions } from "@loanlink/cget";
 
-import { Context } from "./xsd/Context.js";
-import { Loader } from "./xsd/Loader.js";
-import { exportNamespace } from "./xsd/Exporter.js";
-import { AddImports } from "./schema/transform/AddImports.js";
-import { Sanitize } from "./schema/transform/Sanitize.js";
-import * as schema from "./schema.js";
-import { cacheWriter } from "./schema/exporter/CacheWriter.js";
-import { inMemoryWriter } from "./schema/exporter/InMemoryWriter.js";
+import { Context } from "./xsd/Context";
+import { Loader } from "./xsd/Loader";
+import { exportNamespace } from "./xsd/Exporter";
+import { AddImports } from "./schema/transform/AddImports";
+import { Sanitize } from "./schema/transform/Sanitize";
+import * as schema from "./schema";
+import { cacheWriter } from "./schema/exporter/CacheWriter";
+import { inMemoryWriter } from "./schema/exporter/InMemoryWriter";
 
 export async function handleConvert(
   urlRemote: string,
@@ -15,7 +15,9 @@ export async function handleConvert(
 ) {
   const fetchOptions: FetchOptions = {};
 
-  fetchOptions.allowLocal = "allowLocal" in opts ? opts["allowLocal"] : true;
+  fetchOptions.allowLocal = Object.hasOwn(opts, "allowLocal")
+    ? opts["allowLocal"]
+    : true;
 
   const useCache = opts["cache"] ? true : false;
 

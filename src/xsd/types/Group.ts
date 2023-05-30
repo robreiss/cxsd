@@ -1,10 +1,10 @@
 // This file is part of cxsd, copyright (c) 2015-2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import { State } from "../State.js"
-import { QName } from "../QName.js"
-import { ElementLike } from "./Element.js"
-import * as types from "../types.js"
+import { State } from "../State";
+import { QName } from "../QName";
+import { ElementLike } from "./Element";
+import * as types from "../types";
 
 export class GroupBase extends types.Base implements ElementLike {
   init(_state: State) {

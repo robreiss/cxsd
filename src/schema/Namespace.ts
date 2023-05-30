@@ -3,8 +3,8 @@
 
 import { NamespaceBase, MemberSpec as Member } from "@loanlink/cxml";
 
-import { Context } from "./Context.js"
-import { Type } from "./Type.js"
+import { Context } from "./Context";
+import { Type } from "./Type";
 
 export interface ImportContent {
   typeTbl: { [key: string]: Type };

@@ -1,7 +1,7 @@
 // This file is part of cxsd, copyright (c) 2015-2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import { BaseClass } from "./types/Base.js"
+import { BaseClass } from "./types/Base";
 
 /** Parser rule, defines a handler class, valid attributes and children
  * for an XSD tag. */

@@ -1,4 +1,4 @@
-import * as Exporter from "./Exporter.js"
+import * as Exporter from "./Exporter";
 
 test("Exporter", () => {
   expect(typeof Exporter).toBe("object");

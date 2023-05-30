@@ -1,10 +1,10 @@
 // This file is part of cxsd, copyright (c) 2015-2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import { Rule } from "../Rule.js"
-import { State } from "../State.js"
-import { Scope } from "../Scope.js"
-import { QName } from "../QName.js"
+import { Rule } from "../Rule";
+import { State } from "../State";
+import { Scope } from "../Scope";
+import { QName } from "../QName";
 
 export interface BaseClass {
   new (state?: State): Base;

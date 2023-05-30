@@ -3,7 +3,7 @@
 
 import { ContextBase } from "@loanlink/cxml";
 
-import { Namespace } from "./Namespace.js"
+import { Namespace } from "./Namespace";
 
 export class Context extends ContextBase<Namespace> {
   constructor() {

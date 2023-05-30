@@ -3,9 +3,9 @@
 
 import { NamespaceBase } from "@loanlink/cxml";
 
-import { Context } from "./Context.js"
-import { Source } from "./Source.js"
-import { Scope } from "./Scope.js"
+import { Context } from "./Context";
+import { Source } from "./Source";
+import { Scope } from "./Scope";
 
 /** XML namespace, binding it to syntax definitions. */
 export class Namespace extends NamespaceBase<Context> {

@@ -3,7 +3,7 @@
 
 import { MemberSpec as Member, MemberRef } from "@loanlink/cxml";
 
-import { Namespace } from "./Namespace.js"
+import { Namespace } from "./Namespace";
 
 export class Type {
   constructor(name: string) {

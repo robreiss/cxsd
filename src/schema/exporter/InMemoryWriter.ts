@@ -1,4 +1,4 @@
-import { Writer } from "./Exporter.js"
+import { Writer } from "./Exporter";
 
 export const inMemoryWriter = (files: Record<string, string>): Writer => {
   return {

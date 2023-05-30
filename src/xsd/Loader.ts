@@ -3,10 +3,10 @@
 
 import { FetchOptions, Cache, CacheResult } from "@loanlink/cget";
 
-import { Context } from "./Context.js"
-import { Namespace } from "./Namespace.js"
-import { Source } from "./Source.js"
-import { Parser } from "./Parser.js"
+import { Context } from "./Context";
+import { Namespace } from "./Namespace";
+import { Source } from "./Source";
+import { Parser } from "./Parser";
 
 /** Copy all members of src object to dst object. */
 export function extend(
