@@ -44,8 +44,8 @@
     "typescript"
   ],
   "dependencies": {
-    "@loanlink/cget": "../cget",
-    "@loanlink/cxml": "../cxml",
+    "@loanlink/cget": "Capital-Management-Group/cget",
+    "@loanlink/cxml": "Capital-Management-Group/cxml",
     "commander": "^9.5.0",
     "node-expat": "^2.4.0",
     "source-map-support": "^0.5.16"
