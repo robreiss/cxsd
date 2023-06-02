@@ -46,7 +46,7 @@
   "dependencies": {
     "@loanlink/cget": "Capital-Management-Group/cget",
     "@loanlink/cxml": "Capital-Management-Group/cxml",
-    "commander": "^9.5.0",
+    "commander": "^10.0.1",
     "node-expat": "^2.4.0",
     "source-map-support": "^0.5.16"
   },
