@@ -140,7 +140,10 @@ export class TS extends Exporter {
       output.push("\n");
     }
 
-    let name = member.name;
+    let name: string = member.name;
+    name = name.replace(/^([a-z]?[A-Z]+(?=[A-Z])|[A-Z])/, (word) =>
+      word.toLowerCase(),
+    );
     if (member.name !== ref.safeName) name = `"${name}"`;
     output.push(indent + name);
 
