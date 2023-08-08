@@ -141,10 +141,12 @@ export class TS extends Exporter {
     }
 
     let name: string = member.name;
-    name = name.replace(/^([a-z]?[A-Z]+(?=[A-Z])|[A-Z])/, (word) =>
+    // Convert name to a name compatible with JAXB output (from Jsonix)
+    name = name.replace(/^([a-z]?[A-Z]+(?=([A-Z][a-z])|$)|[A-Z])/, (word) =>
       word.toLowerCase(),
     );
     if (member.name !== ref.safeName) name = `"${name}"`;
+
     output.push(indent + name);
 
     if (ref.min == 0) output.push("?");
@@ -177,7 +179,7 @@ export class TS extends Exporter {
       const outAttributeList: string[] = [];
 
       for (const attribute of type.attributeList) {
-        const outAttribute = this.writeMember(attribute, false, 2);
+        const outAttribute = this.writeMember(attribute, false, 1);
         if (outAttribute) outAttributeList.push(outAttribute);
       }
 
@@ -193,12 +195,15 @@ export class TS extends Exporter {
       }
 
       if (outAttributeList.length) {
-        output.push(`${singleIndent}_attributes: {\n`);
         output.push(outAttributeList.join("\n"));
-        output.push(`\n${singleIndent}};\n`);
+        output.push("\n");
       }
 
       if (outMemberList.length) {
+        if (outAttributeList.length) {
+          output.push("\n");
+        }
+
         output.push(outMemberList.join("\n"));
         output.push("\n");
       }
@@ -371,6 +376,8 @@ export class TS extends Exporter {
     const doc = this.doc;
     const namespace = this.namespace;
 
+    output.push("/* eslint-disable */");
+    output.push("// @ts-nocheck");
     output.push("");
 
     // this.writeAugmentations(output);
