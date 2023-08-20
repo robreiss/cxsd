@@ -5,6 +5,10 @@ import { Writer } from "./Exporter";
 
 export const cacheWriter = (cache: Cache, disableCache = false): Writer => ({
   write: async (name, contentGetter) => {
+    if (name === "xml-primitives.ts") {
+      return true;
+    }
+
     return cache
       .isCached(name)
       .then((isCached: boolean) => {

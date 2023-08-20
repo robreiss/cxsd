@@ -27,7 +27,10 @@ export abstract class Exporter extends Transform<Exporter, boolean, State> {
 
     for (const shortName of Object.keys(importTbl).sort()) {
       const namespace = importTbl[shortName];
-      const relativePath = this.state.writer.getPathTo(namespace.name, namespace);
+      const relativePath = this.state.writer.getPathTo(
+        namespace.name,
+        namespace,
+      );
       output.push(this.writeImport(shortName, relativePath, namespace.name));
     }
 

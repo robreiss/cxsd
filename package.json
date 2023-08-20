@@ -44,8 +44,8 @@
     "typescript"
   ],
   "dependencies": {
-    "@loanlink/cget": "Capital-Management-Group/cget",
-    "@loanlink/cxml": "Capital-Management-Group/cxml",
+    "@loanlink/cget": "Capital-Management-Group/cget#ee04a5205c9dcdd9d88408e142db9ea9445154d5",
+    "@loanlink/cxml": "Capital-Management-Group/cxml#43055516483ef864bce1a019f580410fb9212ef1",
     "commander": "^11.0.0",
     "node-expat": "^2.4.0",
     "source-map-support": "^0.5.16"
@@ -55,8 +55,8 @@
     "@types/node": "^18.16.19",
     "@types/node-expat": "^2.3.2",
     "@types/source-map-support": "^0.5.6",
-    "@typescript-eslint/eslint-plugin": "^6.2.1",
-    "@typescript-eslint/parser": "^5.60.1",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@typescript-eslint/parser": "^6.3.0",
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-import-resolver-typescript": "^3.5.5",
@@ -67,7 +67,7 @@
     "prettier": "^2.8.8",
     "rimraf": "^5.0.1",
     "ts-jest": "^29.1.1",
-    "typescript": "^5.0.3"
+    "typescript": "^5.1.6"
   },
   "jest": {
     "moduleFileExtensions": [
