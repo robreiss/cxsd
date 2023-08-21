@@ -4,6 +4,17 @@
 import { Namespace } from "../Namespace";
 import { Type } from "../Type";
 
+/**
+ * Convert name to a name compatible with JAXB output (from Jsonix)
+ *
+ * eg. OfferteAanvraag > offerteAanvraag
+ */
+export function toLowerCamelCase(input: string) {
+  return input.replace(/^([a-z]?[A-Z]+(?=([A-Z][a-z])|$)|[A-Z])/, (word) =>
+    word.toLowerCase(),
+  );
+}
+
 /** TransformType is a class derived from Transform, used like CRTP in C++. */
 
 export abstract class Transform<

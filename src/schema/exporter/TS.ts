@@ -1,17 +1,13 @@
 // This file is part of cxsd, copyright (c) 2015-2016 BusFaster Ltd.
 // Released under the MIT license, see LICENSE.
 
-import { MemberRef, TypeSpec } from "@loanlink/cxml";
+import { MemberRef } from "@loanlink/cxml";
 
 import { Exporter } from "./Exporter";
 import { Type } from "../Type";
+import { toLowerCamelCase } from "../transform/Transform";
 
 const singleIndent = "  ";
-
-interface NodeOptions {
-  isArray?: boolean;
-  type?: string;
-}
 
 /** Export parsed schema to a TypeScript d.ts definition file. */
 export class TS extends Exporter {
@@ -140,11 +136,9 @@ export class TS extends Exporter {
       output.push("\n");
     }
 
-    let name: string = member.name;
+    let name = toLowerCamelCase(member.name);
+
     // Convert name to a name compatible with JAXB output (from Jsonix)
-    name = name.replace(/^([a-z]?[A-Z]+(?=([A-Z][a-z])|$)|[A-Z])/, (word) =>
-      word.toLowerCase(),
-    );
     if (member.name !== ref.safeName) name = `"${name}"`;
 
     output.push(indent + name);
