@@ -45,7 +45,7 @@
   ],
   "dependencies": {
     "@loanlink/cget": "Capital-Management-Group/cget#ee04a5205c9dcdd9d88408e142db9ea9445154d5",
-    "@loanlink/cxml": "Capital-Management-Group/cxml#f2946d2659d03a9ca9b41d1a4eac164cac466039",
+    "@loanlink/cxml": "Capital-Management-Group/cxml#07783e1d0a11ed93de5e6b892201dc15d42f668b",
     "commander": "^11.0.0",
     "node-expat": "^2.4.0",
     "source-map-support": "^0.5.16"
