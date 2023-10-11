@@ -15,7 +15,7 @@
   "main": "./dist/schema.js",
   "typings": "./dist/schema.d.ts",
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "scripts": {
     "clean": "rimraf dist",
