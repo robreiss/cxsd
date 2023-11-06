@@ -51,7 +51,7 @@
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.5",
+    "@types/jest": "^29.5.7",
     "@types/node": "^18.18.8",
     "@types/node-expat": "^2.3.3",
     "@types/source-map-support": "^0.5.8",
