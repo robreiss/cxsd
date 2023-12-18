@@ -1,6 +1,6 @@
 # robreiss fork of cxsd
 
-This fork add special processing of the generated typescript to convert Quickbooks API xsd's to typescript.
+This fork adds special processing of the generated typescript to convert Quickbooks API xsd's to typescript.
 
 ## @loanlink/cxsd
 
