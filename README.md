@@ -25,7 +25,7 @@ cxsd --help
   - Annotations to JSDoc
   - WIP: Strings, numbers and dates to matching primitive types
 
-# License
+## License
 
 [The MIT License](https://raw.githubusercontent.com/charto/cxsd/master/LICENSE)
 
