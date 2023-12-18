@@ -111,7 +111,8 @@ export interface Account extends IntuitEntity {
     * Description: Fully qualified name
     * of the entity. The fully qualified name prepends the topmost
     * parent, followed by each sub element separated by colons. Takes
-    * the form of: [br /] Parent:Account1:SubAccount1:SubAccount2
+    * the form of: 
+    * Parent:Account1:SubAccount1:SubAccount2
     * InputType: ReadOnly */
   FullyQualifiedName?: string;
   /** Product: QBO
@@ -119,7 +120,8 @@ export interface Account extends IntuitEntity {
     * required only for Bank accounts. This is applicable only in FR.
     * InputType: ALL: ReadOnly */
   JournalCodeRef?: ReferenceType;
-  /** User recognizable name for the Account.[br /]
+  /** User recognizable name for the Account.
+  /**
     * Product: ALL
     * Required: ALL
     * Filterable: QBW
@@ -179,7 +181,8 @@ export interface AccountBasedExpenseLineDetail {
   AccountRef?: ReferenceType;
   /** Product: ALL
     * Description: The billable status of
-    * the expense.[br /] */
+    * the expense.
+    * */
   BillableStatus?: BillableStatusEnum;
   /** Product: ALL
     * Description: Reference to the Class
@@ -751,7 +754,8 @@ export interface Bill extends PurchaseByVendor {
   /** Product: ALL
     * Description: The unpaid amount of the bill. When paid-in-full, balance will
     * be zero.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * Non QB-writable.
     * Filterable: QBW
     * Sortable: QBW */
@@ -767,7 +771,8 @@ export interface Bill extends PurchaseByVendor {
     * Description: The unpaid amount of the bill in home currency. Available only
     * for companies where multicurrency is enabled. When paid-in-full,
     * home balance will be zero.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * Non
     * QB-writable.
     * Filterable: QBW
@@ -784,7 +789,8 @@ export interface Bill extends PurchaseByVendor {
     * Description: Payer information */
   PayerRef?: ReferenceType;
   /** Address to which the payment should be sent.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * Non QB-writable. */
   RemitToAddr?: PhysicalAddress;
   /** SalesTerm Reference for the bill */
@@ -816,7 +822,8 @@ export interface BillPayment extends Transaction {
     * account, so the account is implied. When specified, the account
     * must be a liability account - and further, must be of the
     * sub-type "Payables".
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * The AP Account
     * should always be specified or a default will be used. */
   APAccountRef?: ReferenceType;
@@ -840,9 +847,11 @@ export interface BillPayment extends Transaction {
   VendorAddr?: PhysicalAddress;
   /** Identifies the party or organization that
     * originated the purchase of the goods, services or BillPayment.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * Valid Vendor Name or Id is required
-    * for the create operation for Bill Payment transactions.[br /]
+    * for the create operation for Bill Payment transactions.
+    *
     * Required for the create operation. */
   VendorRef?: ReferenceType;
 }
@@ -852,7 +861,8 @@ export interface BillPaymentCheck {
   /** Internal use only: extension place holder for
     * BillPaymentCheck. */
   BillPaymentCheckEx?: IntuitAnyType;
-  /** [b]QuickBooks Notes[/b][br /]
+  /** **QuickBooks Notes**
+  /**
     * [i]Unsupported
     * field.[/i] */
   CheckDetail?: CheckPayment;
@@ -970,9 +980,11 @@ export interface CascadeResponse {
 export interface CashBackInfo {
   /** AccountReferenceGroup Identifies the Asset
     * Account (bank account) to be used for this Cash back.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * Required for the create operation.
-    * [br /] */
+    * 
+    * */
   AccountRef?: ReferenceType;
   Amount?: number;
   Memo?: string;
@@ -1054,8 +1066,9 @@ export interface CDCResponse {
 export interface ChargeCredit extends Transaction {
   /** ARAccountReferenceGroup Identifies the AR
     * Account to
-    * be used for this Credit Memo. [b]QuickBooks
-    * Notes[/b][br /] The AR
+    * be used for this Credit Memo. **QuickBooks
+    * Notes**
+    * The AR
     * Account should always be specified or a
     * default will be used. */
   ARAccountRef?: ReferenceType;
@@ -1074,15 +1087,17 @@ export interface ChargeCredit extends Transaction {
   DueDate?: Date;
   /** Identifies the party or location that the
     * payment is
-    * to be remitted to or sent to. [b]QuickBooks
-    * Notes[/b][br /] Non
+    * to be remitted to or sent to. **QuickBooks
+    * Notes**
+    * Non
     * QB-writable. */
   RemitToRef?: ReferenceType;
   /** Indicates the total amount of the entity
     * associated.
     * This includes the total of all the charges,
     * allowances and taxes.
-    * [b]QuickBooks Notes[/b][br /] Non
+    * **QuickBooks Notes**
+    * Non
     * QB-writable. */
   TotalAmt?: number;
 }
@@ -1158,10 +1173,11 @@ export interface Class extends IntuitEntity {
     * Description: Output Only. Fully
     * qualified name of the entity. The fully qualified name prepends
     * the topmost parent, followed by each sub element separated by
-    * colons. Takes the form of: [br
-    * /]Parent:class1:Subclass1:Subclass2 */
+    * colons. Takes the form of: 
+    * Parent:class1:Subclass1:Subclass2 */
   FullyQualifiedName?: string;
-  /** User recognizable name for the Class.[br /]
+  /** User recognizable name for the Class.
+  /**
     * Length Restriction:
     * QBO: 100 characters
     * QBW: 31 characters
@@ -1226,13 +1242,15 @@ export interface Company extends IntuitEntity {
   CompanyEmailAddr?: EmailAddress;
   /** Product: QBW
     * Description: QuickBooks company
-    * file name.[br /]Data Services max. length: 512 characters. */
+    * file name.
+    *Data Services max. length: 512 characters. */
   CompanyFileName?: string;
   /** Product: ALL
     * Description: Internal use only: extension place holder for Company. */
   CompanyInfoEx?: IntuitAnyType;
   /** Product: ALL
-    * Description: Name of the company.[br /]Max. length: 1024 characters. */
+    * Description: Name of the company.
+    *Max. length: 1024 characters. */
   CompanyName?: string;
   /** Product: ALL
     * Description: DateTime when the company file was created. */
@@ -1241,12 +1259,14 @@ export interface Company extends IntuitEntity {
   CompanyURL?: WebSiteAddress;
   /** Product: QBW
     * Description: IAM or QBN admin users
-    * email.[br /]Data Services max. length: 100 characters. */
+    * email.
+    *Data Services max. length: 100 characters. */
   CompanyUserAdminEmail?: string;
   /** Product: QBW
     * Description: IAM or QBN admin users
     * id sequence number to group many external realms for this user
-    * under his id number.[br /]Data Services max. length: 512
+    * under his id number.
+    *Data Services max. length: 512
     * characters. */
   CompanyUserId?: string;
   /** Product: ALL
@@ -1276,7 +1296,8 @@ export interface Company extends IntuitEntity {
   FiscalYearStartMonth?: MonthEnum;
   /** Product: QBW
     * Description: QB software flavor
-    * being used on the file on the PC.[br /]Data Services max.
+    * being used on the file on the PC.
+    *Data Services max.
     * length: 512 characters. */
   FlavorStratum?: string;
   /** Product: ALL
@@ -1312,7 +1333,8 @@ export interface Company extends IntuitEntity {
     * major release in the first number, the minor release in the
     * second number (always a zero), the release update (slipstream or
     * "R") in the third number, and the build number in the final
-    * number.[br /]Max. length: 512 characters. */
+    * number.
+    *Max. length: 512 characters. */
   QBVersion?: string;
   /** Product: QBW
     * Description: if the QB desktop file is a sample file. */
@@ -1410,13 +1432,15 @@ export interface CompanyInfo extends IntuitEntity {
   CompanyEmailAddr?: EmailAddress;
   /** Product: QBW
     * Description: QuickBooks company
-    * file name.[br /]Data Services max. length: 512 characters. */
+    * file name.
+    *Data Services max. length: 512 characters. */
   CompanyFileName?: string;
   /** Product: ALL
     * Description: Internal use only: extension place holder for Company. */
   CompanyInfoEx?: IntuitAnyType;
   /** Product: ALL
-    * Description: Name of the company.[br /]Max. length: 1024 characters. */
+    * Description: Name of the company.
+    *Max. length: 1024 characters. */
   CompanyName?: string;
   /** Product: ALL
     * Description: DateTime when the company file was created. */
@@ -1425,12 +1449,14 @@ export interface CompanyInfo extends IntuitEntity {
   CompanyURL?: WebSiteAddress;
   /** Product: QBW
     * Description: IAM or QBN admin users
-    * email.[br /]Data Services max. length: 100 characters. */
+    * email.
+    *Data Services max. length: 100 characters. */
   CompanyUserAdminEmail?: string;
   /** Product: QBW
     * Description: IAM or QBN admin users
     * id sequence number to group many external realms for this user
-    * under his id number.[br /]Data Services max. length: 512
+    * under his id number.
+    *Data Services max. length: 512
     * characters. */
   CompanyUserId?: string;
   /** Product: ALL
@@ -1463,7 +1489,8 @@ export interface CompanyInfo extends IntuitEntity {
   FiscalYearStartMonth?: MonthEnum;
   /** Product: QBW
     * Description: QB software flavor
-    * being used on the file on the PC.[br /]Data Services max.
+    * being used on the file on the PC.
+    *Data Services max.
     * length: 512 characters. */
   FlavorStratum?: string;
   /** Product: ALL
@@ -1502,7 +1529,8 @@ export interface CompanyInfo extends IntuitEntity {
     * major release in the first number, the minor release in the
     * second number (always a zero), the release update (slipstream or
     * "R") in the third number, and the build number in the final
-    * number.[br /]Max. length: 512 characters. */
+    * number.
+    *Max. length: 512 characters. */
   QBVersion?: string;
   /** Product: QBW
     * Description: if the QB desktop file is a sample file. */
@@ -1533,7 +1561,8 @@ export interface ContactInfo {
     * Description: Telephone number information. */
   Telephone?: TelephoneNumber;
   /** Product: ALL
-    * Description: The type of contact information.[br /] */
+    * Description: The type of contact information.
+    * */
   Type?: ContactTypeEnum;
   /** Product: ALL
     * Description: Website address (URI) information. */
@@ -1640,10 +1669,12 @@ export interface CreditChargeInfo {
     * Description: Expiration Year on card, expressed as a 4 digit number 1999, 2003, etc. */
   CcExpiryYear?: number;
   /** Product: ALL
-    * Description: Credit card transaction mode used in Credit Card payment transactions. Valid values: CardNotPresent (default) or CardPresent.[br /] */
+    * Description: Credit card transaction mode used in Credit Card payment transactions. Valid values: CardNotPresent (default) or CardPresent.
+    * */
   CCTxnMode?: CCTxnModeEnum;
   /** Product: ALL
-    * Description: Type of credit card transaction. Valid values: Authorization, Capture, Charge, Refund, VoiceAuthorization.[br /] */
+    * Description: Type of credit card transaction. Valid values: Authorization, Capture, Charge, Refund, VoiceAuthorization.
+    * */
   CCTxnType?: CCTxnTypeEnum;
   /** Product: ALL
     * Description: Code associated with commercial cards: purchase, corporate, and business cards. Lower transaction fee rates apply when these cards are used and this field is provided. */
@@ -1667,7 +1698,8 @@ export interface CreditChargeInfo {
     * Description: If false or no value, QBO will not process the payment but just store Credit Card Information. If true, QBO will process the Credit Card Payment (Not supported currently). */
   ProcessPayment?: boolean;
   /** Product: ALL
-    * Description: Type of credit card.[br /] */
+    * Description: Type of credit card.
+    * */
   Type?: string;
 }
 
@@ -1678,12 +1710,14 @@ export interface CreditChargeResponse {
     * Description: Code returned from the credit card processor to indicate that the charge will be paid by the card issuer. */
   AuthCode?: string;
   /** Product: ALL
-    * Description: The AVS (Address Verification Service) result for the street address supplied in the transaction. Possible values are Pass, if the information matches the information on file with the cardholder's account, Fail, or NotAvailable.[br /] */
+    * Description: The AVS (Address Verification Service) result for the street address supplied in the transaction. Possible values are Pass, if the information matches the information on file with the cardholder's account, Fail, or NotAvailable.
+    * */
   AvsStreet?: CCAVSMatchEnum;
   /** The AVS (Address Verification Service) result for the zip code supplied in the transaction.  Possible values are Pass, if the information matches the information on file with the cardholder's account, Fail, or NotAvailable. */
   AvsZip?: CCAVSMatchEnum;
   /** Product: ALL
-    * Description: Result of comparing the security code supplied in the credit card transaction request with the code on file with the card issuer. Possible values are Pass, Fail, and NotAvailable.[br /] */
+    * Description: Result of comparing the security code supplied in the credit card transaction request with the code on file with the card issuer. Possible values are Pass, Fail, and NotAvailable.
+    * */
   CardSecurityCodeMatch?: CCSecurityCodeMatchEnum;
   /** Product: Not used now
     * Description: Credit Card Processor Name for recording the payment processor */
@@ -1716,7 +1750,8 @@ export interface CreditChargeResponse {
     * Description: CardCode or Card Id field that can be optionally provided to use additional security features of credit card authorization. It is typically a 3 digit number located on the back of most credit cards. For American Express, it is a 4 digit number on the front. */
   SecurityCode?: string;
   /** Product: ALL
-    * Description: Indicates the status of the payment transaction. Possible values include Completed, Unknown.[br /] */
+    * Description: Indicates the status of the payment transaction. Possible values include Completed, Unknown.
+    * */
   Status?: CCPaymentStatusEnum;
   /** Product: ALL
     * Description: This value is used to support the credit card transaction reconciliation. */
@@ -1739,8 +1774,9 @@ export interface CreditMemo extends SalesTransaction {
   InvoiceRef?: ReferenceType;
   /** Indicates the total credit amount still
     * available to apply towards the payment.
-    * [b]QuickBooks
-    * Notes[/b][br /]
+    * **QuickBooks
+    * Notes**
+    *
     * Non QB-writable. */
   RemainingCredit?: number;
 }
@@ -1751,16 +1787,19 @@ export interface Currency extends IntuitEntity {
   /** Whether or not active inactive Currency may be
     * hidden from most display purposes and may not be used on
     * financial transactions.
-    * [b][i]QuickBooks Notes[/i][/b] [br /]
+    * **[i]QuickBooks Notes[/i]** 
+    *
     * Inactive Currencies are not used when downloading the exchange
     * rates. */
   Active?: boolean;
   AsOfDate?: Date;
   /** Currency universal 3-letter code, like USD,
     * CAD, EUR, etc.
-    * [b][i]QuickBooks Notes[/i][/b] [br /]
+    * **[i]QuickBooks Notes[/i]** 
+    *
     * Required for
-    * the create operation. [br /]
+    * the create operation. 
+    *
     * Max Length: 3 */
   Code?: currencyCode;
   /** Internal use only: extension place holder for
@@ -1768,7 +1807,8 @@ export interface Currency extends IntuitEntity {
   CurrencyEx?: IntuitAnyType;
   /** Specifies how many decimal places can be shown.
     * Usually there will be 2, or 0 for currencies without "cents".
-    * [b][i]QuickBooks Notes[/i][/b] [br /]
+    * **[i]QuickBooks Notes[/i]** 
+    *
     * Max Length: 1 */
   DecimalPlaces?: number;
   /** Used for display purpose, can be a comma or a
@@ -1777,7 +1817,8 @@ export interface Currency extends IntuitEntity {
   ExchangeRate?: number;
   /** Specifies how to present the value, used for
     * the display purpose for example, ##,###,### or #,##,##,###
-    * [b][i]QuickBooks Notes[/i][/b] [br /]
+    * **[i]QuickBooks Notes[/i]** 
+    *
     * Max Length: 32 */
   Format?: string;
   /** Currency name.
@@ -1788,7 +1829,8 @@ export interface Currency extends IntuitEntity {
   Name?: string;
   /** "Thousand separator" character, used for the
     * display purpose.
-    * [b][i]QuickBooks Notes[/i][/b] [br /]
+    * **[i]QuickBooks Notes[/i]** 
+    *
     * Max Length:
     * 1 */
   Separator?: string;
@@ -1796,7 +1838,8 @@ export interface Currency extends IntuitEntity {
   /** Used for display purpose to specify where to
     * show the Currency Symbol. */
   SymbolPosition?: SymbolPositionEnum;
-  /** [b][i]QuickBooks Notes[/i][/b] [br /]
+  /** **[i]QuickBooks Notes[/i]** 
+  /**
     * QuickBooks predefines the most common world currencies, however
     * it does allow the user to define the new one.
     * The user-defined
@@ -2013,10 +2056,15 @@ export interface CurrencyPrefs {
 /** Product: ALL
   * Description: QBO: The Customer entityrepresents the consumer of the service or the product that your business offers. QBO allows categorizing the customers in a way that is meaningful to the business. For example, you can set up a category of customers to indicate which industry a customer represents, the geographic location of a customer, or how a customer came to know about the business. The categorization can be then used for reports or mails.
   * Description: QBW: The Customer entity is a consumer of the service or product that your business offers. While creating a customer, avoid entering  job data. If you enter a job data, the system can prevent you from adding   more jobs for that customer. You must first create the customer, and then create a job using that customer as a parent.
-  * Business Rules: [li]The customer name must be unique.[/li][li]The customer name must not contain a colon (:).[/li][li]The e-mail address of the customer must contain "@" and "." (dot).[/li][li]The customer address field is mandatory.[/li] */
+  * Business Rules: 
+  * * The customer name must be unique.
+  * * The customer name must not contain a colon (:).
+  * * The e-mail address of the customer must contain "@" and "." (dot).
+  * * The customer address field is mandatory. */
 export interface Customer extends NameBase {
   /** Product: QBW
-    * Description: Name or number of the account associated with this customer.[br /]Max. length: 99 characters. */
+    * Description: Name or number of the account associated with this customer.
+    *Max. length: 99 characters. */
   AcctNum?: string;
   /** Product: QBW
     * Description: Name of the Alternate Customer contact. */
@@ -2089,7 +2137,8 @@ export interface Customer extends NameBase {
     * Description: Specifies the level of the hirearchy in which the entity is located. Zero specifies the top level of the hierarchy; anything above will be level with respect to the parent. */
   Level?: number;
   /** Product: ALL
-    * Description: Free form text describing the Customer.[br /]Max. length: 1024 characters. */
+    * Description: Free form text describing the Customer.
+    *Max. length: 1024 characters. */
   Notes?: string;
   /** Product: ALL
     * Description: Date of the Open Balance for the create operation. */
@@ -2101,7 +2150,8 @@ export interface Customer extends NameBase {
     * Description: Over-due balance amount. Cannot be written to QuickBooks. */
   OverDueBalance?: number;
   /** Product: ALL
-    * Description: The immediate parent of the Sub-Customer/Job in the hierarchical "Customer:Job" list.[br /]Required for the create operation if the Customer is a sub-customer or Job. */
+    * Description: The immediate parent of the Sub-Customer/Job in the hierarchical "Customer:Job" list.
+    *Required for the create operation if the Customer is a sub-customer or Job. */
   ParentRef?: ReferenceType;
   /** Product: ALL
     * Description: Reference to a PaymentMethod associated with the Customer. */
@@ -2174,7 +2224,8 @@ export interface CustomerMsg extends IntuitEntity {
   /** Internal use only: extension place holder for
     * CustomerMsg */
   CustomerMsgEx?: IntuitAnyType;
-  /** Contains the message to a customer.[br /]
+  /** Contains the message to a customer.
+  /**
     * Length Restriction:
     * QBO: 15
     * QBW: 1024 */
@@ -2189,12 +2240,15 @@ export interface CustomerType extends IntuitEntity {
     * Filterable: QBW */
   Active?: boolean;
   /** Product: ALL
-    * Description: Fully qualified name of the entity. The fully qualified name prepends the topmost parent, followed by each sub element separated by colons. Takes the form of Parent:Customer:Job:Sub-job. Limited to 5 levels.[br /]Max. length: 41 characters (single name) or 209 characters (fully qualified name). */
+    * Description: Fully qualified name of the entity. The fully qualified name prepends the topmost parent, followed by each sub element separated by colons. Takes the form of Parent:Customer:Job:Sub-job. Limited to 5 levels.
+    *Max. length: 41 characters (single name) or 209 characters (fully qualified name). */
   FullyQualifiedName?: string;
   /** Product: QBW
-    * Description: User recognizable name for the CustomerType.[br /]Max. length: 31 characters.
+    * Description: User recognizable name for the CustomerType.
+    *Max. length: 31 characters.
     * Product: QBO
-    * Description: User recognizable name for the CustomerType.[br /]Max. length: 15 characters. */
+    * Description: User recognizable name for the CustomerType.
+    *Max. length: 15 characters. */
   Name?: string;
   /** Product: ALL
     * Description: Reference to the CustomerTypeParent. */
@@ -2232,7 +2286,8 @@ export interface CustomField {
     * Description: The value for a StringType custom field. */
   StringValue: string;
   /** Product: ALL
-    * Description: Data type of custom field.[br /] */
+    * Description: Data type of custom field.
+    * */
   Type: CustomFieldTypeEnum;
 }
 
@@ -2243,14 +2298,16 @@ export interface CustomFieldDefinition extends IntuitEntity {
     * Description: Identifier of Partner AppId that corresponds to this CustomField. */
   AppId?: string;
   /** Product: ALL
-    * Description: Intuit entity type to which the CustomFieldDefinition is associated. Valid values are defined in the objectNameEnumType.[br /]Required for the create operation.
+    * Description: Intuit entity type to which the CustomFieldDefinition is associated. Valid values are defined in the objectNameEnumType.
+    *Required for the create operation.
     * Required: ALL */
   EntityType?: string;
   /** Product: ALL
     * Description: True if the custom field is Private; false if Public and can be shared among different applications. */
   Hidden?: boolean;
   /** Product: ALL
-    * Description: Name of the CustomField entity.[br /]Required for the create operation.
+    * Description: Name of the CustomField entity.
+    *Required for the create operation.
     * Required: ALL */
   Name?: string;
   /** Product: ALL
@@ -2371,10 +2428,12 @@ export interface Department extends IntuitEntity {
     * Description: Output Only. Fully
     * qualified name of the entity. The fully qualified name prepends
     * the topmost parent, followed by each sub element separated by
-    * colons. Takes the form of: [br /]
+    * colons. Takes the form of: 
+    *
     * Parent:Location1:SubLocation1:SubLocation2 */
   FullyQualifiedName?: string;
-  /** User recognizable name for the Class.[br /]
+  /** User recognizable name for the Class.
+  /**
     * Length Restriction:
     * QBO: 100 characters
     * QBW: 1024 */
@@ -2396,9 +2455,11 @@ export interface Deposit extends Transaction {
   DepositEx?: IntuitAnyType;
   /** DepositToAccountReferenceGroup Identifies the
     * Asset Account (bank account) to be used for this Deposit.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * Required for the create operation.
-    * [br /] */
+    * 
+    * */
   DepositToAccountRef?: ReferenceType;
   /** Product: QBO
     * Description: Indicates the
@@ -2414,8 +2475,9 @@ export interface Deposit extends Transaction {
     * QuickBooks. */
   HomeTotalAmt?: number;
   /** Total amount of Deposit.
-    * [b]QuickBooks
-    * Notes[/b][br /]
+    * **QuickBooks
+    * Notes**
+    *
     * Non QB-writable. */
   TotalAmt?: number;
 }
@@ -2458,7 +2520,8 @@ export interface DepositLineDetail {
   TaxCodeRef?: ReferenceType;
   /** Product: ALL
     * Description: Type of the payment
-    * transaction. For information purposes only.[br /] */
+    * transaction. For information purposes only.
+    * */
   TxnType?: TxnTypeEnum;
 }
 
@@ -2669,9 +2732,11 @@ export interface EffectiveTaxRate {
   * Description: EmailAddress type definition. This entity is always manipulated in context of another parent entity like Person, Organization etc. */
 export interface EmailAddress {
   /** Product: QBW
-    * Description: Email address.[br /]Max. length: 1023 characters.
+    * Description: Email address.
+    *Max. length: 1023 characters.
     * Product: QBO
-    * Description: Email address.[br /]Max. length: 100 characters. */
+    * Description: Email address.
+    *Max. length: 100 characters. */
   Address?: string;
   /** Product: ALL
     * Description: True if this is the default email address. */
@@ -2865,7 +2930,8 @@ export interface EntityTypeRef {
     * Description: Reference to the entity. */
   EntityRef?: ReferenceType;
   /** Product: ALL
-    * Description: Entity type.[br /] */
+    * Description: Entity type.
+    * */
   Type?: EntityTypeEnum;
 }
 
@@ -3014,12 +3080,14 @@ export interface FinanceChargePrefs {
   AssessFinChrgForOverdueCharges?: boolean;
   /** Product:QBW
     * If true, the Finance Charges are
-    * calculated from the transaction date (Invoice, or Bill).[br /]
+    * calculated from the transaction date (Invoice, or Bill).
+    *
     * If
     * false, the Finance Charges are calculated from the due date. */
   CalcFinChrgFromTxnDate?: boolean;
   /** Product:QBW
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * Max
     * Length: 31 or 159 (for a fully qualified name) */
   FinChrgAccountRef?: ReferenceType;
@@ -3042,7 +3110,8 @@ export const FinancingProductTypeEnum = Object.freeze({
   * as a truck, cash register, or computer. */
 export interface FixedAsset extends IntuitEntity {
   /** Specifies whether the asset is new or used.
-    * This will aid in calculating depreciation.[br /]
+    * This will aid in calculating depreciation.
+    *
     * Length
     * Restriction:
     * QBO: 15
@@ -3055,9 +3124,12 @@ export interface FixedAsset extends IntuitEntity {
   /** Indicates the Fixed Asset account that tracks
     * the current value of the asset. If the same account is used for
     * all fixed assets, the current balance of this account will
-    * represent the current total value of the fixed assets.[br /]
-    * [br /]
-    * Required for the create operation. [br /] */
+    * represent the current total value of the fixed assets.
+    *
+    * 
+    *
+    * Required for the create operation. 
+    * */
   AssetAccountRef?: ReferenceType;
   /** QBW only: asset number. Maintained by the QB
     * Fixed Asset Manager. */
@@ -3085,7 +3157,8 @@ export interface FixedAsset extends IntuitEntity {
     * has been placed into service. */
   Location?: string;
   /** User recognizable name for the Fixed Asset
-    * Item.[br /]
+    * Item.
+    *
     * Length Restriction:
     * QBO: 15
     * QBW: 1024 */
@@ -3099,7 +3172,8 @@ export interface FixedAsset extends IntuitEntity {
   /** Specifies the asset's purchase price. */
   PurchaseCost?: number;
   /** Specifies the date the asset was purchased or
-    * acquired.[br /]
+    * acquired.
+    *
     * Length Restriction:
     * QBO: 15
     * QBW: 1024 */
@@ -3257,7 +3331,8 @@ export interface IntuitEntity {
     * Description: True if the entity representation has a partial set of elements. Output only field. */
   sparse?: boolean;
   /** Product: ALL
-    * Description: System status of the entity. Output only field.[br /]
+    * Description: System status of the entity. Output only field.
+    *
     * Filterable: ALL */
   status?: EntityStatusEnum;
 
@@ -3268,7 +3343,8 @@ export interface IntuitEntity {
     * Filterable: QBW */
   CustomField?: CustomField[];
   /** Product: ALL
-    * Description: Unique Identifier for an Intuit entity (object). [br /]Required for the update operation.
+    * Description: Unique Identifier for an Intuit entity (object). 
+    *Required for the update operation.
     * Required: ALL
     * Filterable: ALL */
   Id?: string;
@@ -3276,7 +3352,8 @@ export interface IntuitEntity {
     * Description: Descriptive information about the entity.  The MetaData values are set by Data Services and are read only for all applications. */
   MetaData?: ModificationMetaData;
   /** Product: ALL
-    * Description: Version number of the entity.  The SyncToken is used to lock the entity for use by one application at a time. As soon as an application modifies an entity, its SyncToken is incremented; another application's request to modify the entity with the same SyncToken will fail. Only the latest version of the entity is maintained by Data Services.  An attempt to modify an entity specifying an older SyncToken will fail. [br /]Required for the update operation.
+    * Description: Version number of the entity.  The SyncToken is used to lock the entity for use by one application at a time. As soon as an application modifies an entity, its SyncToken is incremented; another application's request to modify the entity with the same SyncToken will fail. Only the latest version of the entity is maintained by Data Services.  An attempt to modify an entity specifying an older SyncToken will fail. 
+    *Required for the update operation.
     * Required: ALL */
   SyncToken?: string;
 }
@@ -3409,7 +3486,8 @@ export interface InventoryAdjustment extends Transaction {
   * represents a location where inventory is stored.
   * Endpoint:
   * inventorysite
-  * Business Rules: [li]The site name must be unique.[/li] */
+  * Business Rules: 
+  * * The site name must be unique. */
 export interface InventorySite extends IntuitEntity {
   /** Product: QBW
     * Filterable: QBW
@@ -3449,10 +3527,12 @@ export interface InventorySite extends IntuitEntity {
   * salesterm with invoice and due dates for payment. Invoice supports
   * sales tax, and shipping charges as a special line item. Invoice can
   * be printed and emailed to a customer.
-  * Business Rules: [li] An invoice
+  * Business Rules: 
+  * *  An invoice
   * must have at least one line that describes the item and an
-  * amount.[/li][li] An invoice must have a reference to a customer in
-  * the header.[/li]
+  * amount.
+  * *  An invoice must have a reference to a customer in
+  * the header.
   * Product: QBW
   * Description: An Invoice is a financial transaction representing
   * a request for payment for goods or services that have been sold. An
@@ -3465,18 +3545,22 @@ export interface InventorySite extends IntuitEntity {
   * CustomerId field and at least one line item. The referenced customer
   * must already exist in the QuickBooks company at the desktop and any
   * line items must also already exists in the QuickBooks company, or
-  * the attempt to sync will fail.[br /]In general, it is a good
+  * the attempt to sync will fail.
+  *In general, it is a good
   * practice to specify all the header fields if you have the data. You
   * should always specify the ARAccountId; otherwise a default AR
   * account will be used and this may give you unexpected results.[/br]
   * If you want to apply one tax to all the transaction line items, use
   * the TaxId or TaxGroupId field. If you want to use more than one tax,
   * you need to use Tax Line items instead.
-  * Business Rules: [li] An
+  * Business Rules: 
+  * *  An
   * invoice must have at least one line that describes the item.
-  * [/li][li] If an account is specified in the header, the account must
-  * be of the Accounts Receivable (AR) type. [/li][li] An invoice must
-  * have a reference to a customer in the header.[/li] */
+  * 
+  * *  If an account is specified in the header, the account must
+  * be of the Accounts Receivable (AR) type. 
+  * *  An invoice must
+  * have a reference to a customer in the header. */
 export interface Invoice extends SalesTransaction {
   /** Product: QBO
     * Description: Specifies whether
@@ -3591,51 +3675,72 @@ export interface Invoice extends SalesTransaction {
   * discounts, and sales tax (if applicable). An item is shown as a line
   * on an invoice or other sales form. The Item.Type property, which
   * specifies how the item is used, may have one of the following
-  * values: [li]Assembly: The Assembly item allows you combine inventory
+  * values: 
+  * * Assembly: The Assembly item allows you combine inventory
   * part items and other assembly items (subassemblies) into a single
   * item by defining a Bill of Materials, that lists the component parts
   * of the assembly item. You can also include the cost of building the
   * assembly item by adding the non-inventory part items, service items,
-  * and other charge items to the Bill of Materials. [/li][li] Fixed
+  * and other charge items to the Bill of Materials. 
+  * *  Fixed
   * Asset: The Fixed Asset item represents those business assets that
   * you do not convert to cash one year of normal operation. A fixed
   * asset is usually something that is integral to your business
-  * operations. For example, a truck or computer. [/li][li]Group: The
+  * operations. For example, a truck or computer. 
+  * * Group: The
   * Group item helps you to quickly enter a group of individual items
-  * that you often purchase or sell together. [li]Inventory: The
+  * that you often purchase or sell together. 
+  * * Inventory: The
   * Inventory item is used to track merchandise which your business
   * purchases, stocks as inventory, and re-sells. QuickBooks tracks the
   * current number of inventory items in stock and the average value of
   * the inventory after the purchase and sale of every item.
-  * [/li][li]Other Charge: The Other Charge item is used to charge
-  * customers for the mileage expense.[/li] [li]Product The Product item
+  * 
+  * * Other Charge: The Other Charge item is used to charge
+  * customers for the mileage expense. 
+  * * Product The Product item
   * is used to record the sales information of a product.
-  * [/li][li]Payment: The Payment item subtracts the amount of a
+  * 
+  * * Payment: The Payment item subtracts the amount of a
   * customer payment from the total amount of an invoice or statement.
   * You must create a payment item if you receive payment for an invoice
   * or statement in parts. If you receive full payment at the time of
   * sale, use a sales receipt form instead of an invoice with a payment
-  * item.[/li] [li]Service: The Service item is used for the services
+  * item. 
+  * * Service: The Service item is used for the services
   * that you charge on the purchase. For example, including specialized
-  * labor, consulting hours, and professional fees. [/li][li]Subtotal:
+  * labor, consulting hours, and professional fees. 
+  * * Subtotal:
   * The Subtotal item is used when you want the total of all the items.
   * You can use this item to apply a percentage discount or
-  * surcharge.[/li]
-  * Business Rules: [li]The item name must be unique.
-  * [/li][li]The item type must not be NULL. [/li][li]The item cannot
+  * surcharge.
+  * Business Rules: 
+  * * The item name must be unique.
+  * 
+  * * The item type must not be NULL. 
+  * * The item cannot
   * define both unit price and unit price percent simultaneously.
-  * [/li][li]For the Service, Product, and Other Charge items, you must
-  * specify the ID or name of the expense account or both. [/li][li]If
+  * 
+  * * For the Service, Product, and Other Charge items, you must
+  * specify the ID or name of the expense account or both. 
+  * * If
   * the purchase order cost is specified for the Service, Product, and
   * Other Charge items, you must specify the ID or name of the expense
-  * account or both.[/li] For the Inventory and Assembly items, you must
-  * specify: [li]the ID or name of the income account or both
-  * [/li][li]the ID or name of the cogs account or both [/li][li]the ID
-  * or name of the asset account or both [/li][li]For the Group item,
-  * you must specify the tax ID or tax name or both.[/li] For the Fixed
-  * Asset item, you must: [li]set the asset account type to Asset[/li]
-  * [li]specify the purchase date [/li][li]specify the ID or name of the
-  * income account or both[/li] */
+  * account or both. For the Inventory and Assembly items, you must
+  * specify: 
+  * * the ID or name of the income account or both
+  * 
+  * * the ID or name of the cogs account or both 
+  * * the ID
+  * or name of the asset account or both 
+  * * For the Group item,
+  * you must specify the tax ID or tax name or both. For the Fixed
+  * Asset item, you must: 
+  * * set the asset account type to Asset
+  * 
+  * * specify the purchase date 
+  * * specify the ID or name of the
+  * income account or both */
 export interface Item extends IntuitEntity {
   /** Product: QBO
     * Description: India sales tax
@@ -3652,7 +3757,8 @@ export interface Item extends IntuitEntity {
     * Inventory Asset account that tracks the current value of the
     * inventory. If the same account is used for all inventory items,
     * the current balance of this account will represent the current
-    * total value of the inventory.[br /]Required for the the
+    * total value of the inventory.
+    *Required for the the
     * following item types: Assembly, Inventory.
     * Required: ALL */
   AssetAccountRef?: ReferenceType;
@@ -3663,7 +3769,9 @@ export interface Item extends IntuitEntity {
   /** Product: ALL
     * Description: Assembly item
     * QuantityOnHand threshold below which more assemblies should be
-    * built.[br /]Applicable to the Assembly Item type only.[br /]When
+    * built.
+    *Applicable to the Assembly Item type only.
+    *When
     * he quantity of the assembly item gets below the BuildPoint
     * number, QuickBooks will remind the user to build more. */
   BuildPoint?: number;
@@ -3673,7 +3781,8 @@ export interface Item extends IntuitEntity {
   ClassRef?: ReferenceType;
   /** Product: ALL
     * Description: Reference to the Cost
-    * of Goods Sold account for the inventory item.[br /]Required for
+    * of Goods Sold account for the inventory item.
+    *Required for
     * the the following item types: Assembly, Inventory.
     * Required: ALL */
   COGSAccountRef?: ReferenceType;
@@ -3684,28 +3793,32 @@ export interface Item extends IntuitEntity {
   DeferredRevenue?: boolean;
   /** Product: ALL
     * Description: Optional reference to
-    * the account in which the payment money is deposited.[br /]If not
+    * the account in which the payment money is deposited.
+    *If not
     * specified, the Undeposited Funds account will be used.
     * Applicable to the Payment item type only. */
   DepositToAccountRef?: ReferenceType;
   /** Product: QBW
     * Description: User entered
     * description for the item that describes the details of the
-    * service or product.[br /]Max. length: 4000 characters.
+    * service or product.
+    *Max. length: 4000 characters.
     * Product:
     * QBO
     * Description: User entered description for the item that
-    * describes the details of the service or product.[br /]Max.
+    * describes the details of the service or product.
+    *Max.
     * length: 4000 characters.
     * Filterable: QBO
     * Sortable: QBO */
   Description?: string;
   /** Product: ALL
     * Description: Reference to the
-    * expense account used to pay the vendor for this item.[br /]Note:
+    * expense account used to pay the vendor for this item.
+    *Note:
     * for a service item, this may also be an equity account to record
-    * a draw against the company equity to pay for the service.[br
-    * /]If the Purchase information (PurchaseDesc,
+    * a draw against the company equity to pay for the service.
+    * If the Purchase information (PurchaseDesc,
     * PurchaseTaxIncluded, PurchaseCost, etc.) is provided, this
     * account is required for the the following item types: Other
     * Charge, Product, Service.
@@ -3715,14 +3828,17 @@ export interface Item extends IntuitEntity {
     * Description: Fully qualified name
     * of the entity. The fully qualified name prepends the topmost
     * parent, followed by each sub element separated by colons. Takes
-    * the form of: [br /] Parent:Customer:Job:Sub-job [br /] Limited
+    * the form of: 
+    * Parent:Customer:Job:Sub-job 
+    * Limited
     * to 5 levels. Max. length: 41 characters (single name) or 209
     * characters (fully qualified name). */
   FullyQualifiedName?: string;
   /** Product: ALL
     * Description: Reference to the
     * posting account, that is, the account that records the proceeds
-    * from the sale of this item.[br /]Required for the the following
+    * from the sale of this item.
+    *Required for the the following
     * types: Assembly, Inventory, Other Charge, Product, Service.
     * Required: ALL */
   IncomeAccountRef?: ReferenceType;
@@ -3731,8 +3847,10 @@ export interface Item extends IntuitEntity {
     * balance for the inventory transaction. QuickBooks creates the
     * Opening Balance inventory transaction as of the  date, and
     * calculates the total value by multiplying the cost by the
-    * quantity on hand.[br /]Applies to the Quantity On Hand and Total
-    * Value.[br /]Applicable to the Inventory and Assembly item types
+    * quantity on hand.
+    *Applies to the Quantity On Hand and Total
+    * Value.
+    *Applicable to the Inventory and Assembly item types
     * only. */
   InvStartDate?: Date;
   /** Product: ALL
@@ -3760,15 +3878,17 @@ export interface Item extends IntuitEntity {
   Level?: number;
   /** Product: ALL
     * Description: Identifier provided by
-    * manufacturer for the Item, for example, the model number.[br
-    * /]Applicable for the the following item types: Inventory,
+    * manufacturer for the Item, for example, the model number.
+    * Applicable for the the following item types: Inventory,
     * Product. */
   ManPartNum?: string;
   /** Product: QBW
     * Description: User recognizable name
-    * for the Item.[br /]Max. length: 31 characters.
+    * for the Item.
+    *Max. length: 31 characters.
     * Product: QBO
-    * Description: User recognizable name for the Item.[br /]Max.
+    * Description: User recognizable name for the Item.
+    *Max.
     * length: 100 characters.
     * Filterable: ALL
     * Sortable: ALL
@@ -3805,7 +3925,8 @@ export interface Item extends IntuitEntity {
   PurchaseDesc?: string;
   /** Product: ALL
     * Description: Reference to the
-    * purchase tax code for the item.[br /]Applicable to the Service,
+    * purchase tax code for the item.
+    *Applicable to the Service,
     * Other Charge, and Part (Non-Inventory) item types. */
   PurchaseTaxCodeRef?: ReferenceType;
   /** Product: ALL
@@ -3830,8 +3951,8 @@ export interface Item extends IntuitEntity {
   /** Product: ALL
     * Description: The tax amount
     * expressed as a percent of charges entered in the current
-    * transaction. To enter a rate of 10% use 10.0, not 0.01.[br
-    * /]Applicable to the Service, OtherCharge or Part (Non-Inventory)
+    * transaction. To enter a rate of 10% use 10.0, not 0.01.
+    * Applicable to the Service, OtherCharge or Part (Non-Inventory)
     * item types only, and only if the Purchase part of the item does
     * not exist, that is, the item is not used as a reimbursable item,
     * or as a part in assemblies. */
@@ -3848,7 +3969,8 @@ export interface Item extends IntuitEntity {
     * reverse charge rate. */
   ReverseChargeRate?: number;
   /** Product: ALL
-    * Description: Reference to the sales tax code for the item.[br /]Applicable
+    * Description: Reference to the sales tax code for the item.
+    *Applicable
     * to the Service, Other Charge, Part (Non-Inventory), Inventory
     * and Assembly item types only. */
   SalesTaxCodeRef?: ReferenceType;
@@ -3864,7 +3986,8 @@ export interface Item extends IntuitEntity {
   /** Product: QBO
     * Description: Stock Keeping Unit -
     * User entered item identifier that identifies an item uniquely
-    * [br /]Max. length: 100 characters.
+    * 
+    *Max. length: 100 characters.
     * Filterable: ALL
     * Sortable: ALL */
   Sku?: string;
@@ -3881,7 +4004,8 @@ export interface Item extends IntuitEntity {
   SpecialItem?: boolean;
   /** Product: ALL
     * Description Type of special item,
-    * if SpecialItem is true.[br /] */
+    * if SpecialItem is true.
+    * */
   SpecialItemType?: SpecialItemTypeEnum;
   /** Product: ALL
     * Description: True if the item is a
@@ -3902,7 +4026,8 @@ export interface Item extends IntuitEntity {
   /** Product: ALL
     * Description: Classification that
     * specifies the use of this item. See the description at the top
-    * of the Item entity page for details. [br /]
+    * of the Item entity page for details. 
+    *
     * Filterable: ALL */
   Type?: ItemTypeEnum;
   /** Product: ALL
@@ -3963,7 +4088,8 @@ export interface ItemAssemblyDetail {
 export interface ItemBasedExpenseLineDetail extends ItemLineDetail {
   /** Product: ALL
     * Description: The billable status of
-    * the expense.[br /] */
+    * the expense.
+    * */
   BillableStatus?: BillableStatusEnum;
   /** Product: ALL
     * Description: Reference to the
@@ -4120,7 +4246,8 @@ export interface JobInfo {
     * Description: Starting date of the Job. */
   StartDate?: Date;
   /** Product: ALL
-    * Description: Current status of the job. Valid values are: Awarded, Closed, InProgress, None, NotAwarded, Pending, as defined in the JobStatusEnum.[br /] */
+    * Description: Current status of the job. Valid values are: Awarded, Closed, InProgress, None, NotAwarded, Pending, as defined in the JobStatusEnum.
+    * */
   Status?: JobStatusEnum;
 }
 
@@ -4144,12 +4271,15 @@ export interface JobType extends IntuitEntity {
     * Filterable: QBW */
   Active?: boolean;
   /** Product: ALL
-    * Description: Fully qualified name of the entity. The fully qualified name prepends the topmost parent, followed by each sub element separated by colons. Takes the form of Parent:Customer:Job:Sub-job. Limited to 5 levels.[br /]Max. length: 41 characters (single name) or 209 characters (fully qualified name). */
+    * Description: Fully qualified name of the entity. The fully qualified name prepends the topmost parent, followed by each sub element separated by colons. Takes the form of Parent:Customer:Job:Sub-job. Limited to 5 levels.
+    *Max. length: 41 characters (single name) or 209 characters (fully qualified name). */
   FullyQualifiedName?: string;
   /** Product: QBW
-    * Description: User recognizable name for the Job Type.[br /]Max. length: 31 characters.
+    * Description: User recognizable name for the Job Type.
+    *Max. length: 31 characters.
     * Product: QBO
-    * Description: User recognizable name for the Job Type.[br /]Max. length: 15 characters. */
+    * Description: User recognizable name for the Job Type.
+    *Max. length: 15 characters. */
   Name?: string;
   /** Product: ALL
     * Description: Reference to the JobTypeParent entity. */
@@ -4198,7 +4328,8 @@ export interface JournalEntry extends Transaction {
   Adjustment?: boolean;
   /** Valid only if the company file is set up to use
     * Multi-Currency feature.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * Amounts are
     * always entered in home currency for a HomeCurrencyAdjustment
     * JournalEntry. */
@@ -4210,7 +4341,8 @@ export interface JournalEntry extends Transaction {
   GlobalTaxCalculation?: GlobalTaxCalculationEnum;
   /** Valid only if the company file is set up to use
     * Multi-Currency feature.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * At the end
     * of a reporting period, when financial reports need to reflect a
     * current home currency value of the foreign balances, enter a
@@ -4238,8 +4370,8 @@ export interface JournalEntry extends Transaction {
     * based on sub items total and overridden.
     * Product: QBW
     * Description: Indicates the total amount of the transaction. This
-    * includes the total of all the charges, allowances and taxes.[br
-    * /]Calculated by QuickBooks business logic; cannot be written to
+    * includes the total of all the charges, allowances and taxes.
+    * Calculated by QuickBooks business logic; cannot be written to
     * QuickBooks.
     * Filterable: QBW
     * Sortable: QBW */
@@ -4258,7 +4390,8 @@ export interface JournalEntryLineDetail {
     * Description: The billable status of
     * the journal entry line. The line is to be billed to a customer if
     * the account is an expense account and the Entity Reference
-    * specifies a Customer or a Job.[br /] */
+    * specifies a Customer or a Job.
+    * */
   BillableStatus?: BillableStatusEnum;
   /** Product: ALL
     * Description: Reference to the Class
@@ -4283,7 +4416,8 @@ export interface JournalEntryLineDetail {
   JournalEntryLineDetailEx?: IntuitAnyType;
   /** Product: ALL
     * Description: Indicates whether the
-    * JournalEntry line is a Debit or Credit.[br /] */
+    * JournalEntry line is a Debit or Credit.
+    * */
   PostingType?: PostingTypeEnum;
   /** Product: QBO
     * Description: Tax applicable for this
@@ -4324,7 +4458,8 @@ export interface Line {
     * Description: The amount
     * of the line depending on the type of the line. It can represent
     * the discount amount, charge amount, tax amount, or subtotal amount
-    * based on the line type detail.[br /]Required for BillPayment,
+    * based on the line type detail.
+    *Required for BillPayment,
     * Check, Estimate, Invoice, JournalEntry, Payment, SalesReceipt.
     * Required: QBO */
   Amount?: number;
@@ -4339,7 +4474,9 @@ export interface Line {
   /** Product: QBO
     * Description: Free form text
     * description of the line item that appears in the printed
-    * record.[br /]Max. length: 4000 characters.[br /]Not supported for
+    * record.
+    *Max. length: 4000 characters.
+    *Not supported for
     * BillPayment or Payment.
     * Product: QBW
     * Description: Free form text
@@ -4352,7 +4489,8 @@ export interface Line {
   DescriptionLineDetail?: DescriptionLineDetail;
   /** Product: ALL
     * Description: The type of line in the
-    * transaction.[br /]
+    * transaction.
+    *
     * Required: ALL */
   DetailType?: LineDetailTypeEnum;
   /** Product: ALL
@@ -4366,14 +4504,18 @@ export interface Line {
   /** Product: QBW
     * Description: ID of the Line Item.
     * Product: QBO
-    * Description: ID of the Line Item.[br /]QBO considers a
+    * Description: ID of the Line Item.
+    *QBO considers a
     * request as an update operation for a line item, if you provide an
-    * ID that is greater than zero and the ID exists in QBO.[br /]QBO
+    * ID that is greater than zero and the ID exists in QBO.
+    *QBO
     * considers a request as an create operation for a line item in any
     * of the following conditions: No ID provided, ID provided is less
     * than or equal to zero, ID provided is greater than zero and does
-    * not exist in QuickBooks.[br /]Required for updating existing
-    * lines.[br /]Not supported for BillPayment, Estimate, Invoice, or
+    * not exist in QuickBooks.
+    *Required for updating existing
+    * lines.
+    *Not supported for BillPayment, Estimate, Invoice, or
     * Payment.
     * Required: QBO */
   Id?: string;
@@ -4480,11 +4622,12 @@ export const LineDetailTypeEnum = Object.freeze({
 export interface LinkedTxn {
   /** Product: QBW
     * Description: Transaction the current
-    * entity is related to (linked to), for example, Sales Order.[br
-    * /]UNSUPPORTED FIELD.
+    * entity is related to (linked to), for example, Sales Order.
+    * UNSUPPORTED FIELD.
     * Product: QBO
     * Description: A list of Estimate
-    * Ids that are to be associated with the invoice.[br /]Note: Only
+    * Ids that are to be associated with the invoice.
+    *Note: Only
     * Pending and Accepted Estimates can be specified. Closed and
     * Rejected estimates will be ignored. */
   TxnId?: string;
@@ -4639,9 +4782,13 @@ export interface NameBase extends IntuitEntity {
     * Filterable: QBW */
   DisplayName?: string;
   /** Product: QBW
-    * Description: Family name or the last name of the person.[br /]Max. length: 25 characters.[br /]At least one of the name elements is required: Title, GivenName, MiddleName, or FamilyName.
+    * Description: Family name or the last name of the person.
+    *Max. length: 25 characters.
+    *At least one of the name elements is required: Title, GivenName, MiddleName, or FamilyName.
     * Product: QBO
-    * Description: Family name or the last name of the person.[br /]Max. length: 15 characters.[br /]At least one of the name elements is required: Title, GivenName, MiddleName, FamilyName, or Suffix.
+    * Description: Family name or the last name of the person.
+    *Max. length: 15 characters.
+    *At least one of the name elements is required: Title, GivenName, MiddleName, FamilyName, or Suffix.
     * Filterable: ALL
     * Sortable: ALL */
   FamilyName?: string;
@@ -4649,12 +4796,17 @@ export interface NameBase extends IntuitEntity {
     * Description: Fax number. */
   Fax?: TelephoneNumber;
   /** Product: ALL
-    * Description: Fully qualified name of the entity. The fully qualified name prepends the topmost parent, followed by each sub element separated by colons. Takes the form of Parent:Customer:Job:Sub-job. Limited to 5 levels.[br /]Max. length: 41 characters (single name) or 209 characters (fully qualified name). */
+    * Description: Fully qualified name of the entity. The fully qualified name prepends the topmost parent, followed by each sub element separated by colons. Takes the form of Parent:Customer:Job:Sub-job. Limited to 5 levels.
+    *Max. length: 41 characters (single name) or 209 characters (fully qualified name). */
   FullyQualifiedName?: string;
   /** Product: QBW
-    * Description: Given name or first name of a person.[br /]Max. length: 25 characters.[br /]At least one of the name elements is required: Title, GivenName, MiddleName, or FamilyName.
+    * Description: Given name or first name of a person.
+    *Max. length: 25 characters.
+    *At least one of the name elements is required: Title, GivenName, MiddleName, or FamilyName.
     * Product: QBO
-    * Description: Given name or first name of a person.[br /]Max. length: 25 characters.[br /]At least one of the name elements is required: Title, GivenName, MiddleName, FamilyName, or Suffix.
+    * Description: Given name or first name of a person.
+    *Max. length: 25 characters.
+    *At least one of the name elements is required: Title, GivenName, MiddleName, FamilyName, or Suffix.
     * Filterable: ALL
     * Sortable: ALL */
   GivenName?: string;
@@ -4662,9 +4814,13 @@ export interface NameBase extends IntuitEntity {
     * Description: IntuitId represents the realm id, authid or an entity id. An entity is a new type of IAM identity that represents a person or a business which has no Intuit authentication context */
   IntuitId?: string;
   /** Product: QBW
-    * Description: Middle name of the person. The person can have zero or more middle names.[br /]Max. length: 5 characters.[br /]At least one of the name elements is required: Title, GivenName, MiddleName, or FamilyName.
+    * Description: Middle name of the person. The person can have zero or more middle names.
+    *Max. length: 5 characters.
+    *At least one of the name elements is required: Title, GivenName, MiddleName, or FamilyName.
     * Product: QBO
-    * Description: Middle name of the person. The person can have zero or more middle names.[br /]Max. length: 15 characters.[br /]At least one of the name elements is required: Title, GivenName, MiddleName, FamilyName, or Suffix.
+    * Description: Middle name of the person. The person can have zero or more middle names.
+    *Max. length: 15 characters.
+    *At least one of the name elements is required: Title, GivenName, MiddleName, FamilyName, or Suffix.
     * Filterable: ALL
     * Sortable: ALL */
   MiddleName?: string;
@@ -4687,7 +4843,9 @@ export interface NameBase extends IntuitEntity {
     * Description: Name of the person or organization as printed on a check. If not provided, this is populated from FullName. */
   PrintOnCheckName?: string;
   /** Product: QBO
-    * Description: Suffix appended to the name of a person. For example, Senior, Junior, etc. QBO only field.[br /]Max. length: 15 characters.[br /]At least one of the name elements is required: Title, GivenName, MiddleName, FamilyName, or Suffix. */
+    * Description: Suffix appended to the name of a person. For example, Senior, Junior, etc. QBO only field.
+    *Max. length: 15 characters.
+    *At least one of the name elements is required: Title, GivenName, MiddleName, FamilyName, or Suffix. */
   Suffix?: string;
   /** Product: ALL
     * Description: QBW: Title of the person. The person can have zero or more titles.
@@ -4924,8 +5082,8 @@ export interface OtherPrefs {
 export interface Payment extends Transaction {
   /** ARAccountReferenceGroup Identifies the AR
     * Account to be used for this Payment.
-    * [b]QuickBooks Notes[/b][br
-    * /]
+    * **QuickBooks Notes**
+    *
     * The AR Account should always be specified or a default will be
     * used. */
   ARAccountRef?: ReferenceType;
@@ -4939,7 +5097,8 @@ export interface Payment extends Transaction {
   /** Optional asset account specification to
     * designate the account the payment money needs to be deposited
     * to.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * If not specified, the
     * Undeposited Funds account will be used. */
   DepositToAccountRef?: ReferenceType;
@@ -4960,7 +5119,8 @@ export interface Payment extends Transaction {
     * Description: Valid values are Cash, Check, CreditCard, or
     * Other. No defaults. Cash based expense is not supported by
     * QuickBooks Windows. Not applicable to Estimate and
-    * SalesOrder.[br /] */
+    * SalesOrder.
+    * */
   PaymentType?: PaymentTypeEnum;
   /** Indicates that the payment should be processed
     * by merchant account service. Valid for QBO companies with credit
@@ -4969,24 +5129,26 @@ export interface Payment extends Transaction {
   ProcessPayment?: boolean;
   /** Identifies the party or location that the
     * payment is to be remitted to or sent to.
-    * [b]QuickBooks
-    * Notes[/b][br /]
+    * **QuickBooks
+    * Notes**
+    *
     * Non QB-writable. */
   RemitToRef?: ReferenceType;
   /** Product: ALL
     * Description: Indicates the total
     * amount of the entity associated. This includes the total of all
     * the payments from the Payment Details.
-    * [b]QuickBooks Notes[/b][br
-    * /]
+    * **QuickBooks Notes**
+    *
     * Non QB-writable.
     * Filterable: QBW
     * Sortable: QBW */
   TotalAmt?: number;
   /** Indicates the amount that has not been applied
     * to pay amounts owed for sales transactions.
-    * [b]QuickBooks
-    * Notes[/b][br /]
+    * **QuickBooks
+    * Notes**
+    *
     * Non QB-writable. */
   UnappliedAmt?: number;
 }
@@ -4997,8 +5159,8 @@ export interface Payment extends Transaction {
 export interface PaymentLineDetail {
   /** Product: ALL
     * Description: Indicates the unpaid
-    * amount of the transaction after this payment is applied.[br
-    * /]Cannot be written to QuickBooks. */
+    * amount of the transaction after this payment is applied.
+    * Cannot be written to QuickBooks. */
   Balance?: number;
   /** Product: ALL
     * Description: Reference to the Class
@@ -5012,7 +5174,8 @@ export interface PaymentLineDetail {
     * Description: Indicates the unpaid
     * amount of the transaction after this payment is applied in home
     * currency. It is visible only for companies which have
-    * multicurrency enabled[br /] Cannot be written to Quickbooks. */
+    * multicurrency enabled
+    * Cannot be written to Quickbooks. */
   HomeBalance?: number;
   /** Product: ALL
     * Description: Reference to the Item.
@@ -5037,7 +5200,8 @@ export interface PaymentMethod extends IntuitEntity {
     * Filterable: QBW */
   Active?: boolean;
   /** User recognizable name for the payment
-    * method.[br /]
+    * method.
+    *
     * Length Restriction:
     * QBO: 15
     * QBW: 31 */
@@ -5125,67 +5289,90 @@ export const PerItemAdjustEnum = Object.freeze({
   * Description: Physical (or postal) address type, this entity is always manipulated in context of another parent entity like Person, Organization etc. */
 export interface PhysicalAddress {
   /** Product: QBW
-    * Description: City name.[br /]Max. length: 31 characters.
+    * Description: City name.
+    *Max. length: 31 characters.
     * Product: QBO
-    * Description: City name.[br /]Max. length: 255 characters. */
+    * Description: City name.
+    *Max. length: 255 characters. */
   City?: string;
   /** Product: QBW
-    * Description: Country name.[br /]Max. length: 31 characters.
+    * Description: Country name.
+    *Max. length: 31 characters.
     * Product: QBO
-    * Description: Country name.[br /]Max. length: 255 characters. */
+    * Description: Country name.
+    *Max. length: 255 characters. */
   Country?: string;
   /** Product: ALL
-    * Description: Country code per ISO 3166.[br /]Unsupported field. */
+    * Description: Country code per ISO 3166.
+    *Unsupported field. */
   CountryCode?: string;
   /** Product: QBW
-    * Description: Region within a country.  For example, state name for USA, province name for Canada.[br /]Max. length: 21 characters.
+    * Description: Region within a country.  For example, state name for USA, province name for Canada.
+    *Max. length: 21 characters.
     * Product: QBO
-    * Description: Globalized representation of a region. For example, state name for USA, province name for Canada.[br /]Max. length: 255 characters. */
+    * Description: Globalized representation of a region. For example, state name for USA, province name for Canada.
+    *Max. length: 255 characters. */
   CountrySubDivisionCode?: string;
   /** Product: QBO
-    * Description: County name.[br /]Max. length: 25 characters. */
+    * Description: County name.
+    *Max. length: 25 characters. */
   County?: string;
   /** Product: ALL
-    * Description: Unique identifier of the Intuit entity for the address, mainly used for modifying the address.[br /]Note: There is no SyncToken for this entity because it is always associated with the IntuitEntity type that is the top level or parent entity. */
+    * Description: Unique identifier of the Intuit entity for the address, mainly used for modifying the address.
+    *Note: There is no SyncToken for this entity because it is always associated with the IntuitEntity type that is the top level or parent entity. */
   Id?: string;
   /** Product: ALL
-    * Description: Latitude coordinate of Geocode (Geospatial Entity Object Code).[br /]Unsupported field. */
+    * Description: Latitude coordinate of Geocode (Geospatial Entity Object Code).
+    *Unsupported field. */
   Lat?: string;
   /** Product: QBW
-    * Description: First line of the address.[br /]Max. length: 41 characters.
+    * Description: First line of the address.
+    *Max. length: 41 characters.
     * Product: QBO
-    * Description: First line of the address.[br /]Max. length: 500 characters. */
+    * Description: First line of the address.
+    *Max. length: 500 characters. */
   Line1?: string;
   /** Product: QBW
-    * Description: Second line of the address.[br /]Max. length: 41 characters.
+    * Description: Second line of the address.
+    *Max. length: 41 characters.
     * Product: QBO
-    * Description: Second line of the address.[br /]Max. length: 500 characters. */
+    * Description: Second line of the address.
+    *Max. length: 500 characters. */
   Line2?: string;
   /** Product: QBW
-    * Description: Third line of the address.[br /]Max. length: 41 characters.
+    * Description: Third line of the address.
+    *Max. length: 41 characters.
     * Product: QBO
-    * Description: Third line of the address.[br /]Max. length: 500 characters. */
+    * Description: Third line of the address.
+    *Max. length: 500 characters. */
   Line3?: string;
   /** Product: QBW
-    * Description: Fourth line of the address.[br /]Max. length: 41 characters.
+    * Description: Fourth line of the address.
+    *Max. length: 41 characters.
     * Product: QBO
-    * Description: Fourth line of the address.[br /]Max. length: 500 characters. */
+    * Description: Fourth line of the address.
+    *Max. length: 500 characters. */
   Line4?: string;
   /** Product: QBW
-    * Description: Fifth line of the address.[br /]Max. length: 41 characters.
+    * Description: Fifth line of the address.
+    *Max. length: 41 characters.
     * Product: QBO
-    * Description: Fifth line of the address.[br /]Max. length: 500 characters. */
+    * Description: Fifth line of the address.
+    *Max. length: 500 characters. */
   Line5?: string;
   /** Product: ALL
-    * Description: Longitude coordinate of Geocode (Geospatial Entity Object Code).[br /]Unsupported field. */
+    * Description: Longitude coordinate of Geocode (Geospatial Entity Object Code).
+    *Unsupported field. */
   Long?: string;
   /** Product: ALL
     * Description: Note for . */
   Note?: string;
   /** Product: QBW
-    * Description: Postal code. For example, zip code for USA and Canada.[br /]Max. length: 13 characters.
+    * Description: Postal code. For example, zip code for USA and Canada.
+    *Max. length: 13 characters.
     * Product: QBO
-    * Description: Postal code. For example, zip code for USA and Canada.[br /]Max. length: 30 characters. */
+    * Description: Postal code. For example, zip code for USA and Canada.
+    *Max. length: 30 characters. */
   PostalCode?: string;
   /** Product: ALL
     * Description: Postal Code extension. For example, in the USA this is a 4 digit extension of the zip code. */
@@ -5419,8 +5606,8 @@ export interface Purchase extends Transaction {
   /** The total amount due, determined by taking the
     * sum of all lines associated. This includes all charges,
     * allowances, taxes, discounts, etc...
-    * [b]QuickBooks Notes[/b][br
-    * /]
+    * **QuickBooks Notes**
+    *
     * Non QB-writable.
     * Output only field in case of QBO
     * Filterable:
@@ -5443,13 +5630,15 @@ export interface PurchaseByVendor extends Transaction {
     * account, so the account is implied. When specified, the account
     * must be a Liability account, and further, the sub-type must be
     * of type "Payables"
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * The AP Account
     * should always be specified or a default will be used. */
   APAccountRef?: ReferenceType;
   /** Product: QBW
     * Description: The email address to
-    * which this bill is/was sent. [br/] Non QB-writable. */
+    * which this bill is/was sent. 
+    * Non QB-writable. */
   BillEmail?: EmailAddress;
   /** Product: QBO
     * Description: Indicates the
@@ -5461,13 +5650,15 @@ export interface PurchaseByVendor extends Transaction {
   /** Product: QBW
     * Description: The email address to
     * which inquiries about the bill may be directed. (Also
-    * appropriate for paypal payments). [br/] Non QB-writable. */
+    * appropriate for paypal payments). 
+    * Non QB-writable. */
   ReplyEmail?: EmailAddress;
   /** Product: ALL
     * Description: The total amount due, determined by taking the sum of all lines
     * associated. This includes all charges, allowances, taxes,
     * discounts, etc...
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * Non QB-writable.
     * Output only field in case of QBO
     * Filterable: QBW
@@ -5528,11 +5719,13 @@ export interface PurchaseOrder extends PurchaseByVendor {
     * Description: Ship to Entity Reference. */
   ShipTo?: ReferenceType;
   /** Represents the TaxCode Reference with respect
-    * to the purchase[br /] */
+    * to the purchase
+    * */
   TaxCodeRef?: ReferenceType;
   TemplateRef?: ReferenceType;
   /** Address to which the payment should be sent.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * Non QB-writable. */
   VendorAddr?: PhysicalAddress;
 }
@@ -5554,7 +5747,8 @@ export interface PurchaseOrderItemLineDetail extends SalesItemLineDetail {
   /** Product: ALL
     * Description: Represents the
     * difference between the quantity ordered and actually
-    * received.[br /]Cannot be written to QuickBooks. */
+    * received.
+    *Cannot be written to QuickBooks. */
   OpenQty?: number;
   /** Product: ALL
     * Description: Internal use only:
@@ -5799,8 +5993,9 @@ export interface RefundReceipt extends SalesTransaction {
   RefundReceiptEx?: IntuitAnyType;
   /** Indicates the total credit amount still
     * available to apply towards the payment.
-    * [b]QuickBooks
-    * Notes[/b][br /]
+    * **QuickBooks
+    * Notes**
+    *
     * Non QB-writable. */
   RemainingCredit?: number;
 }
@@ -5895,7 +6090,8 @@ export interface ReportHeader {
 export interface ReportPrefs {
   /** Product:QBW
     * If true, the Aging Reports are based
-    * on the transaction date.[br /]
+    * on the transaction date.
+    *
     * If false, the Aging Reports are
     * based on the due date. */
   CalcAgingReportFromTxnDate?: boolean;
@@ -5991,8 +6187,9 @@ export interface SalesFormsPrefs {
   DefaultMarkup?: number;
   /** Product:QBW
     * Cloud Max Length: 256
-    * [b]QuickBooks
-    * Notes[/b][br /]
+    * **QuickBooks
+    * Notes**
+    *
     * Max Length: 31 */
   DefaultShipMethodRef?: ReferenceType;
   /** Product:QBO
@@ -6092,11 +6289,14 @@ export interface SalesItemLineDetail extends ItemLineDetail {
   * orders is optional.
   * Endpoint: services.intuit.com
   * Business Rules:
-  * [li]A sales order must have at least one line that describes the
-  * item. [/li][li]A sales order must have a reference to a customer in
-  * the [/li][li]If you submit a query with the filter
+  * 
+  * * A sales order must have at least one line that describes the
+  * item. 
+  * * A sales order must have a reference to a customer in
+  * the 
+  * * If you submit a query with the filter
   * IncludeDiscountLineDetails, the system retrieves either
-  * DiscountAmount or DiscountRatePercent with associated values[/li] */
+  * DiscountAmount or DiscountRatePercent with associated values */
 export interface SalesOrder extends SalesTransaction {
   /** Product: QBW
     * Description: The entire
@@ -6151,14 +6351,17 @@ export interface SalesRep extends IntuitEntity {
   EmployeeRef?: ReferenceType;
   /** Product: QBW
     * Description: User recognizable
-    * initials of the Sales Rep.[br/]Required for the Create
-    * request.[br/] Max Length: 5 characters. */
+    * initials of the Sales Rep.
+    *Required for the Create
+    * request.
+    * Max Length: 5 characters. */
   Initials?: string;
   /** Product: QBW
     * Description: The SalesRep type.
     * Also, one of the three entity references (either the Name or the
     * ID of the Employee, OtherName, or Vendor) is required for the
-    * Create request.[br /]
+    * Create request.
+    *
     * Required: QBW */
   NameOf?: SalesRepTypeEnum;
   /** Product: QBW
@@ -6234,28 +6437,32 @@ export interface SalesTransaction extends Transaction {
   Balance?: number;
   /** Product: ALL
     * Description: QBO: Bill-to address
-    * of the Invoice.[br]See [a
+    * of the Invoice.]See [a
     * href="http://ipp.developer.intuit.com/0010_Intuit_Partner_Platform/0060_Financial_Management_Services_(v3)/01000_Using_Data_Service_Entities#Addresses"]Addresses[/a]
     * Description: QBW: The physical (postal) address where the bill
-    * or invoice is sent.[br]See [a
+    * or invoice is sent.]See [a
     * href="http://ipp.developer.intuit.com/0010_Intuit_Partner_Platform/0060_Financial_Management_Services_(v3)/01000_Using_Data_Service_Entities#Addresses"]Addresses[/a]
     * InputType: ReadWrite */
   BillAddr?: PhysicalAddress;
   /** Product: QBO
     * Description: Identifies the e-mail
     * address where the invoice is sent. At present, you can provide
-    * only one e-mail address.[br /]If the ToBeEmailed attribute is
+    * only one e-mail address.
+    *If the ToBeEmailed attribute is
     * true and the BillEmail attribute contains an e-mail address, the
     * user can send an e-mail message to the e-mail address that is
-    * specified in the BillEmail attribute.[br /]If the BillEmail
+    * specified in the BillEmail attribute.
+    *If the BillEmail
     * attribute contains an invalid e-mail address, QBO does not send
     * the e-mail message to the invalid e-mail address. QBO also does
     * not return any error message to indicate that the e-mail address
-    * is invalid.[br /]The maximum length for BillEmail is 100
+    * is invalid.
+    *The maximum length for BillEmail is 100
     * characters.
     * Product: QBW
     * Description: Identifies the email address
-    * where the bill or invoice is sent. [br /]UNSUPPORTED FIELD. */
+    * where the bill or invoice is sent. 
+    *UNSUPPORTED FIELD. */
   BillEmail?: EmailAddress;
   /** Product: QBO
     * Description: Identifies the bcc
@@ -6263,14 +6470,17 @@ export interface SalesTransaction extends Transaction {
     * attribute is true and the BillEmailBcc attribute contains an
     * e-mail address, the user can send an e-mail message to the
     * e-mail address that is specified in the BillEmailBcc
-    * attribute.[br /] If the BillEmailCc attribute contains an
+    * attribute.
+    * If the BillEmailCc attribute contains an
     * invalid bcc e-mail address, QBO does not send the e-mail message
-    * to the invalid bcc e-mail address. [br /]The maximum length for
+    * to the invalid bcc e-mail address. 
+    *The maximum length for
     * BillEmailBcc is 200 characters.
     * Product: QBW
     * Description:
     * Identifies the bcc email address where the bill or invoice is
-    * sent as bcc. [br /] */
+    * sent as bcc. 
+    * */
   BillEmailBcc?: EmailAddress;
   /** Product: QBO
     * Description: Identifies the cc
@@ -6278,14 +6488,17 @@ export interface SalesTransaction extends Transaction {
     * attribute is true and the BillEmailCc attribute contains an
     * e-mail address, the user can send an e-mail message to the
     * e-mail address that is specified in the BillEmailCc
-    * attribute.[br /] If the BillEmailCc attribute contains an
+    * attribute.
+    * If the BillEmailCc attribute contains an
     * invalid e-mail address, QBO does not send the e-mail message to
-    * the invalid cc e-mail address. [br /]The maximum length for
+    * the invalid cc e-mail address. 
+    *The maximum length for
     * BillEmailCc is 200 characters.
     * Product: QBW
     * Description:
     * Identifies the cc email address where the bill or invoice is
-    * sent. [br /] */
+    * sent. 
+    * */
   BillEmailCc?: EmailAddress;
   /** Product: ALL
     * Description Information about a check payment for the
@@ -6306,11 +6519,14 @@ export interface SalesTransaction extends Transaction {
     * Description: QBO: For an Invoice, this is the user-entered message to the
     * customer that does appear in the invoice, and does appear in the
     * printed invoice. The maximum length for Invoice Msg is 1000
-    * characters.[br /]For a Bill, this is the memo of the transaction
+    * characters.
+    *For a Bill, this is the memo of the transaction
     * to provide more detail, and does not appear in the printed
     * message of the bill. The maximum length for Bill Msg is 4000
-    * characters.[br /]For a CreditCardCharge, this message appears in
-    * the printed record; maximum length is 4000 characters.[br /]Not
+    * characters.
+    *For a CreditCardCharge, this message appears in
+    * the printed record; maximum length is 4000 characters.
+    *Not
     * supported for BillPayment, JournalEntry or Payment.
     * Description: QBW: User-entered message to the customer; this message will be
     * visible to end user on their transactions.
@@ -6365,7 +6581,8 @@ export interface SalesTransaction extends Transaction {
   DueDate?: Date;
   /** Product: ALL
     * Description: Email status of the
-    * invoice.[br /]
+    * invoice.
+    *
     * InputType: ReadWrite */
   EmailStatus?: EmailStatusEnum;
   /** Product: ALL
@@ -6402,11 +6619,13 @@ export interface SalesTransaction extends Transaction {
   /** Product: QBO
     * Description: The balance reflecting
     * any payments made against the transaction in home currency.
-    * Initially this will be equal to the HomeTotalAmt.[br /]Read-only
+    * Initially this will be equal to the HomeTotalAmt.
+    *Read-only
     * field.
     * Product: QBW
     * Description: Indicates the unpaid amount of
-    * the transaction in home currency.[br /]Cannot be written to
+    * the transaction in home currency.
+    *Cannot be written to
     * QuickBooks.
     * Filterable: ALL
     * Sortable: QBW */
@@ -6444,7 +6663,8 @@ export interface SalesTransaction extends Transaction {
   PONumber?: string;
   /** Product: ALL
     * Description: Printing status of the
-    * invoice.[br /]
+    * invoice.
+    *
     * InputType: ReadWrite */
   PrintStatus?: PrintStatusEnum;
   /** Product: QBW
@@ -6464,13 +6684,14 @@ export interface SalesTransaction extends Transaction {
   SalesTermRef?: ReferenceType;
   /** Product: ALL
     * Description: QBO: Shipping address
-    * of the Invoice.[br]See [a
+    * of the Invoice.]See [a
     * href="http://ipp.developer.intuit.com/0010_Intuit_Partner_Platform/0060_Financial_Management_Services_(v3)/01000_Using_Data_Service_Entities#Addresses"]Addresses[/a]
     * Description: QBW: Identifies the address where the goods must be
-    * shipped. [br /]QuickBooks Note: If ShipAddr is not specified,
+    * shipped. 
+    *QuickBooks Note: If ShipAddr is not specified,
     * and a default ship-to address is specified in QuickBooks for
     * this customer, the default ship-to address will be used by
-    * QuickBooks.[br]See [a
+    * QuickBooks.]See [a
     * href="http://ipp.developer.intuit.com/0010_Intuit_Partner_Platform/0060_Financial_Management_Services_(v3)/01000_Using_Data_Service_Entities#Addresses"]Addresses[/a] */
   ShipAddr?: PhysicalAddress;
   /** Product: QBW
@@ -6480,7 +6701,7 @@ export interface SalesTransaction extends Transaction {
   ShipDate?: Date;
   /** Product: ALL
     * Description: QBO: Shipping from address
-    * of the Invoice.[br]See [a
+    * of the Invoice.]See [a
     * href="http://ipp.developer.intuit.com/0010_Intuit_Partner_Platform/0060_Financial_Management_Services_(v3)/01000_Using_Data_Service_Entities#Addresses"]Addresses[/a]
     * Description: QBW: Identifies the address where the goods are shipped
     * from. For transactions without shipping, it represents the address where the sale took place. */
@@ -6511,7 +6732,8 @@ export interface SalesTransaction extends Transaction {
     * recalculated based on sub items total and overridden.
     * Description: QBW: Indicates the total amount of the transaction.
     * This includes the total of all the charges, allowances and
-    * taxes.[br /]Calculated by QuickBooks business logic; cannot be
+    * taxes.
+    *Calculated by QuickBooks business logic; cannot be
     * written to QuickBooks.
     * Filterable: QBW
     * Sortable: QBW
@@ -6686,8 +6908,9 @@ export const SpecialTaxTypeEnum = Object.freeze({
 export interface StatementCharge extends Transaction {
   /** ARAccountReferenceGroup Identifies the AR
     * Account to be used for this Credit Memo.
-    * [b]QuickBooks
-    * Notes[/b][br /]
+    * **QuickBooks
+    * Notes**
+    *
     * The AR Account should always be specified or a
     * default will be used. */
   ARAccountRef?: ReferenceType;
@@ -6703,8 +6926,9 @@ export interface StatementCharge extends Transaction {
   DueDate?: Date;
   /** Identifies the party or location that the
     * payment is to be remitted to or sent to.
-    * [b]QuickBooks
-    * Notes[/b][br /]
+    * **QuickBooks
+    * Notes**
+    *
     * Non QB-writable. */
   RemitToRef?: ReferenceType;
   /** Internal use only: extension place holder for
@@ -6713,7 +6937,8 @@ export interface StatementCharge extends Transaction {
   /** Indicates the total amount of the entity
     * associated. This includes the total of all the charges,
     * allowances and taxes.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * Non
     * QB-writable. */
   TotalAmt?: number;
@@ -6764,13 +6989,15 @@ export interface StatusInfo {
   * Description: Provides for strong-typing of the StringType CustomField. */
 export interface StringTypeCustomFieldDefinition extends CustomFieldDefinition {
   /** Product: ALL
-    * Description: Default string value of the StringType CustomField.[br /]Max. length: 31 characters. */
+    * Description: Default string value of the StringType CustomField.
+    *Max. length: 31 characters. */
   DefaultString?: string;
   /** Product: ALL
     * Description: Maximum length allowed for the value of the string when creating/updating a StringType CustomField. */
   MaxLength?: number;
   /** Product: ALL
-    * Description: The regular expression string used to validate the StringType CustomField value.[br /]Max. length: 31 characters. */
+    * Description: The regular expression string used to validate the StringType CustomField value.
+    *Max. length: 31 characters. */
   RegularExpression?: string;
 }
 
@@ -7026,7 +7253,7 @@ export interface TaxClassification extends IntuitEntity {
   * services, and customers based on their taxable or non-taxable
   * status. You can then use these codes to generate reports that
   * provide information to the tax agencies about the taxable or
-  * non-taxable status of certain sales. [br]See [a
+  * non-taxable status of certain sales. ]See [a
   * href="http://ipp.developer.intuit.com/0010_Intuit_Partner_Platform/0060_Financial_Management_Services_(v3)/01100_Global_Tax_Model"]Global
   * Tax Model[/a]. */
 export interface TaxCode extends IntuitEntity {
@@ -7042,7 +7269,8 @@ export interface TaxCode extends IntuitEntity {
   AdjustmentTaxRateList?: TaxRateList;
   /** Product: ALL
     * Description: User entered
-    * description for the sales tax code.[br/]Max Length: 31
+    * description for the sales tax code.
+    *Max Length: 31
     * characters. */
   Description?: string;
   /** Product: QBW
@@ -7051,11 +7279,13 @@ export interface TaxCode extends IntuitEntity {
   Hidden?: boolean;
   /** Product: QBW
     * Description: User recognizable name
-    * for the tax sales code.[br/]Max. Length: 3 characters.[br
-    * /]Required for the Create request.
+    * for the tax sales code.
+    *Max. Length: 3 characters.
+    * Required for the Create request.
     * Product: QBO
     * Description: User
-    * recognizable name for the tax sales code.[br/]Max. Length: 10
+    * recognizable name for the tax sales code.
+    *Max. Length: 10
     * characters.
     * Required: ALL
     * Filterable: ALL
@@ -7153,17 +7383,19 @@ export interface TaxLineDetail {
     * referenced here MUST also be
     * one of the rates in the referenced tax code's rate list (either the
     * SalesTaxRateList or the PurchaseTaxRateList) that applies to the
-    * transaction type.[br /]
+    * transaction type.
+    *
     * For international editions of QuickBooks,
     * for a TaxLineDetail in a TxnTaxDetail, the rate referenced here
     * must be referenced by a TaxCode used on a transaction
-    * line. Any given rate may only be listed once.[br]See [a
+    * line. Any given rate may only be listed once.]See [a
     * href="http://ipp.developer.intuit.com/0010_Intuit_Partner_Platform/0060_Financial_Management_Services_(v3)/01100_Global_Tax_Model"]Global
     * Tax Model[/a].
     * Product: QBO
     * Description: For US editions of
     * QuickBooks Online, and in TxnTaxDetail only, this references the
-    * TaxRate applied to the entire transaction.[br /]
+    * TaxRate applied to the entire transaction.
+    *
     * For international
     * editions of QuickBooks Online, for a TaxLineDetail in a
     * TxnTaxDetail, where the TxnTaxCodeRef is set, the TaxRate
@@ -7171,8 +7403,9 @@ export interface TaxLineDetail {
     * here MUST also be one of the rates in the referenced tax code's rate
     * list (either the SalesTaxRateList or the PurchaseTaxRateList) that
     * applies to the
-    * transaction type. Any given rate may only be listed once.[br /]Does not apply
-    * to a TaxLineDetail apart from a TxnTaxDetail.[br]See [a
+    * transaction type. Any given rate may only be listed once.
+    *Does not apply
+    * to a TaxLineDetail apart from a TxnTaxDetail.]See [a
     * href="http://ipp.developer.intuit.com/0010_Intuit_Partner_Platform/0060_Financial_Management_Services_(v3)/01100_Global_Tax_Model"]Global
     * Tax Model[/a]. */
   TaxRateRef?: ReferenceType;
@@ -7201,7 +7434,8 @@ export interface TaxPayment extends IntuitEntity {
 export interface TaxPrefs {
   HideTaxManagement?: boolean;
   /** Product: QBW
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * Max
     * Length: 3 */
   NonTaxableSalesTaxCodeRef?: ReferenceType;
@@ -7210,7 +7444,8 @@ export interface TaxPrefs {
     * Description: */
   PaySalesTax?: PaySalesTaxEnum;
   /** Product: QBW
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * Max
     * Length: 3 */
   TaxableSalesTaxCodeRef?: ReferenceType;
@@ -7229,7 +7464,7 @@ export interface TaxPrefs {
 
 /** Product: ALL
   * Description: A sales tax rate specifies
-  * the tax rate for the specific TaxCode.[br]See [a
+  * the tax rate for the specific TaxCode.]See [a
   * href="http://ipp.developer.intuit.com/0010_Intuit_Partner_Platform/0060_Financial_Management_Services_(v3)/01100_Global_Tax_Model"]Global
   * Tax Model[/a]. */
 export interface TaxRate extends IntuitEntity {
@@ -7246,7 +7481,8 @@ export interface TaxRate extends IntuitEntity {
   AgencyRef?: ReferenceType;
   /** Product: QBW
     * Description: User entered
-    * description for the tax rate.[br /]Max Length: 4000 characters.
+    * description for the tax rate.
+    *Max Length: 4000 characters.
     * ValidRange: QBW: Max=4000 */
   Description?: string;
   /** Product: QBO
@@ -7259,7 +7495,9 @@ export interface TaxRate extends IntuitEntity {
   EffectiveTaxRate?: EffectiveTaxRate[];
   /** Product: QBW
     * Description: User recognizable name
-    * for the tax rate.[br /]Max. Length: 31 characters.[br /]Required
+    * for the tax rate.
+    *Max. Length: 31 characters.
+    *Required
     * for the Create request.
     * Required: QBW
     * ValidRange: QBW: Max=31
@@ -7526,7 +7764,8 @@ export interface TelephoneNumber {
     * Description: Telephone extension code. */
   Extension?: string;
   /** Product: ALL
-    * Description: Specifies the telephone number in free form.  FreeFormNumber takes precedence over CountryCode, AreaCode, ExchangeCode, and Extension.[br /]Max length: 21 characters. */
+    * Description: Specifies the telephone number in free form.  FreeFormNumber takes precedence over CountryCode, AreaCode, ExchangeCode, and Extension.
+    *Max length: 21 characters. */
   FreeFormNumber?: string;
   /** Product: QBW
     * Description: Unique identifier for an Intuit entity. */
@@ -7558,9 +7797,12 @@ export interface TemplateName extends IntuitEntity {
     * financial tansactions. */
   Active?: boolean;
   /** User recognizable name for the Template
-    * name.[br /]
-    * [br /]
-    * Required for the create operation. [br /]
+    * name.
+    *
+    * 
+    *
+    * Required for the create operation. 
+    *
     * Max Length: 31 */
   Name?: string;
   Type?: TemplateTypeEnum;
@@ -7602,10 +7844,12 @@ export interface Term extends IntuitEntity {
   /** Product: ALL
     * Description: Payment must be
     * received by this day of the month.
-    * Business Rules: QBO: [li]
-    * This value is used only when DueDays is not specified.[/li]
-    * [li] Required for the Create request when DueDays is not
-    * specified.[/li]
+    * Business Rules: QBO: 
+    * * 
+    * This value is used only when DueDays is not specified.
+    * 
+    * *  Required for the Create request when DueDays is not
+    * specified.
     * ValidRange: QBO: Min=1 Max=31 */
   DayOfMonthDue?: number;
   /** Product: ALL
@@ -7618,8 +7862,9 @@ export interface Term extends IntuitEntity {
   /** Product: ALL
     * Description: Discount applies if
     * paid within this number of days.
-    * Business Rules: [li] This
-    * value is used only when DueDays is specified. [/li]
+    * Business Rules: 
+    * *  This
+    * value is used only when DueDays is specified. 
     * ValidRange: QBO: Min=0 Max=999 */
   DiscountDays?: number;
   /** Product: ALL
@@ -7631,10 +7876,12 @@ export interface Term extends IntuitEntity {
   /** Product: ALL
     * Description: Number of days from
     * delivery of goods or services until the payment is due.
-    * Business Rules: QBO: [li] This value is required if
-    * DayOfMonthDue is not specified. [/li] [li] If DueDays is
+    * Business Rules: QBO: 
+    * *  This value is required if
+    * DayOfMonthDue is not specified.  
+    * *  If DueDays is
     * specified, only DiscountDays and DiscountPercent can be
-    * additionally specified.[/li]
+    * additionally specified.
     * Required: QBO
     * ValidRange: QBO:
     * Min=0 Max=999 */
@@ -7642,8 +7889,9 @@ export interface Term extends IntuitEntity {
   /** Product: ALL
     * Description: Payment due next
     * month if issued that many days before the DayOfMonthDue.
-    * Business Rules: QBO: [li] Required for the Create request when
-    * DueDays is not specified.[/li]
+    * Business Rules: QBO: 
+    * *  Required for the Create request when
+    * DueDays is not specified.
     * ValidRange: QBO: Min=1 Max=999 */
   DueNextMonthDays?: number;
   /** Product: ALL
@@ -7662,7 +7910,8 @@ export interface Term extends IntuitEntity {
   /** Product: ALL
     * Description: Type of the Sales
     * Term. Valid values: Standard or DateDriven, as defined by
-    * SalesTermTypeEnum. [br /] If dueDays is not null, the Type is
+    * SalesTermTypeEnum. 
+    * If dueDays is not null, the Type is
     * Standard else DateDriven.
     * InputType: ALL: ReadOnly */
   Type?: string;
@@ -7674,12 +7923,14 @@ export interface TimeActivity extends IntuitEntity {
   BillableStatus?: BillableStatusEnum;
   /** Hours of break taken between start time and end
     * time.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * [i]Unsupported field.[/i] */
   BreakHours?: number;
   /** Minutes of break taken between start time and
     * end time. Valid values are 0 - 59.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * [i]Unsupported field.[/i] */
   BreakMinutes?: number;
   /** Seconds of break taken between start time and
@@ -7700,12 +7951,14 @@ export interface TimeActivity extends IntuitEntity {
     * recorded. */
   EmployeeRef?: ReferenceType;
   /** Time work ended.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * [i]Unsupported field.[/i] */
   EndTime?: Date;
   /** Hourly bill rate of the employee or vendor for
     * this time activity.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * [i]Unsupported
     * field.[/i] */
   HourlyRate?: number;
@@ -7715,7 +7968,8 @@ export interface TimeActivity extends IntuitEntity {
     *
     * Couple of TimeActivity API integrations are already submitting start, end hours with right company/employee time zone offsets. Such integrations will pass this attribute as true to avoid company time zone offsets by TimeActivity API. */
   HoursInEmployeeTimeZone?: boolean;
-  /** [br /]
+  /** 
+  /**
     * Required for the create operation. */
   ItemRef?: ReferenceType;
   /** Minutes worked; valid values are 0 - 59. */
@@ -7734,7 +7988,8 @@ export interface TimeActivity extends IntuitEntity {
   /** Seconds worked; valid values are 0 - 59. */
   Seconds?: number;
   /** Time work started.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * [i]Unsupported field.[/i] */
   StartTime?: Date;
   /** True if the time recorded is both billable and
@@ -7809,7 +8064,8 @@ export interface Transaction extends IntuitEntity {
   /** Product: ALL
     * Description: Reference to the
     * Currency in which all amounts on the associated transaction are
-    * expressed.[br /]
+    * expressed.
+    *
     * InputType: ReadWrite */
   CurrencyRef?: ReferenceType;
   /** Product: QBO
@@ -7825,14 +8081,17 @@ export interface Transaction extends IntuitEntity {
     * transactions. Otherwise the value will remaing null.
     * Alternatively, you can also pass in "AUTO_GENERATE" in this
     * field to force QBO to auto-sequence the document number for
-    * Invoices, Estimates and Sales Receipt.[br /]The maximum length
+    * Invoices, Estimates and Sales Receipt.
+    *The maximum length
     * for DocNumber is 21 characters. The default value is an empty
     * String. Filter support not provided for Payment.
     * Description:
     * QBW: The primary document number for this transaction. DocNumber
-    * is exposed to end users.[br /]If it is not provided, QuickBooks
+    * is exposed to end users.
+    *If it is not provided, QuickBooks
     * business logic will assign the document number using the "next
-    * in sequence" algorithm.[br /]Max. length is 11 characters for
+    * in sequence" algorithm.
+    *Max. length is 11 characters for
     * Payment, Bill, ItemReceipt and VendorCredit. Max. length is 20
     * characters for other entities.
     * Filterable: QBO
@@ -7899,15 +8158,18 @@ export interface Transaction extends IntuitEntity {
   TxnApprovalInfo?: TxnApprovalInfo;
   /** Product: ALL
     * Description: QBO: The date entered
-    * by the user when this transaction occurred. [br /]Often, it is
-    * the date when the transaction is created in the system. [br
-    * /]For "posting" transactions, this is the posting date that
+    * by the user when this transaction occurred. 
+    *Often, it is
+    * the date when the transaction is created in the system. 
+    * For "posting" transactions, this is the posting date that
     * affects the financial statements. If the date is not supplied,
     * the current date on the server is used.
     * Description: QBW: The
-    * nominal, user entered, date of the transaction. [br /]Often, but
+    * nominal, user entered, date of the transaction. 
+    *Often, but
     * not required to be, the date the transaction was created in the
-    * system. [br /]For "posting" transactions, this is the posting
+    * system. 
+    *For "posting" transactions, this is the posting
     * date that affects financial statements.
     * Filterable: ALL
     * Sortable:
@@ -7922,12 +8184,14 @@ export interface Transaction extends IntuitEntity {
   /** Product: ALL
     * Description: QBW: The status of the
     * transaction. Depending on the transaction type it may have
-    * different values.[br /]For Sales Transactions acceptable values
+    * different values.
+    *For Sales Transactions acceptable values
     * are defined in PaymentStatusEnum. For Estimate, the values
     * accepted are defined in EstimateStatusEnum.
     * Description: QBO: The
     * status of the transaction. Depending on the transaction type it
-    * may have different values.[br /]For Sales Transactions
+    * may have different values.
+    *For Sales Transactions
     * acceptable values are defined in PaymentStatusEnum. For
     * Estimate, the values accepted are defined in
     * QboEstimateStatusEnum.
@@ -7946,7 +8210,7 @@ export interface Transaction extends IntuitEntity {
     * of QuickBooks you need only supply the tax code for the customer
     * and the tax code (in the case of multiple rates) or tax rate
     * (for a single rate) to apply for the transaction as a
-    * whole.[br]See [a
+    * whole.]See [a
     * href="http://ipp.developer.intuit.com/0010_Intuit_Partner_Platform/0060_Financial_Management_Services_(v3)/01100_Global_Tax_Model"]Global
     * Tax Model[/a]. */
   TxnTaxDetail?: TxnTaxDetail;
@@ -8051,7 +8315,7 @@ export const TxnSourceEnum = Object.freeze({
   * transaction. For US versions of QuickBooks you need only supply the
   * tax code for the customer and the tax code (in the case of multiple
   * rates) or tax rate (for a single rate) to apply for the transaction
-  * as a whole.[br]See [a
+  * as a whole.]See [a
   * href="http://ipp.developer.intuit.com/0010_Intuit_Partner_Platform/0060_Financial_Management_Services_(v3)/01100_Global_Tax_Model"]Global
   * Tax Model[/a]. */
 export interface TxnTaxDetail {
@@ -8138,19 +8402,27 @@ export const TxnTypeEnum = Object.freeze({
   * units. It allows showing what quantities, prices, rates, and costs
   * are based on. */
 export interface UOM extends IntuitEntity {
-  /** Abbreviation of the Unit of Measure.[br /]
-    * [br /]
-    * Required for the create operation. [br /]
+  /** Abbreviation of the Unit of Measure.
+  /**
+    * 
+    *
+    * Required for the create operation. 
+    *
     * Max Length: 31 */
   Abbrv?: string;
-  /** [br /]
-    * Required for the create operation. [br /] */
+  /** 
+  /**
+    * Required for the create operation. 
+    * */
   BaseType?: UOMBaseTypeEnum;
   ConvUnit?: UOMConvUnit[];
   /** User recognizable name of the Unit of
-    * Measure.[br /]
-    * [br /]
-    * Required for the create operation. [br /]
+    * Measure.
+    *
+    * 
+    *
+    * Required for the create operation. 
+    *
     * Max Length: 31 */
   Name?: string;
 }
@@ -8171,16 +8443,21 @@ export const UOMBaseTypeEnum = Object.freeze({
 
 /** Related UOM */
 export interface UOMConvUnit {
-  /** Abbreviation of the Unit of Measure.[br /]
-    * [br /]
-    * Required for the create operation. [br /]
+  /** Abbreviation of the Unit of Measure.
+  /**
+    * 
+    *
+    * Required for the create operation. 
+    *
     * Max Length: 31 */
   Abbrv?: string;
   ConvRatio?: number;
-  /** User recognizable name of the Unit of Measure.[br
-    * /]
-    * [br /]
-    * Required for the create operation. [br /]
+  /** User recognizable name of the Unit of Measure.
+    *
+    * 
+    *
+    * Required for the create operation. 
+    *
     * Max Length: 31 */
   Name?: string;
 }
@@ -8324,7 +8601,8 @@ export interface Vendor extends NameBase {
     * Description: True if the vendor is subcontractor */
   IsSubContractor?: boolean;
   /** Product: ALL
-    * Description: Free form text describing the Vendor.[br /]Max. length: 1024 characters. */
+    * Description: Free form text describing the Vendor.
+    *Max. length: 1024 characters. */
   Notes?: string;
   /** Specifies the date of the Open Balance.
     * Non QB-writable. */
@@ -8411,8 +8689,8 @@ export interface VendorAndPurchasesPrefs {
     * Default Terms */
   DefaultTerms?: ReferenceType;
   /** Cloud Max Length: 4000
-    * [b]QuickBooks Notes[/b][br
-    * /]
+    * **QuickBooks Notes**
+    *
     * Max Length: 31 or 159 (for a fully qualified name) */
   DiscountAccountRef?: ReferenceType;
   /** Product:All
@@ -8460,7 +8738,8 @@ export interface VendorCredit extends PurchaseByVendor {
   /** Product: ALL
     * Description: The unpaid amount of the bill. When paid-in-full, balance will
     * be zero.
-    * [b]QuickBooks Notes[/b][br /]
+    * **QuickBooks Notes**
+    *
     * Non QB-writable.
     * Filterable: QBW
     * Sortable: QBW */
@@ -8481,7 +8760,8 @@ export interface VendorType extends IntuitEntity {
   /** Whether or not active inactive customer types may be hidden from most display purposes and may not be used on financial transactions */
   Active?: boolean;
   /** Product: ALL
-    * Description: Fully qualified name of the entity. The fully qualified name prepends the topmost parent, followed by each sub element separated by colons. Takes the form of Parent:Customer:Job:Sub-job. Limited to 5 levels.[br /]Max. length: 41 characters (single name) or 209 characters (fully qualified name). */
+    * Description: Fully qualified name of the entity. The fully qualified name prepends the topmost parent, followed by each sub element separated by colons. Takes the form of Parent:Customer:Job:Sub-job. Limited to 5 levels.
+    *Max. length: 41 characters (single name) or 209 characters (fully qualified name). */
   FullyQualifiedName?: string;
   /** User recognizable name for the Vendor Type.
     * Length Restriction:
@@ -8511,7 +8791,8 @@ export interface Warnings {
 }
 
 /** Product: ALL
-  * Description: Website address type. This entity is always manipulated in context of another parent entity like Person, Organization etc.[br /]Unsupported type. */
+  * Description: Website address type. This entity is always manipulated in context of another parent entity like Person, Organization etc.
+  *Unsupported type. */
 export interface WebSiteAddress {
   /** Product: ALL
     * Description: True if this is the default web site. */
@@ -8523,7 +8804,8 @@ export interface WebSiteAddress {
     * Description: Descriptive tag associated with the web site. */
   Tag?: string;
   /** Product: ALL
-    * Description: Uniform Resource Identifier for the web site.[br /]Max. length: 1000 characters. */
+    * Description: Uniform Resource Identifier for the web site.
+    *Max. length: 1000 characters. */
   URI?: string;
 }
 
