@@ -5,7 +5,7 @@ import { MemberRef } from "@loanlink/cxml";
 
 import { Exporter } from "./Exporter";
 import { Type } from "../Type";
-import { toLowerCamelCase } from "../transform/Transform";
+// import { toLowerCamelCase } from "../transform/Transform";
 
 const singleIndent = "  ";
 
@@ -22,6 +22,14 @@ export class TS extends Exporter {
     for (let line of lineList) {
       // Remove leading and trailing whitespace.
       line = line.trim();
+      line = line.replace(/\[br \/\]/g, "\n" + indent + prefix);
+      line = line.replace(/\[br\/\]/g, "\n" + indent + prefix);
+      line = line.replace(/\[b\]/g, "**");
+      line = line.replace(/\[\/b\]/g, "**");
+      line = line.replace(/\[li\]/g, "\n" + indent + prefix + " * ");
+      line = line.replace(/\[\/li\]/g, "");
+      line = line.replace(/\[br/g, "");
+      line = line.replace(/\/\]/g, "");
 
       if (!line) ++blankCount;
       else {
@@ -89,7 +97,7 @@ export class TS extends Exporter {
     if (parentDef) parentList.push(parentDef);
 
     for (const type of mixinList || []) {
-      parentList.push(this.writeTypeRef(type, "_"));
+      parentList.push(this.writeTypeRef(type, ""));
     }
 
     return parentList.length ? " extends " + parentList.join(", ") : "";
@@ -136,7 +144,8 @@ export class TS extends Exporter {
       output.push("\n");
     }
 
-    let name = toLowerCamelCase(member.name);
+    // let name = toLowerCamelCase(member.name);
+    let name = member.name;
 
     // Convert name to a name compatible with JAXB output (from Jsonix)
     if (member.name !== ref.safeName) name = `"${name}"`;
@@ -277,7 +286,7 @@ export class TS extends Exporter {
     } else if (type.isList) {
       output.push(exportPrefix + "type " + name + " = " + content + ";" + "\n");
     } else if (type.isPlainPrimitive) {
-      parentDef = this.writeTypeRef(type.parent, "_");
+      parentDef = this.writeTypeRef(type.parent, "");
 
       if (type.literalList && type.literalList.length) {
         output.push(
@@ -297,7 +306,7 @@ export class TS extends Exporter {
         );
       }
     } else {
-      if (type.parent) parentDef = this.writeTypeRef(type.parent, "_");
+      if (type.parent) parentDef = this.writeTypeRef(type.parent, "");
 
       output.push(
         exportPrefix +
