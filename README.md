@@ -1,4 +1,8 @@
-# @loanlink/cxsd
+# robreiss fork of cxsd
+
+This fork add special processing of the generated typescript to convert Quickbooks API xsd's to typescript.
+
+## @loanlink/cxsd
 
 `cxsd` is a streaming XSD parser and XML parser generator for Node.js and [TypeScript](http://www.typescriptlang.org/).
 It retrieves the specified file(s) and generates a Typescript file containing the defintions and a parser based on the widely used [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser) library.
