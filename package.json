@@ -26,7 +26,8 @@
     "prepare": "npm run build",
     "prepublishOnly": "npm run test",
     "postpublish": "TAG=\"v$(jq -r .version package.json)\" && git commit -am \"Bumped to version $TAG\" && git tag -a $TAG -m \"Published version $TAG\" && git push origin $TAG",
-    "test": "jest"
+    "test": "jest",
+    "gen": " rm ./work/quickbooks-xsd.d.ts; ./bin/cxsd.js -c -n finance.xsd -o ./work  ./work/xsd/SalesTax.xsd; mv ./work/schema.intuit.com/finance/v3.ts ./work/quickbooks-xsd.d.ts; rm -rf ./work/schema.intuit.com"
   },
   "bin": {
     "cxsd": "bin/cxsd.js"
